@@ -1,0 +1,19 @@
+# generated build trees (recreated by tools/build.ps1)
+build/
+out/
+vcpkg_installed/
+
+# IDE / local settings
+.vs/
+*.user
+CMakeUserPresets.json
+
+# build logs
+*.log
+
+# generated outputs: STEP/STL/PNG exports and third-party models downloaded for a design
+exports/
+
+# Python caches (MCP bridge)
+__pycache__/
+*.pyc

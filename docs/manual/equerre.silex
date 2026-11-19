@@ -1,0 +1,917 @@
+{
+  "features": [
+    {
+      "id": "b426a607-06b0-4a2f-a5d3-6ad4cce5ddac",
+      "name": "Esquisse semelle",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "47affc15-73cb-4943-8b73-66995ed5158c",
+                2
+              ],
+              "b": [
+                "ead69d3f-4265-4b47-b1d0-916a4690224c",
+                1
+              ],
+              "id": "a49ffe72-77d2-4f87-ad3f-2936d2c7a9a0",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "ead69d3f-4265-4b47-b1d0-916a4690224c",
+                2
+              ],
+              "b": [
+                "f7a1eeda-4a72-4c5a-b86f-78cf6d867a1b",
+                1
+              ],
+              "id": "23cde88d-81d7-4cf6-ad32-9268d5766e7c",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "f7a1eeda-4a72-4c5a-b86f-78cf6d867a1b",
+                2
+              ],
+              "b": [
+                "4e8bc161-2102-4bed-932f-54af384d15ce",
+                1
+              ],
+              "id": "d8937672-721a-43b6-99c3-e6830e6377dc",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "4e8bc161-2102-4bed-932f-54af384d15ce",
+                2
+              ],
+              "b": [
+                "47affc15-73cb-4943-8b73-66995ed5158c",
+                1
+              ],
+              "id": "d6652aff-2b8d-4bf2-acdc-d5d1e101789c",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "47affc15-73cb-4943-8b73-66995ed5158c",
+                0
+              ],
+              "id": "fd08ec4f-afec-4423-ae4f-280d3914d6f9",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "f7a1eeda-4a72-4c5a-b86f-78cf6d867a1b",
+                0
+              ],
+              "id": "83d16623-7477-4e48-8f29-98fa862ebc4b",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "ead69d3f-4265-4b47-b1d0-916a4690224c",
+                0
+              ],
+              "id": "f25f70f5-d51e-43b9-a9bc-42c57a1cb14c",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "4e8bc161-2102-4bed-932f-54af384d15ce",
+                0
+              ],
+              "id": "22df10dc-c918-420b-918b-e123b8d81087",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "47affc15-73cb-4943-8b73-66995ed5158c",
+                0
+              ],
+              "id": "da07a172-8330-43f8-8622-fb6aced9b8ac",
+              "kind": "Distance",
+              "value": 40.0
+            },
+            {
+              "a": [
+                "4e8bc161-2102-4bed-932f-54af384d15ce",
+                0
+              ],
+              "id": "9785f083-959c-4603-9ffb-5c041658962b",
+              "kind": "Distance",
+              "value": 85.0
+            },
+            {
+              "a": [
+                "47affc15-73cb-4943-8b73-66995ed5158c",
+                1
+              ],
+              "b": [
+                "@O",
+                1
+              ],
+              "id": "b86e3dcc-859f-4a57-85f2-6960c664e882",
+              "kind": "DistanceX",
+              "value": 20.0
+            },
+            {
+              "a": [
+                "47affc15-73cb-4943-8b73-66995ed5158c",
+                1
+              ],
+              "b": [
+                "@X",
+                0
+              ],
+              "id": "c17d11fb-bc37-44de-9717-d93ef490e956",
+              "kind": "PointOnObject"
+            }
+          ],
+          "geos": [
+            {
+              "id": "47affc15-73cb-4943-8b73-66995ed5158c",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                0.0
+              ],
+              "p2": [
+                20.0,
+                0.0
+              ]
+            },
+            {
+              "id": "ead69d3f-4265-4b47-b1d0-916a4690224c",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                0.0
+              ],
+              "p2": [
+                20.0,
+                85.0
+              ]
+            },
+            {
+              "id": "f7a1eeda-4a72-4c5a-b86f-78cf6d867a1b",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                85.0
+              ],
+              "p2": [
+                -20.0,
+                85.0
+              ]
+            },
+            {
+              "id": "4e8bc161-2102-4bed-932f-54af384d15ce",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                85.0
+              ],
+              "p2": [
+                -20.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "7ea4407e-948e-418b-915a-87278d8f2dac",
+      "name": "Extrude1",
+      "params": {
+        "distance": 10.0,
+        "op": "NewBody",
+        "profile": {
+          "regions": [
+            "47affc15-73cb-4943-8b73-66995ed5158c,4e8bc161-2102-4bed-932f-54af384d15ce,ead69d3f-4265-4b47-b1d0-916a4690224c,f7a1eeda-4a72-4c5a-b86f-78cf6d867a1b"
+          ],
+          "sketch": "b426a607-06b0-4a2f-a5d3-6ad4cce5ddac"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "560dd459-8305-417f-855e-ad68aea08066",
+      "name": "Esquisse rail",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "4ce05b5f-c197-4534-be89-466535fa1052",
+                2
+              ],
+              "b": [
+                "5358bb96-28cc-4bdb-94c9-c61429577a54",
+                1
+              ],
+              "id": "0ed88c75-c26f-44a4-8d6b-48e9d3170d9a",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "5358bb96-28cc-4bdb-94c9-c61429577a54",
+                2
+              ],
+              "b": [
+                "3ffe46ae-57ef-4e09-82a5-4e62f5fe351b",
+                1
+              ],
+              "id": "102ae5fb-85bc-4b75-9332-d24632ce6c72",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "3ffe46ae-57ef-4e09-82a5-4e62f5fe351b",
+                2
+              ],
+              "b": [
+                "acd8c6e1-7a83-4bfc-b538-742db37e0733",
+                1
+              ],
+              "id": "52a52cb1-c784-42ac-aba4-d96ea533d0d7",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "acd8c6e1-7a83-4bfc-b538-742db37e0733",
+                2
+              ],
+              "b": [
+                "4ce05b5f-c197-4534-be89-466535fa1052",
+                1
+              ],
+              "id": "fd4b2fdf-bf3d-4d7e-a8cd-35a527ba53ee",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "4ce05b5f-c197-4534-be89-466535fa1052",
+                0
+              ],
+              "id": "3d094102-2aeb-4a22-9fc8-320d3f456851",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "3ffe46ae-57ef-4e09-82a5-4e62f5fe351b",
+                0
+              ],
+              "id": "49743ffa-11e8-4b80-bc05-2ac8a34230dd",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "5358bb96-28cc-4bdb-94c9-c61429577a54",
+                0
+              ],
+              "id": "54ed6025-46f4-4b8e-9ec4-133c488c4223",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "acd8c6e1-7a83-4bfc-b538-742db37e0733",
+                0
+              ],
+              "id": "6739bbac-b966-41a5-811e-69dfc661607d",
+              "kind": "Vertical"
+            }
+          ],
+          "geos": [
+            {
+              "id": "4ce05b5f-c197-4534-be89-466535fa1052",
+              "kind": "Line",
+              "p1": [
+                -35.0,
+                0.0
+              ],
+              "p2": [
+                35.0,
+                0.0
+              ]
+            },
+            {
+              "id": "5358bb96-28cc-4bdb-94c9-c61429577a54",
+              "kind": "Line",
+              "p1": [
+                35.0,
+                0.0
+              ],
+              "p2": [
+                35.0,
+                20.0
+              ]
+            },
+            {
+              "id": "3ffe46ae-57ef-4e09-82a5-4e62f5fe351b",
+              "kind": "Line",
+              "p1": [
+                35.0,
+                20.0
+              ],
+              "p2": [
+                -35.0,
+                20.0
+              ]
+            },
+            {
+              "id": "acd8c6e1-7a83-4bfc-b538-742db37e0733",
+              "kind": "Line",
+              "p1": [
+                -35.0,
+                20.0
+              ],
+              "p2": [
+                -35.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "dc89143b-daa1-4560-b3b9-0b8f989af838",
+      "name": "Extrude2",
+      "params": {
+        "distance": 15.0,
+        "op": "Join",
+        "profile": {
+          "regions": [
+            "3ffe46ae-57ef-4e09-82a5-4e62f5fe351b,4ce05b5f-c197-4534-be89-466535fa1052,5358bb96-28cc-4bdb-94c9-c61429577a54,acd8c6e1-7a83-4bfc-b538-742db37e0733"
+          ],
+          "sketch": "560dd459-8305-417f-855e-ad68aea08066"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "1bf9c959-dcaf-4bc0-a8ff-f21d1d8f10e4",
+      "name": "Chamfer1",
+      "params": {
+        "edges": [
+          {
+            "name": "E[7ea4407e-948e-418b-915a-87278d8f2dac:side(b426a607-06b0-4a2f-a5d3-6ad4cce5ddac/47affc15-73cb-4943-8b73-66995ed5158c)|dc89143b-daa1-4560-b3b9-0b8f989af838:end]",
+            "sig": {
+              "c": [
+                1.7763568394002505e-15,
+                0.0,
+                15.0
+              ],
+              "d": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "s": 70.0,
+              "t": 0
+            }
+          }
+        ],
+        "value": 5.0
+      },
+      "type": "Chamfer"
+    },
+    {
+      "id": "18d7747a-3017-4560-af4c-35e96e9c8a42",
+      "name": "Esquisse montant",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "22089a85-3c0e-4dd0-9400-abed79274712",
+                2
+              ],
+              "b": [
+                "c07ce83b-f98c-4010-a158-2706dd2cf2a7",
+                1
+              ],
+              "id": "1a97e431-de43-4461-bb3a-f731b5b6a4c1",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "c07ce83b-f98c-4010-a158-2706dd2cf2a7",
+                2
+              ],
+              "b": [
+                "2728a2f3-40cc-4753-b6c7-52e34964cbd3",
+                1
+              ],
+              "id": "0c66bf21-9b4a-409a-a0b7-e75396e7c217",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "2728a2f3-40cc-4753-b6c7-52e34964cbd3",
+                2
+              ],
+              "b": [
+                "a94600c0-0f95-42c3-9603-a4657a9e90e5",
+                1
+              ],
+              "id": "64015102-f102-4b59-9631-4bd5493b3415",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "a94600c0-0f95-42c3-9603-a4657a9e90e5",
+                2
+              ],
+              "b": [
+                "22089a85-3c0e-4dd0-9400-abed79274712",
+                1
+              ],
+              "id": "d27083a5-7c09-4545-8162-b0b9d084995a",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "22089a85-3c0e-4dd0-9400-abed79274712",
+                0
+              ],
+              "id": "9502632c-462a-4b1b-82db-8c903c795f17",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "2728a2f3-40cc-4753-b6c7-52e34964cbd3",
+                0
+              ],
+              "id": "2b005fa6-5da5-4a6b-96bb-ac7dfee217d2",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "c07ce83b-f98c-4010-a158-2706dd2cf2a7",
+                0
+              ],
+              "id": "7c1176b9-b448-4ab4-b5fc-69f2a6c3796c",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "a94600c0-0f95-42c3-9603-a4657a9e90e5",
+                0
+              ],
+              "id": "51a4605c-2dd4-4dbc-9652-e8f3ebdcd529",
+              "kind": "Vertical"
+            }
+          ],
+          "geos": [
+            {
+              "id": "22089a85-3c0e-4dd0-9400-abed79274712",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                65.0
+              ],
+              "p2": [
+                20.0,
+                65.0
+              ]
+            },
+            {
+              "id": "c07ce83b-f98c-4010-a158-2706dd2cf2a7",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                65.0
+              ],
+              "p2": [
+                20.0,
+                85.0
+              ]
+            },
+            {
+              "id": "2728a2f3-40cc-4753-b6c7-52e34964cbd3",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                85.0
+              ],
+              "p2": [
+                -20.0,
+                85.0
+              ]
+            },
+            {
+              "id": "a94600c0-0f95-42c3-9603-a4657a9e90e5",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                85.0
+              ],
+              "p2": [
+                -20.0,
+                65.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "37656335-058c-4862-8eef-51fadc328a18",
+      "name": "Extrude3",
+      "params": {
+        "distance": 65.0,
+        "op": "Join",
+        "profile": {
+          "regions": [
+            "22089a85-3c0e-4dd0-9400-abed79274712,2728a2f3-40cc-4753-b6c7-52e34964cbd3,a94600c0-0f95-42c3-9603-a4657a9e90e5,c07ce83b-f98c-4010-a158-2706dd2cf2a7"
+          ],
+          "sketch": "18d7747a-3017-4560-af4c-35e96e9c8a42"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "e7aae8d5-09e0-4972-a831-8554014a738b",
+      "name": "Esquisse renfort",
+      "params": {
+        "plane": {
+          "face": {
+            "name": "7ea4407e-948e-418b-915a-87278d8f2dac:end",
+            "sig": {
+              "c": [
+                -6.93889390390723e-17,
+                42.5,
+                10.0
+              ],
+              "d": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "s": 1799.9999999999998,
+              "t": 0
+            }
+          },
+          "kind": "Face"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "38d09a3c-0f44-458d-b099-92df777a9e85",
+                2
+              ],
+              "b": [
+                "81c53642-f219-4e77-8d6a-81268f689ee8",
+                1
+              ],
+              "id": "5af61ee5-a91b-43c3-b10f-d28f99e5649e",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "81c53642-f219-4e77-8d6a-81268f689ee8",
+                2
+              ],
+              "b": [
+                "92bea900-fcce-420b-a210-4f89e481aef4",
+                1
+              ],
+              "id": "27eb09b2-08e1-4f4e-ba6b-c4a44365efc9",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "92bea900-fcce-420b-a210-4f89e481aef4",
+                2
+              ],
+              "b": [
+                "eb1cd94f-40e6-4c69-b987-3aed04a8928d",
+                1
+              ],
+              "id": "18c82ed9-8241-448b-832b-e91b49aaac50",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "eb1cd94f-40e6-4c69-b987-3aed04a8928d",
+                2
+              ],
+              "b": [
+                "38d09a3c-0f44-458d-b099-92df777a9e85",
+                1
+              ],
+              "id": "b561602f-d568-41b7-befd-f30f4a5c2a71",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "38d09a3c-0f44-458d-b099-92df777a9e85",
+                0
+              ],
+              "id": "847f271f-8b31-4654-8d23-8e381ec76241",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "92bea900-fcce-420b-a210-4f89e481aef4",
+                0
+              ],
+              "id": "92fbb4e2-07f8-44d1-8d92-aeb33eb431bc",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "81c53642-f219-4e77-8d6a-81268f689ee8",
+                0
+              ],
+              "id": "0e1a8207-42d5-4fd4-bc3d-85b860ff1b68",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "eb1cd94f-40e6-4c69-b987-3aed04a8928d",
+                0
+              ],
+              "id": "dba22496-b5f9-415b-baf6-dec21289089b",
+              "kind": "Vertical"
+            }
+          ],
+          "geos": [
+            {
+              "id": "38d09a3c-0f44-458d-b099-92df777a9e85",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                55.0
+              ],
+              "p2": [
+                20.0,
+                55.0
+              ]
+            },
+            {
+              "id": "81c53642-f219-4e77-8d6a-81268f689ee8",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                55.0
+              ],
+              "p2": [
+                20.0,
+                65.0
+              ]
+            },
+            {
+              "id": "92bea900-fcce-420b-a210-4f89e481aef4",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                65.0
+              ],
+              "p2": [
+                -20.0,
+                65.0
+              ]
+            },
+            {
+              "id": "eb1cd94f-40e6-4c69-b987-3aed04a8928d",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                65.0
+              ],
+              "p2": [
+                -20.0,
+                55.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "7eff3c2a-0a48-46ac-bde4-086f352f7360",
+      "name": "Extrude4",
+      "params": {
+        "distance": 15.0,
+        "op": "Join",
+        "profile": {
+          "regions": [],
+          "sketch": "e7aae8d5-09e0-4972-a831-8554014a738b"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "9736415a-a58b-490d-aee7-1f6fae963788",
+      "name": "Esquisse perçage Ø20",
+      "params": {
+        "plane": {
+          "face": {
+            "name": "7ea4407e-948e-418b-915a-87278d8f2dac:end",
+            "sig": {
+              "c": [
+                -6.93889390390723e-17,
+                37.5,
+                10.0
+              ],
+              "d": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "s": 1399.9999999999998,
+              "t": 0
+            }
+          },
+          "kind": "Face"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "08c3ef88-e84c-4de3-899e-5eae219c2c8f",
+                0
+              ],
+              "id": "df210a59-491e-416c-9f84-47c04ef78fc2",
+              "kind": "Diameter",
+              "value": 20.0
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                37.5
+              ],
+              "id": "08c3ef88-e84c-4de3-899e-5eae219c2c8f",
+              "kind": "Circle",
+              "r": 10.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "d55663e7-7c1f-47a3-b9b8-c4d9614521d6",
+      "name": "Extrude5",
+      "params": {
+        "distance": 10.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "9736415a-a58b-490d-aee7-1f6fae963788"
+        },
+        "reversed": true,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "c289fe0a-188d-43a7-a6c9-2aade91dadb6",
+      "name": "Esquisse trous Ø10",
+      "params": {
+        "plane": {
+          "face": {
+            "name": "37656335-058c-4862-8eef-51fadc328a18:side(18d7747a-3017-4560-af4c-35e96e9c8a42/22089a85-3c0e-4dd0-9400-abed79274712)",
+            "sig": {
+              "c": [
+                -2.775557561562892e-17,
+                65.0,
+                45.0
+              ],
+              "d": [
+                -0.0,
+                -1.0,
+                -0.0
+              ],
+              "s": 1599.9999999999998,
+              "t": 0
+            }
+          },
+          "kind": "Face"
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "c": [
+                10.0,
+                55.0
+              ],
+              "id": "e9db70e6-f4cf-4e59-ba79-0e856fddd01c",
+              "kind": "Circle",
+              "r": 5.0
+            },
+            {
+              "c": [
+                30.0,
+                55.0
+              ],
+              "id": "18974956-fc05-4696-9a83-3bea22be943f",
+              "kind": "Circle",
+              "r": 5.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "2e39babe-910d-490e-ba49-270c8df936f7",
+      "name": "Extrude6",
+      "params": {
+        "distance": 20.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "c289fe0a-188d-43a7-a6c9-2aade91dadb6"
+        },
+        "reversed": true,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "02a870b6-becc-41f8-a2a9-5fa973fc52a3",
+      "name": "Fillet1",
+      "params": {
+        "edges": [
+          {
+            "name": "E[37656335-058c-4862-8eef-51fadc328a18:end|37656335-058c-4862-8eef-51fadc328a18:side(18d7747a-3017-4560-af4c-35e96e9c8a42/a94600c0-0f95-42c3-9603-a4657a9e90e5)]",
+            "sig": {
+              "c": [
+                -20.0,
+                75.0,
+                65.0
+              ],
+              "d": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "s": 20.0,
+              "t": 0
+            }
+          },
+          {
+            "name": "E[37656335-058c-4862-8eef-51fadc328a18:end|37656335-058c-4862-8eef-51fadc328a18:side(18d7747a-3017-4560-af4c-35e96e9c8a42/c07ce83b-f98c-4010-a158-2706dd2cf2a7)]",
+            "sig": {
+              "c": [
+                20.0,
+                75.0,
+                65.0
+              ],
+              "d": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "s": 20.0,
+              "t": 0
+            }
+          }
+        ],
+        "value": 10.0
+      },
+      "type": "Fillet"
+    }
+  ],
+  "format": "silex",
+  "marker": 14,
+  "version": 1
+}

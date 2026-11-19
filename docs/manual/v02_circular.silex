@@ -1,0 +1,273 @@
+{
+  "features": [
+    {
+      "id": "ebd7b961-1a39-42e4-ab9b-dfbe4f44d225",
+      "name": "Esquisse bride",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "2b913c0d-2754-41f3-acfa-8834fc8f88b8",
+              "kind": "Circle",
+              "r": 40.0
+            },
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "eda0c3af-291d-451e-9fcf-90807293326c",
+              "kind": "Circle",
+              "r": 15.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "158fc4b0-4197-4c13-978c-4265f2bd760d",
+      "name": "Extrude1",
+      "params": {
+        "distance": 8.0,
+        "op": "NewBody",
+        "profile": {
+          "regions": [],
+          "sketch": "ebd7b961-1a39-42e4-ab9b-dfbe4f44d225"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "39184454-9db7-4d2e-b95f-f73810092d62",
+      "name": "Sketch1",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "b967339f-ceaf-4081-960b-2dc90c6bcf10",
+              "kind": "Circle",
+              "r": 15.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "babc125b-3814-48a8-96da-70fcbed6e749",
+      "name": "Extrude2",
+      "params": {
+        "distance": 8.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [
+            "b967339f-ceaf-4081-960b-2dc90c6bcf10"
+          ],
+          "sketch": "39184454-9db7-4d2e-b95f-f73810092d62"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "e1e1842d-6290-4f9a-9a49-f268542f8004",
+      "name": "Esquisse trou",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "c": [
+                30.0,
+                0.0
+              ],
+              "id": "c6e704f3-438b-40bb-8add-d01531ee30c7",
+              "kind": "Circle",
+              "r": 3.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53",
+      "name": "Extrude3",
+      "params": {
+        "distance": 8.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [
+            "c6e704f3-438b-40bb-8add-d01531ee30c7"
+          ],
+          "sketch": "e1e1842d-6290-4f9a-9a49-f268542f8004"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "33b70415-4e0c-4606-9dbb-c857111606c2",
+      "name": "CircularPattern1",
+      "params": {
+        "axis": {
+          "kind": "Z"
+        },
+        "count": 6,
+        "equalSpacing": true,
+        "reverse": false,
+        "targets": {
+          "ids": [
+            "ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53"
+          ],
+          "type": "feature"
+        },
+        "totalAngle": 360.0
+      },
+      "type": "CircularPattern"
+    },
+    {
+      "id": "9c47c03a-b1da-42a0-a223-0a138df187f8",
+      "name": "Chamfer1",
+      "params": {
+        "edges": [
+          {
+            "name": "E[158fc4b0-4197-4c13-978c-4265f2bd760d:end|pattern_circ(33b70415-4e0c-4606-9dbb-c857111606c2,4,ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53:side(e1e1842d-6290-4f9a-9a49-f268542f8004/c6e704f3-438b-40bb-8add-d01531ee30c7))]",
+            "sig": {
+              "c": [
+                -15.000000000000021,
+                -25.980762113533167,
+                8.0
+              ],
+              "d": [
+                -0.8660254037844384,
+                0.5000000000000004,
+                -0.0
+              ],
+              "s": 18.849555921538762,
+              "t": 1
+            }
+          },
+          {
+            "name": "E[158fc4b0-4197-4c13-978c-4265f2bd760d:end|pattern_circ(33b70415-4e0c-4606-9dbb-c857111606c2,5,ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53:side(e1e1842d-6290-4f9a-9a49-f268542f8004/c6e704f3-438b-40bb-8add-d01531ee30c7))]",
+            "sig": {
+              "c": [
+                15.000000000000007,
+                -25.980762113533167,
+                8.0
+              ],
+              "d": [
+                -0.8660254037844387,
+                -0.5000000000000001,
+                -0.0
+              ],
+              "s": 18.849555921538762,
+              "t": 1
+            }
+          },
+          {
+            "name": "E[158fc4b0-4197-4c13-978c-4265f2bd760d:end|ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53:side(e1e1842d-6290-4f9a-9a49-f268542f8004/c6e704f3-438b-40bb-8add-d01531ee30c7)]",
+            "sig": {
+              "c": [
+                30.0,
+                2.5905203907920316e-16,
+                8.0
+              ],
+              "d": [
+                -1.2246467991473532e-16,
+                -1.0,
+                0.0
+              ],
+              "s": 18.849555921538762,
+              "t": 1
+            }
+          },
+          {
+            "name": "E[158fc4b0-4197-4c13-978c-4265f2bd760d:end|pattern_circ(33b70415-4e0c-4606-9dbb-c857111606c2,3,ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53:side(e1e1842d-6290-4f9a-9a49-f268542f8004/c6e704f3-438b-40bb-8add-d01531ee30c7))]",
+            "sig": {
+              "c": [
+                -30.0,
+                3.589721112954672e-15,
+                8.0
+              ],
+              "d": [
+                2.4492935982947064e-16,
+                1.0,
+                -0.0
+              ],
+              "s": 18.849555921538762,
+              "t": 1
+            }
+          },
+          {
+            "name": "E[158fc4b0-4197-4c13-978c-4265f2bd760d:end|pattern_circ(33b70415-4e0c-4606-9dbb-c857111606c2,2,ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53:side(e1e1842d-6290-4f9a-9a49-f268542f8004/c6e704f3-438b-40bb-8add-d01531ee30c7))]",
+            "sig": {
+              "c": [
+                -15.0,
+                25.980762113533167,
+                8.0
+              ],
+              "d": [
+                0.8660254037844388,
+                0.4999999999999998,
+                -0.0
+              ],
+              "s": 18.849555921538762,
+              "t": 1
+            }
+          },
+          {
+            "name": "E[158fc4b0-4197-4c13-978c-4265f2bd760d:end|pattern_circ(33b70415-4e0c-4606-9dbb-c857111606c2,1,ed3bd6e7-08a6-4e0a-8c46-d9f5d4509c53:side(e1e1842d-6290-4f9a-9a49-f268542f8004/c6e704f3-438b-40bb-8add-d01531ee30c7))]",
+            "sig": {
+              "c": [
+                15.000000000000007,
+                25.980762113533167,
+                8.0
+              ],
+              "d": [
+                0.8660254037844386,
+                -0.5000000000000001,
+                -0.0
+              ],
+              "s": 18.849555921538762,
+              "t": 1
+            }
+          }
+        ],
+        "value": 0.6
+      },
+      "type": "Chamfer"
+    }
+  ],
+  "format": "silex",
+  "marker": 8,
+  "schema_version": "0.2",
+  "version": 2
+}

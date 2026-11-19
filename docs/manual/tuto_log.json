@@ -1,0 +1,146 @@
+[
+ {
+  "step": 1,
+  "title": "Semelle : rectangle 40 × 85 extrudé de 10 mm",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_01.png",
+  "volume": 34000.0,
+  "valid": true
+ },
+ {
+  "step": 2,
+  "title": "Rail avant : rectangle 70 × 20 extrudé de 15 mm (Joindre)",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_02.png",
+  "volume": 47000.0,
+  "valid": true
+ },
+ {
+  "step": 3,
+  "title": "Chanfrein de 5 mm sur l'arête avant du rail",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_03.png",
+  "volume": 46125.0,
+  "valid": true
+ },
+ {
+  "step": 4,
+  "title": "Montant : rectangle 40 × 20 extrudé de 65 mm (Joindre)",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_04.png",
+  "volume": 90125.0,
+  "valid": true
+ },
+ {
+  "step": 5,
+  "title": "Renfort : esquisse sur le dessus de la semelle, extrudé de 15 mm",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_05.png",
+  "volume": 96125.0,
+  "valid": true
+ },
+ {
+  "step": 6,
+  "title": "Perçage Ø20 : cercle sur la semelle, extrusion « Couper » de 10 mm",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_06.png",
+  "volume": 92983.41,
+  "valid": true
+ },
+ {
+  "step": 7,
+  "title": "Deux trous Ø10 (entraxe 20) sur la face avant du montant",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_07.png",
+  "volume": 89841.81,
+  "valid": true
+ },
+ {
+  "step": 8,
+  "title": "Congés R10 sur les deux arêtes hautes du montant",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_08.png",
+  "volume": 88983.41,
+  "valid": true
+ },
+ {
+  "step": 9,
+  "title": "Vue de face",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_09.png",
+  "volume": 88983.41,
+  "valid": true
+ },
+ {
+  "step": 10,
+  "title": "Modification : le perçage passe de Ø20 à Ø26, tout le reste suit",
+  "image": "C:\\Projects\\Silex\\docs\\manual\\img\\step_10.png",
+  "volume": 86815.71,
+  "valid": true
+ },
+ {
+  "timeline": [
+   [
+    "Esquisse semelle",
+    "Sketch",
+    "OK"
+   ],
+   [
+    "Extrude1",
+    "Extrude",
+    "OK"
+   ],
+   [
+    "Esquisse rail",
+    "Sketch",
+    "OK"
+   ],
+   [
+    "Extrude2",
+    "Extrude",
+    "OK"
+   ],
+   [
+    "Chamfer1",
+    "Chamfer",
+    "OK"
+   ],
+   [
+    "Esquisse montant",
+    "Sketch",
+    "OK"
+   ],
+   [
+    "Extrude3",
+    "Extrude",
+    "OK"
+   ],
+   [
+    "Esquisse renfort",
+    "Sketch",
+    "OK"
+   ],
+   [
+    "Extrude4",
+    "Extrude",
+    "OK"
+   ],
+   [
+    "Esquisse perçage Ø20",
+    "Sketch",
+    "OK"
+   ],
+   [
+    "Extrude5",
+    "Extrude",
+    "OK"
+   ],
+   [
+    "Esquisse trous Ø10",
+    "Sketch",
+    "OK"
+   ],
+   [
+    "Extrude6",
+    "Extrude",
+    "OK"
+   ],
+   [
+    "Fillet1",
+    "Fillet",
+    "OK"
+   ]
+  ]
+ }
+]
