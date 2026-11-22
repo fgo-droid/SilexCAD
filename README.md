@@ -12,7 +12,11 @@ Dessine, cote, imprime. Change une cote, tout suit.
 deux micro HDMI, la prise audio et la carte micro SD, entretoises, couvercle ventilé avec logo gravé.
 À ouvrir dans [`examples/boitier_raspberry_pi4.silex`](examples/boitier_raspberry_pi4.silex).*
 
-[Découvrir](#ce-que-tu-peux-faire-avec-silex) · [Installer](#installer-silex) · [Manuel utilisateur](docs/manual/Silex_Manuel_utilisateur.docx) · [Guide technique](docs/DEVELOPPEMENT.md)
+### [⬇️ Télécharger Silex 0.7 pour Windows](https://github.com/fgo-droid/SilexCAD/releases/download/v0.7.0/Silex-0.7.0-windows-x64.zip)
+
+*Gratuit · 48 Mo · rien à installer · Windows 10 et 11 (64 bits)*
+
+[Découvrir](#ce-que-tu-peux-faire-avec-silex) · [Installer](#installer-silex) · [Toutes les versions](https://github.com/fgo-droid/SilexCAD/releases) · [Manuel utilisateur](docs/manual/Silex_Manuel_utilisateur.docx) · [Guide technique](docs/DEVELOPPEMENT.md)
 
 </div>
 
@@ -95,9 +99,13 @@ Arduino…), import de fichiers STEP de fabricants.
 
 Silex fonctionne sous **Windows 10 et 11 (64 bits)**.
 
-1. Récupère le dossier de Silex (environ 120 Mo) et copie-le où tu veux. Pour l'instant, il faut le compiler
-   soi-même : voir le [guide technique](docs/DEVELOPPEMENT.md#compilation-windows).
-2. Double-clique sur `silex.exe`. C'est tout.
+1. Télécharge [**Silex-0.7.0-windows-x64.zip**](https://github.com/fgo-droid/SilexCAD/releases/download/v0.7.0/Silex-0.7.0-windows-x64.zip)
+   (48 Mo). Les autres versions et leurs notes sont sur la page [Releases](https://github.com/fgo-droid/SilexCAD/releases).
+2. Décompresse-le où tu veux : bureau, `C:\Silex`, clé USB…
+3. Double-clique sur `silex.exe`. C'est tout.
+
+Au premier lancement, Windows SmartScreen peut afficher « Windows a protégé votre ordinateur », parce que
+`silex.exe` n'est pas signé numériquement : clique sur *Informations complémentaires* puis *Exécuter quand même*.
 
 Si Windows signale qu'il manque `MSVCP140.dll`, installe le *Visual C++ Redistributable* de Microsoft :
 
