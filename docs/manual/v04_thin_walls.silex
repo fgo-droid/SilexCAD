@@ -1,0 +1,72 @@
+{
+  "features": [
+    {
+      "id": "351ac091-ff07-4245-8494-96a064696a98",
+      "name": "Box1",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 25.0,
+        "length": 60.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 40.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "add29d52-b70b-44ce-85c4-45a5ca216162",
+      "name": "Shell1",
+      "params": {
+        "body": "351ac091-ff07-4245-8494-96a064696a98",
+        "outward": false,
+        "removedFaces": [
+          {
+            "name": "351ac091-ff07-4245-8494-96a064696a98:top",
+            "sig": {
+              "c": [
+                -6.522560269672795e-16,
+                7.105427357601002e-16,
+                25.0
+              ],
+              "d": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "s": 2400.0,
+              "t": 0
+            }
+          }
+        ],
+        "thickness": 0.5
+      },
+      "type": "Shell"
+    },
+    {
+      "id": "9f4907c1-aae8-4590-99eb-1401deac8259",
+      "name": "Box2",
+      "params": {
+        "centerX": 50.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 25.0,
+        "length": 20.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 40.0
+      },
+      "type": "Box"
+    }
+  ],
+  "format": "silex",
+  "marker": 3,
+  "parameters": [],
+  "schema_version": "0.4",
+  "version": 4
+}

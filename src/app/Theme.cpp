@@ -1,5 +1,7 @@
 #include "Theme.h"
 
+#include <QPainter>
+
 #include <QApplication>
 #include <QPalette>
 #include <QStyleFactory>
@@ -46,6 +48,26 @@ void applyDarkTheme(QApplication& app)
         QMenu { background: #2b2e34; border: 1px solid #454a52; }
         QMenu::item:selected { background: #1f5f99; }
     )");
+}
+
+namespace {
+bool g_essential = false;
+}
+bool essentialUi() { return g_essential; }
+void setEssentialUi(bool on) { g_essential = on; }
+
+void paintSelectionBox(QPainter& p, const QPointF& from, const QPointF& to)
+{
+    const bool crossing = to.x() < from.x();
+    const QColor c = crossing ? QColor(0x4c, 0xd9, 0x7b) : QColor(0x2f, 0x9b, 0xff);
+    QColor fill = c;
+    fill.setAlpha(45);
+    p.save();
+    p.setRenderHint(QPainter::Antialiasing, false);
+    p.setPen(QPen(c, 1.2, crossing ? Qt::DashLine : Qt::SolidLine));
+    p.setBrush(fill);
+    p.drawRect(QRectF(from, to).normalized());
+    p.restore();
 }
 
 }  // namespace silex::ui

@@ -1,0 +1,237 @@
+{
+  "id": "palier",
+  "order": 7,
+  "title": {
+    "fr": "Parcours 7 — Le support de roulement à semelle",
+    "en": "Path 7 — The pillow block bearing"
+  },
+  "level": {
+    "fr": "Intermédiaire",
+    "en": "Intermediate"
+  },
+  "level_rank": 1,
+  "minutes": 25,
+  "intro": {
+    "fr": "Une pièce industrielle emblématique : on modélise une moitié puis on la symétrise, avec des trous oblongs de réglage et un logement de roulement concentrique.",
+    "en": "An iconic industrial part: model one half then mirror it, with adjustment slots and a concentric bearing seat."
+  },
+  "example": "palier_semelle",
+  "steps": [
+    {
+      "title": {
+        "fr": "La demi-semelle",
+        "en": "The half base"
+      },
+      "goal": {
+        "fr": "Crée la moitié droite de la semelle : 45 × 30 × 10 mm, côté X positif (Maj+B).",
+        "en": "Create the right half of the base: 45 × 30 × 10 mm, on the positive X side (Shift+B)."
+      },
+      "hint": {
+        "tool": "Box",
+        "text": {
+          "fr": "Maj+B, longueur 45, centre X = 22,5.",
+          "en": "Shift+B, length 45, center X = 22.5."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Box"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude"
+            }
+          ],
+          "label": {
+            "fr": "Une semelle",
+            "en": "A base"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le corps du palier",
+        "en": "The housing"
+      },
+      "goal": {
+        "fr": "Ajoute le pied (Join) et le corps cylindrique Ø44, axe Y, centré sur l'axe Z.",
+        "en": "Add the pedestal (Join) and the Ø44 cylindrical housing, Y axis, centered on the Z axis."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y sur XZ, centre (0 ; 30), Ø44, Join.",
+          "en": "Shift+Y on XZ, center (0; 30), Ø44, Join."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Join"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Join"
+            },
+            {
+              "type": "feature",
+              "feature": "Revolve"
+            }
+          ],
+          "label": {
+            "fr": "Un corps de palier (Join)",
+            "en": "A housing (Join)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le trou oblong",
+        "en": "The slot"
+      },
+      "goal": {
+        "fr": "Esquisse une oblongue (U) sur la semelle et enlève-la : elle laisse un réglage au montage.",
+        "en": "Sketch a slot (U) on the base and cut it: it leaves some adjustment at assembly."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S sur le dessus de la semelle, U, E Cut à travers.",
+          "en": "S on top of the base, U, E Cut through."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "op": "Cut",
+          "label": {
+            "fr": "Un oblong (Cut)",
+            "en": "A slot (Cut)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La symétrie",
+        "en": "The mirror"
+      },
+      "goal": {
+        "fr": "Symétrise la pièce par le plan YZ (Mirror) : l'oblong est copié avec elle.",
+        "en": "Mirror the part across the YZ plane: the slot is copied with it."
+      },
+      "hint": {
+        "tool": "Mirror",
+        "text": {
+          "fr": "Pattern ▾ > Mirror, plan YZ, fusionner.",
+          "en": "Pattern ▾ > Mirror, YZ plane, merge."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Mirror",
+          "label": {
+            "fr": "Une symétrie",
+            "en": "A mirror"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le logement concentrique",
+        "en": "The concentric seat"
+      },
+      "goal": {
+        "fr": "Esquisse le logement Ø26 du roulement, rendu concentrique (O) au corps Ø44, puis enlève-le.",
+        "en": "Sketch the Ø26 bearing seat, made concentric (O) with the Ø44 housing, then cut it."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S sur la face avant, deux cercles, O pour les rendre concentriques, D = 26.",
+          "en": "S on the front face, two circles, O to make them concentric, D = 26."
+        }
+      },
+      "criteria": [
+        {
+          "type": "sketch_constraint",
+          "kind": "Concentric",
+          "label": {
+            "fr": "Contrainte concentrique (O)",
+            "en": "Concentric constraint (O)"
+          }
+        },
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "op": "Cut",
+          "min": 2,
+          "label": {
+            "fr": "Le logement est enlevé",
+            "en": "The seat is cut"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le trou de graissage",
+        "en": "The grease hole"
+      },
+      "goal": {
+        "fr": "Perce un petit trou Ø4 sur le dessus, jusque dans le logement.",
+        "en": "Drill a small Ø4 hole on top, down into the seat."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y sur le dessus, Ø4, Cut.",
+          "en": "Shift+Y on top, Ø4, Cut."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Cut"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Cut",
+              "min": 3
+            }
+          ],
+          "label": {
+            "fr": "Un trou de graissage",
+            "en": "A grease hole"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    }
+  ]
+}

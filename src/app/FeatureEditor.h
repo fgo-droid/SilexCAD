@@ -1,9 +1,11 @@
 #pragma once
-// Editing session for Extrude / Revolve / Fillet / Chamfer: selection-driven parameters,
+// Editing session for Extrude / Revolve / Fillet / Chamfer / Shell / Combine and the direct
+// modelling steps (Press / Pull on a face, Box, Cylinder): selection-driven parameters,
 // live transparent preview (recomputed asynchronously, cancellable) and a direct
 // manipulation handle for the extrusion distance.
 
 #include <QPointer>
+#include <map>
 #include <optional>
 #include <set>
 #include <string>
@@ -14,6 +16,7 @@
 
 class QComboBox;
 class QDoubleSpinBox;
+namespace silex::ui { class ExprSpinBox; }
 class QLabel;
 
 namespace silex::ui {
@@ -39,12 +42,20 @@ public:
     std::vector<MenuAction> menuActions() override;
     Uuid editedFeature() const override { return m_existing ? m_id : Uuid{}; }
     std::set<Uuid> sketchesInUse() const override;
+    /// Press / Pull (Q) with nothing selected: a closed profile hands over to Extrude, a planar
+    /// face is pushed / pulled directly.
+    void setPressPullMode(bool on) { m_pressPull = on; }
 
 private:
     bool isProfileBased() const;
     bool isBlend() const;
     bool isCombine() const;
     bool isShell() const;
+    bool isOffsetFace() const;
+    bool isPrimitive() const;
+    Placement primitivePlane() const;
+    std::vector<TopoRef> highlightedFaces() const;
+    std::string valuePointer() const;  ///< JSON pointer of the main numeric field
     QString bodyName(const Uuid& id) const;
     FeaturePtr buildNode() const;
     DocState previewDoc() const;
@@ -72,6 +83,14 @@ private:
     BooleanOp m_op = BooleanOp::NewBody;
     std::string m_axis = "Y";
     bool m_autoPickPending = false;
+    // direct modelling
+    TopoRef m_face;                            ///< Press / Pull: the face
+    Uuid m_faceBody;
+    bool m_pressPull = false;
+    PrimitiveParams m_prim;                    ///< Box / Cylinder (height & op live in m_value / m_op)
+    std::map<std::string, std::string> m_exprs;  ///< expressions of the secondary fields (JSON pointer)
+    QPointer<QComboBox> m_planeBox;
+    QPointer<QLabel> m_opInfo;
 
     // gizmo drag
     bool m_dragging = false;
@@ -80,7 +99,8 @@ private:
     double m_dragStartT = 0;
 
     QPointer<QLabel> m_selLabel;
-    QPointer<QDoubleSpinBox> m_valueBox;
+    QPointer<ExprSpinBox> m_valueBox;
+    std::string m_valueExpr;  ///< v0.3: expression bound to the main value ("" = literal)
     QPointer<QComboBox> m_opBox;
     QPointer<QComboBox> m_dirBox;
     QPointer<QComboBox> m_axisBox;

@@ -1,0 +1,889 @@
+{
+  "features": [
+    {
+      "id": "b6ab9423-fbb1-4b79-9c52-ef13d54604a4",
+      "name": "Profil_C",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a",
+                1
+              ],
+              "b": [
+                "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+                1
+              ],
+              "id": "63cc97e5-9f95-4e94-83cb-5b31fc9c2de6",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a",
+                2
+              ],
+              "b": [
+                "b5ae3125-9a36-47bc-93b7-4f53a7788512",
+                2
+              ],
+              "id": "22b36c79-9d22-4b53-af22-394092e9d614",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "b5ae3125-9a36-47bc-93b7-4f53a7788512",
+                0
+              ],
+              "b": [
+                "7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a",
+                0
+              ],
+              "id": "ab4b0b70-aa70-42f4-b4fe-4d6384d82d8d",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+                0
+              ],
+              "b": [
+                "7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a",
+                0
+              ],
+              "id": "f4b15cf6-24cf-4aad-84d4-689eac16e9fc",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a",
+                0
+              ],
+              "id": "49dd56be-04d8-47a0-814e-c7a5cabff8a4",
+              "kind": "Radius",
+              "value": 5.0
+            },
+            {
+              "a": [
+                "0df219bf-f668-42aa-9bda-d5e91f263a92",
+                1
+              ],
+              "b": [
+                "151f6885-afe6-4c24-8370-80fa77a8a2eb",
+                1
+              ],
+              "id": "4d5c5c40-a3d2-4a3f-913b-b8e7837f0309",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "0df219bf-f668-42aa-9bda-d5e91f263a92",
+                2
+              ],
+              "b": [
+                "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+                2
+              ],
+              "id": "8a600033-ad13-4ae6-a183-e1aba2928348",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+                0
+              ],
+              "b": [
+                "0df219bf-f668-42aa-9bda-d5e91f263a92",
+                0
+              ],
+              "id": "5ed9c433-e312-4f4f-8c2b-20e0265db14a",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "151f6885-afe6-4c24-8370-80fa77a8a2eb",
+                0
+              ],
+              "b": [
+                "0df219bf-f668-42aa-9bda-d5e91f263a92",
+                0
+              ],
+              "id": "79171b6c-62ab-4c35-b3e6-a3f623e92bf4",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "0df219bf-f668-42aa-9bda-d5e91f263a92",
+                0
+              ],
+              "id": "f6ff7855-ca85-47dd-bdac-c17d761b44fb",
+              "kind": "Radius",
+              "value": 5.0
+            },
+            {
+              "a": [
+                "c6aeb7b5-18d8-4fba-a25f-4536425cec95",
+                1
+              ],
+              "b": [
+                "16b6e340-8769-43a4-a24e-b395bc4997dd",
+                2
+              ],
+              "id": "78ebb820-b176-4e9c-b4bb-1a29ee5fcd88",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "c6aeb7b5-18d8-4fba-a25f-4536425cec95",
+                2
+              ],
+              "b": [
+                "42c02278-32b3-4a2b-abf9-997fe2b4cc8e",
+                1
+              ],
+              "id": "5e32a867-05d1-4440-8f50-4d56f997d551",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "16b6e340-8769-43a4-a24e-b395bc4997dd",
+                0
+              ],
+              "b": [
+                "c6aeb7b5-18d8-4fba-a25f-4536425cec95",
+                0
+              ],
+              "id": "f2119429-ad67-4832-9c87-2e176e4527cd",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "42c02278-32b3-4a2b-abf9-997fe2b4cc8e",
+                0
+              ],
+              "b": [
+                "c6aeb7b5-18d8-4fba-a25f-4536425cec95",
+                0
+              ],
+              "id": "ebf0efdf-d024-4ded-8fe3-8a393c30ca22",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "c6aeb7b5-18d8-4fba-a25f-4536425cec95",
+                0
+              ],
+              "id": "18943f0a-ec11-4cc9-85be-a868c69b04e6",
+              "kind": "Radius",
+              "value": 8.0
+            },
+            {
+              "a": [
+                "87d3567c-43c3-44da-9c85-1f4903944549",
+                1
+              ],
+              "b": [
+                "d33501f6-6460-487a-ae40-c8893d6e8050",
+                2
+              ],
+              "id": "13741024-a28c-40b1-a5d4-fd449305ac17",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "87d3567c-43c3-44da-9c85-1f4903944549",
+                2
+              ],
+              "b": [
+                "16b6e340-8769-43a4-a24e-b395bc4997dd",
+                1
+              ],
+              "id": "3a94dea1-1d83-4eff-bec9-95e9ac0e4d7c",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d33501f6-6460-487a-ae40-c8893d6e8050",
+                0
+              ],
+              "b": [
+                "87d3567c-43c3-44da-9c85-1f4903944549",
+                0
+              ],
+              "id": "92ec3baf-9efc-4371-8e4f-8279e417f335",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "16b6e340-8769-43a4-a24e-b395bc4997dd",
+                0
+              ],
+              "b": [
+                "87d3567c-43c3-44da-9c85-1f4903944549",
+                0
+              ],
+              "id": "6f98ceb0-a96c-478f-bc46-0e6959091c4c",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "87d3567c-43c3-44da-9c85-1f4903944549",
+                0
+              ],
+              "id": "b3ffe381-f310-426c-b392-7f98ce0f5ee1",
+              "kind": "Radius",
+              "value": 8.0
+            },
+            {
+              "a": [
+                "42c02278-32b3-4a2b-abf9-997fe2b4cc8e",
+                2
+              ],
+              "b": [
+                "d7930a6c-3fc9-4ed9-b2a0-b4a9d24b233d",
+                1
+              ],
+              "id": "cf3ad1d5-61b8-4631-9e6a-64c820a24795",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d7930a6c-3fc9-4ed9-b2a0-b4a9d24b233d",
+                2
+              ],
+              "b": [
+                "b5ae3125-9a36-47bc-93b7-4f53a7788512",
+                1
+              ],
+              "id": "1ef48cb3-450a-47f5-ac03-41faeb2245c3",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "151f6885-afe6-4c24-8370-80fa77a8a2eb",
+                2
+              ],
+              "b": [
+                "5b2cc126-6466-414e-9106-19acf6c5d822",
+                1
+              ],
+              "id": "719e547b-9e03-41f2-b93d-c2d0f390f18f",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "5b2cc126-6466-414e-9106-19acf6c5d822",
+                2
+              ],
+              "b": [
+                "d33501f6-6460-487a-ae40-c8893d6e8050",
+                1
+              ],
+              "id": "3049b5f8-c0ed-40c5-874d-03dfbcb465b5",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "42c02278-32b3-4a2b-abf9-997fe2b4cc8e",
+                0
+              ],
+              "id": "be2bf80c-710e-4784-86e1-e8318a72f115",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "d7930a6c-3fc9-4ed9-b2a0-b4a9d24b233d",
+                0
+              ],
+              "id": "676bdc4e-8eed-4493-bca3-31a2cde9491d",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "b5ae3125-9a36-47bc-93b7-4f53a7788512",
+                0
+              ],
+              "id": "ccbe6717-09bf-4b21-a87b-1abbf6b21306",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+                0
+              ],
+              "id": "a514b5d1-08a2-43eb-a087-267fc13a73d6",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "151f6885-afe6-4c24-8370-80fa77a8a2eb",
+                0
+              ],
+              "id": "7b3ef11b-0ced-474f-89d7-5a22132dff94",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "5b2cc126-6466-414e-9106-19acf6c5d822",
+                0
+              ],
+              "id": "18f09be2-07d2-4033-8ef2-3e8b0fb1993f",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "d33501f6-6460-487a-ae40-c8893d6e8050",
+                0
+              ],
+              "id": "a237fa16-52c4-47c6-bae4-59e272e27fdf",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "16b6e340-8769-43a4-a24e-b395bc4997dd",
+                0
+              ],
+              "id": "42caeb5c-ca82-4a68-9cec-fa765e8f179e",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "42c02278-32b3-4a2b-abf9-997fe2b4cc8e",
+                1
+              ],
+              "id": "9a53c0a0-90dc-4ded-8596-e50312cc584d",
+              "kind": "DistanceY",
+              "value": -1.7763568394002505e-15
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "d7930a6c-3fc9-4ed9-b2a0-b4a9d24b233d",
+                1
+              ],
+              "id": "f54038fd-171f-44d3-94b1-d798bedb6a92",
+              "kind": "DistanceX",
+              "value": 60.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "b5ae3125-9a36-47bc-93b7-4f53a7788512",
+                1
+              ],
+              "id": "67faa1ea-11d4-4999-bc06-d06102c9e2c4",
+              "kind": "DistanceY",
+              "value": 15.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+                1
+              ],
+              "id": "c2f44d71-12e8-4374-a358-214bf2a4dbf5",
+              "kind": "DistanceX",
+              "value": 15.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "151f6885-afe6-4c24-8370-80fa77a8a2eb",
+                1
+              ],
+              "id": "c5db94dc-fd01-41ca-a747-bd5f114cf7f8",
+              "kind": "DistanceY",
+              "value": 65.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "5b2cc126-6466-414e-9106-19acf6c5d822",
+                1
+              ],
+              "id": "ca84c755-f0e4-4ebc-b19e-905542c7a606",
+              "kind": "DistanceX",
+              "value": 60.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "d33501f6-6460-487a-ae40-c8893d6e8050",
+                1
+              ],
+              "id": "0b2c967c-ac9c-4f33-a935-7e5da7318daf",
+              "kind": "DistanceY",
+              "value": 80.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "16b6e340-8769-43a4-a24e-b395bc4997dd",
+                1
+              ],
+              "id": "ef60b721-aed2-445b-844e-dff5f7a1f62e",
+              "kind": "DistanceX",
+              "value": -1.7763568394002505e-15
+            }
+          ],
+          "geos": [
+            {
+              "id": "42c02278-32b3-4a2b-abf9-997fe2b4cc8e",
+              "kind": "Line",
+              "p1": [
+                7.9999999999999964,
+                -1.7763568394002505e-15
+              ],
+              "p2": [
+                60.0,
+                -1.7763568394002505e-15
+              ]
+            },
+            {
+              "id": "d7930a6c-3fc9-4ed9-b2a0-b4a9d24b233d",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                -1.7763568394002505e-15
+              ],
+              "p2": [
+                60.0,
+                15.0
+              ]
+            },
+            {
+              "id": "b5ae3125-9a36-47bc-93b7-4f53a7788512",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                15.0
+              ],
+              "p2": [
+                20.0,
+                15.0
+              ]
+            },
+            {
+              "id": "248b915a-ecfc-4ab8-a4b9-ae817203b966",
+              "kind": "Line",
+              "p1": [
+                15.0,
+                20.0
+              ],
+              "p2": [
+                15.0,
+                60.0
+              ]
+            },
+            {
+              "id": "151f6885-afe6-4c24-8370-80fa77a8a2eb",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                65.0
+              ],
+              "p2": [
+                60.0,
+                65.0
+              ]
+            },
+            {
+              "id": "5b2cc126-6466-414e-9106-19acf6c5d822",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                65.0
+              ],
+              "p2": [
+                60.0,
+                80.0
+              ]
+            },
+            {
+              "id": "d33501f6-6460-487a-ae40-c8893d6e8050",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                80.0
+              ],
+              "p2": [
+                8.000000000000002,
+                80.0
+              ]
+            },
+            {
+              "id": "16b6e340-8769-43a4-a24e-b395bc4997dd",
+              "kind": "Line",
+              "p1": [
+                -1.7763568394002505e-15,
+                72.0
+              ],
+              "p2": [
+                -1.7763568394002505e-15,
+                8.000000000000004
+              ]
+            },
+            {
+              "a0": 3.141592653589793,
+              "a1": 4.71238898038469,
+              "c": [
+                20.0,
+                20.0
+              ],
+              "id": "7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a",
+              "kind": "Arc",
+              "r": 5.0
+            },
+            {
+              "a0": 1.5707963267948966,
+              "a1": 3.141592653589793,
+              "c": [
+                20.0,
+                60.0
+              ],
+              "id": "0df219bf-f668-42aa-9bda-d5e91f263a92",
+              "kind": "Arc",
+              "r": 5.0
+            },
+            {
+              "a0": 3.1415926535897927,
+              "a1": 4.71238898038469,
+              "c": [
+                7.999999999999998,
+                7.999999999999998
+              ],
+              "id": "c6aeb7b5-18d8-4fba-a25f-4536425cec95",
+              "kind": "Arc",
+              "r": 8.0
+            },
+            {
+              "a0": 1.5707963267948961,
+              "a1": 3.141592653589793,
+              "c": [
+                7.999999999999998,
+                72.0
+              ],
+              "id": "87d3567c-43c3-44da-9c85-1f4903944549",
+              "kind": "Arc",
+              "r": 8.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Le profil en C : un seul contour fermé. Les congés 2D (Maj+F) dans les angles intérieurs évitent la concentration de contraintes.",
+      "annotation_en": "The C profile: one closed contour. 2D fillets (Shift+F) in the inner corners avoid stress concentration."
+    },
+    {
+      "id": "d028ab78-b623-42c3-b8e2-6f68158943d4",
+      "name": "Extrude1",
+      "params": {
+        "distance": 12.0,
+        "op": "NewBody",
+        "profile": {
+          "regions": [
+            "0df219bf-f668-42aa-9bda-d5e91f263a92,151f6885-afe6-4c24-8370-80fa77a8a2eb,16b6e340-8769-43a4-a24e-b395bc4997dd,248b915a-ecfc-4ab8-a4b9-ae817203b966,42c02278-32b3-4a2b-abf9-997fe2b4cc8e,5b2cc126-6466-414e-9106-19acf6c5d822,7a1d30ae-c68f-4bd4-96c5-062e8e9b6c0a,87d3567c-43c3-44da-9c85-1f4903944549,b5ae3125-9a36-47bc-93b7-4f53a7788512,c6aeb7b5-18d8-4fba-a25f-4536425cec95,d33501f6-6460-487a-ae40-c8893d6e8050,d7930a6c-3fc9-4ed9-b2a0-b4a9d24b233d"
+          ],
+          "sketch": "b6ab9423-fbb1-4b79-9c52-ef13d54604a4"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude",
+      "annotation": "12 mm d'épaisseur : le cadre doit rester rigide quand on serre.",
+      "annotation_en": "12 mm thick: the frame must stay stiff when clamping."
+    },
+    {
+      "id": "d98d6db7-e8ed-4514-ac4e-5807f00af9ff",
+      "name": "Nervure_bas",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 6.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "a74244d2-98ac-48d0-9394-95923cdf6851",
+                1
+              ],
+              "id": "a00a8b17-fa48-4df6-91fb-d684e10247d9",
+              "kind": "DistanceX",
+              "value": 15.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "a74244d2-98ac-48d0-9394-95923cdf6851",
+                1
+              ],
+              "id": "73d0c038-e25c-4a3a-9d62-6e5953f4f8c3",
+              "kind": "DistanceY",
+              "value": 32.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "a74244d2-98ac-48d0-9394-95923cdf6851",
+                2
+              ],
+              "id": "0fc0671e-7ae6-4989-9f7e-1d7e4ccc1e02",
+              "kind": "DistanceX",
+              "value": 32.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "a74244d2-98ac-48d0-9394-95923cdf6851",
+                2
+              ],
+              "id": "0e5bb3d6-774d-4ee6-b224-949f29fe1731",
+              "kind": "DistanceY",
+              "value": 15.0
+            }
+          ],
+          "geos": [
+            {
+              "id": "a74244d2-98ac-48d0-9394-95923cdf6851",
+              "kind": "Line",
+              "p1": [
+                15.0,
+                32.0
+              ],
+              "p2": [
+                32.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Une simple ligne sur le plan milieu (Z = 6) : la nervure (Rib) remplit jusqu'aux parois et forme un T qui rigidifie l'angle.",
+      "annotation_en": "A simple line on the mid plane (Z = 6): the rib fills up to the walls and forms a T that stiffens the corner."
+    },
+    {
+      "id": "4863eede-e643-49ee-b8f5-6a79682fe87b",
+      "name": "Rib1",
+      "params": {
+        "body": "d028ab78-b623-42c3-b8e2-6f68158943d4",
+        "sketch": "d98d6db7-e8ed-4514-ac4e-5807f00af9ff",
+        "thickness": 4.0
+      },
+      "type": "Rib"
+    },
+    {
+      "id": "4a6442eb-3b62-4d0d-ab99-732dd55c87a8",
+      "name": "Nervure_haut",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 6.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "7036e341-ba54-43f0-bc63-42bdeba3f8fc",
+                1
+              ],
+              "id": "32781c60-9f27-459b-b5bd-1a0f866ff5ec",
+              "kind": "DistanceX",
+              "value": 15.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "7036e341-ba54-43f0-bc63-42bdeba3f8fc",
+                1
+              ],
+              "id": "4e01b0a7-1fcc-444b-937b-47d5be916ed4",
+              "kind": "DistanceY",
+              "value": 48.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "7036e341-ba54-43f0-bc63-42bdeba3f8fc",
+                2
+              ],
+              "id": "c6c1eb97-d26a-4077-ba9d-ff543294001a",
+              "kind": "DistanceX",
+              "value": 32.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "7036e341-ba54-43f0-bc63-42bdeba3f8fc",
+                2
+              ],
+              "id": "868f7d16-cf18-4f94-b15f-e81e1045432c",
+              "kind": "DistanceY",
+              "value": 65.0
+            }
+          ],
+          "geos": [
+            {
+              "id": "7036e341-ba54-43f0-bc63-42bdeba3f8fc",
+              "kind": "Line",
+              "p1": [
+                15.0,
+                48.0
+              ],
+              "p2": [
+                32.0,
+                65.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "6c306b41-19ff-4095-a409-5c7fdd25606f",
+      "name": "Rib2",
+      "params": {
+        "body": "d028ab78-b623-42c3-b8e2-6f68158943d4",
+        "sketch": "4a6442eb-3b62-4d0d-ab99-732dd55c87a8",
+        "thickness": 4.0
+      },
+      "type": "Rib"
+    },
+    {
+      "id": "46e6325e-afbd-4612-b15d-94512c36773d",
+      "name": "Cylinder1",
+      "params": {
+        "centerX": 45.0,
+        "centerY": 6.0,
+        "diameter": 18.0,
+        "height": 25.0,
+        "length": 20.0,
+        "op": "Join",
+        "plane": {
+          "kind": "XZ",
+          "offset": -85.0
+        },
+        "targetBody": "d028ab78-b623-42c3-b8e2-6f68158943d4",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "Le bossage Ø18 donne assez de matière autour du taraudage.",
+      "annotation_en": "The Ø18 boss leaves enough material around the tapped hole."
+    },
+    {
+      "id": "cc429cf3-5ba5-4a19-86f8-09fe23e785cf",
+      "name": "Cylinder2",
+      "params": {
+        "centerX": 45.0,
+        "centerY": 6.0,
+        "diameter": 6.8,
+        "height": 25.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "XZ",
+          "offset": -85.0
+        },
+        "targetBody": "d028ab78-b623-42c3-b8e2-6f68158943d4",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "Perçage au diamètre de taraudage : 6,8 mm pour du M8 (et non 8 mm !).",
+      "annotation_en": "Hole at the tap drill diameter: 6.8 mm for M8 (not 8 mm!)."
+    },
+    {
+      "id": "91342711-0bf6-414b-871e-1cd6c7700a81",
+      "name": "Thread1",
+      "params": {
+        "clearance": 0.15,
+        "face": {
+          "name": "cc429cf3-5ba5-4a19-86f8-09fe23e785cf:side",
+          "sig": {
+            "c": [
+              45.0,
+              72.5,
+              6.0
+            ],
+            "d": [
+              1.0,
+              -0.0,
+              -1.2246467991473532e-16
+            ],
+            "s": 534.0707511102648,
+            "t": 1
+          }
+        },
+        "fine": false,
+        "length": 0.0,
+        "modeled": true,
+        "pitch": 0.0,
+        "size": "M8"
+      },
+      "type": "Thread",
+      "annotation": "Taraudage M8 réel avec 0,15 mm de jeu FDM : la vis imprimée entrera sans forcer.",
+      "annotation_en": "Real M8 thread with 0.15 mm FDM clearance: the printed screw goes in without forcing."
+    }
+  ],
+  "format": "silex",
+  "marker": 9,
+  "parameters": [],
+  "schema_version": "0.4",
+  "version": 4
+}

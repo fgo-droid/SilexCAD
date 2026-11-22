@@ -1,0 +1,241 @@
+{
+  "id": "raccord",
+  "order": 8,
+  "title": {
+    "fr": "Parcours 8 — Le raccord de ventilation carré-rond",
+    "en": "Path 8 — The square-to-round duct adapter"
+  },
+  "level": {
+    "fr": "Avancé",
+    "en": "Advanced"
+  },
+  "level_rank": 2,
+  "minutes": 25,
+  "intro": {
+    "fr": "Un plan de construction décalé, un lissage d'un carré vers un cercle, une coque ouverte aux deux bouts et un contrôle d'imprimabilité.",
+    "en": "An offset construction plane, a loft from a square to a circle, a shell open at both ends and a printability check."
+  },
+  "example": "raccord_carre_rond",
+  "steps": [
+    {
+      "title": {
+        "fr": "Le plan de sortie",
+        "en": "The outlet plane"
+      },
+      "goal": {
+        "fr": "Crée un plan de construction décalé de 60 mm au-dessus de XY.",
+        "en": "Create a construction plane offset 60 mm above XY."
+      },
+      "hint": {
+        "tool": "Offset Plane",
+        "text": {
+          "fr": "Construct ▾ > Offset Plane, base XY, 60 mm.",
+          "en": "Construct ▾ > Offset Plane, base XY, 60 mm."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "ConstructionPlane",
+          "label": {
+            "fr": "Un plan de construction",
+            "en": "A construction plane"
+          }
+        },
+        {
+          "type": "feature_param",
+          "feature": "ConstructionPlane",
+          "pointer": "/base/offset",
+          "value": 60,
+          "tol": 0.01,
+          "label": {
+            "fr": "Décalé de 60 mm",
+            "en": "Offset by 60 mm"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "L'entrée carrée",
+        "en": "The square inlet"
+      },
+      "goal": {
+        "fr": "Sur XY, un rectangle par le centre (Maj+R) de 60 × 60, entièrement contraint.",
+        "en": "On XY, a 60 × 60 center rectangle (Shift+R), fully constrained."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S → XY, Maj+R depuis l'origine, D sur deux côtés.",
+          "en": "S → XY, Shift+R from the origin, D on two sides."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse",
+            "en": "A sketch"
+          }
+        },
+        {
+          "type": "sketch_dof",
+          "value": 0,
+          "label": {
+            "fr": "Entièrement contrainte",
+            "en": "Fully constrained"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La sortie ronde",
+        "en": "The round outlet"
+      },
+      "goal": {
+        "fr": "Sur le plan décalé, un cercle Ø40 centré, entièrement contraint.",
+        "en": "On the offset plane, a centered Ø40 circle, fully constrained."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "Clique le plan orange puis S, C depuis le centre, D = 40.",
+          "en": "Click the orange plane then S, C from the center, D = 40."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "min": 2,
+          "label": {
+            "fr": "Deux esquisses",
+            "en": "Two sketches"
+          }
+        },
+        {
+          "type": "sketch_dof",
+          "value": 0,
+          "label": {
+            "fr": "Entièrement contrainte",
+            "en": "Fully constrained"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le lissage",
+        "en": "The loft"
+      },
+      "goal": {
+        "fr": "Relie le carré au cercle par un lissage (Maj+L).",
+        "en": "Connect the square to the circle with a loft (Shift+L)."
+      },
+      "hint": {
+        "tool": "Loft",
+        "text": {
+          "fr": "Maj+L, clique les deux profils dans l'ordre.",
+          "en": "Shift+L, click both profiles in order."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Loft",
+          "label": {
+            "fr": "Un lissage",
+            "en": "A loft"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La coque",
+        "en": "The shell"
+      },
+      "goal": {
+        "fr": "Creuse le raccord (H, 2 mm) en retirant les deux faces d'extrémité.",
+        "en": "Hollow the adapter (H, 2 mm) removing both end faces."
+      },
+      "hint": {
+        "tool": "Shell",
+        "text": {
+          "fr": "H, clique la face carrée et la face ronde, épaisseur 2.",
+          "en": "H, click the square face and the round face, thickness 2."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Shell",
+          "label": {
+            "fr": "Une coque",
+            "en": "A shell"
+          }
+        },
+        {
+          "type": "body_volume",
+          "min": 5000,
+          "max": 40000,
+          "label": {
+            "fr": "Le raccord est vraiment creux",
+            "en": "The adapter is really hollow"
+          }
+        },
+        {
+          "type": "feature_param",
+          "feature": "Shell",
+          "pointer": "/thickness",
+          "value": 2,
+          "tol": 0.01,
+          "label": {
+            "fr": "Parois de 2 mm",
+            "en": "2 mm walls"
+          }
+        },
+        {
+          "type": "feature_param",
+          "feature": "Shell",
+          "pointer": "/removedFaces",
+          "min": 2,
+          "label": {
+            "fr": "Ouvert aux deux bouts",
+            "en": "Open at both ends"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Imprimable ?",
+        "en": "Printable?"
+      },
+      "goal": {
+        "fr": "Lance Printability : aucun porte-à-faux ne doit dépasser 60° (pas de supports).",
+        "en": "Run Printability: no overhang may exceed 60° (no supports)."
+      },
+      "hint": {
+        "tool": "Printability",
+        "text": {
+          "fr": "Inspect ▾ > Printability, direction +Z.",
+          "en": "Inspect ▾ > Printability, direction +Z."
+        }
+      },
+      "criteria": [
+        {
+          "type": "event",
+          "name": "printability_ok",
+          "label": {
+            "fr": "Imprimable sans supports",
+            "en": "Printable without supports"
+          }
+        }
+      ]
+    }
+  ]
+}

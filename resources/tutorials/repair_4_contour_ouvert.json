@@ -1,0 +1,76 @@
+{
+  "id": "repair_4",
+  "category": "repair",
+  "order": 4,
+  "level": {
+    "fr": "Défi de dépannage",
+    "en": "Repair challenge"
+  },
+  "level_rank": 3,
+  "minutes": 5,
+  "start": "repair_4_contour_ouvert",
+  "title": {
+    "fr": "Défi 4 — Le contour ouvert",
+    "en": "Challenge 4 — The open contour"
+  },
+  "intro": {
+    "fr": "L'extrusion refuse de se calculer : son esquisse n'a plus de profil fermé. Ouvre l'esquisse « Profil_L », zoome sur les extrémités bleues (libres) et referme le contour.",
+    "en": "The extrusion refuses to compute: its sketch has no closed profile anymore. Open the sketch 'Profil_L', zoom on the blue (free) end points and close the contour."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Refermer le contour",
+        "en": "Close the contour"
+      },
+      "goal": {
+        "fr": "Rends les deux extrémités coïncidentes (sélectionne-les, puis Coïncidence (I)) ou prolonge le trait (Extend / Trim, T). L'extrusion redevient verte.",
+        "en": "Make the two end points coincident (select them, then Coincident (I)) or extend the line (Extend / Trim, T). The extrusion turns green again."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "Un profil n'est extrudable que s'il est fermé : chaque extrémité doit toucher la suivante.",
+          "en": "A profile can be extruded only when it is closed: each end must touch the next one."
+        }
+      },
+      "criteria": [
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "L'extrusion se calcule",
+            "en": "The extrusion computes"
+          }
+        },
+        {
+          "type": "body_volume",
+          "min": 15900,
+          "max": 16100,
+          "label": {
+            "fr": "Le profil en L complet est extrudé (16 000 mm³)",
+            "en": "The whole L profile is extruded (16,000 mm³)"
+          }
+        },
+        {
+          "type": "robust",
+          "parameter": "hauteur",
+          "value": 55,
+          "check": [
+            {
+              "type": "no_errors"
+            },
+            {
+              "type": "body_volume",
+              "min": 18900,
+              "max": 19100
+            }
+          ],
+          "label": {
+            "fr": "Test de robustesse : hauteur 55 mm, le contour reste fermé",
+            "en": "Robustness test: 55 mm height, the contour stays closed"
+          }
+        }
+      ]
+    }
+  ]
+}

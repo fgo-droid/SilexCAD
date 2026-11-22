@@ -31,7 +31,22 @@ IconId iconFor(const std::string& type)
     if (type == FeatureType::Shell) return IconId::Shell;
     if (type == FeatureType::Mirror) return IconId::Mirror;
     if (type == FeatureType::LinearPattern) return IconId::LinearPattern;
+    if (type == FeatureType::Sweep) return IconId::Sweep;
+    if (type == FeatureType::Loft) return IconId::Loft;
     if (type == FeatureType::CircularPattern) return IconId::CircularPattern;
+    if (type == FeatureType::OffsetFace) return IconId::PressPull;
+    if (type == FeatureType::Box) return IconId::Box;
+    if (type == FeatureType::Cylinder) return IconId::Cylinder;
+    if (type == FeatureType::RemoveBody) return IconId::Cancel;
+    if (type == FeatureType::DefeatureFace) return IconId::DeleteFace;
+    if (type == FeatureType::SplitBody) return IconId::SplitBody;
+    if (type == FeatureType::TransformBody) return IconId::MoveBody;
+    if (type == FeatureType::ConstructionPlane) return IconId::Plane;
+    if (type == FeatureType::Rib) return IconId::Rib;
+    if (type == FeatureType::Thread) return IconId::Thread;
+    if (type == FeatureType::FastenerHole) return IconId::Hole;
+    if (type == FeatureType::EmbossText) return IconId::Text;
+    if (type == FeatureType::ImportStep) return IconId::ImportStep;
     return IconId::Body;
 }
 }  // namespace

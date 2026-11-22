@@ -1,0 +1,113 @@
+{
+  "id": "fan_40",
+  "category": "fan",
+  "name": {
+    "fr": "Ventilateur axial 40 × 40 × 10 mm",
+    "en": "40 × 40 × 10 mm axial fan"
+  },
+  "description": {
+    "fr": "Cadre 40 × 40 × 10, ouverture Ø38, 4 trous Ø3,4 (M3) à 32 mm d'entraxe. Origine au centre, sous le cadre.",
+    "en": "40 × 40 × 10 frame, Ø38 opening, 4 Ø3.4 holes (M3) 32 mm apart. Origin at the center, under the frame."
+  },
+  "mounting_holes": [
+    {
+      "x": -16,
+      "y": -16,
+      "d": 3.4
+    },
+    {
+      "x": 16,
+      "y": -16,
+      "d": 3.4
+    },
+    {
+      "x": -16,
+      "y": 16,
+      "d": 3.4
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "d": 3.4
+    }
+  ],
+  "screw": "M3",
+  "standoff_mm": 0,
+  "material": "PETG Noir",
+  "parts": [
+    {
+      "part": "Frame",
+      "box": [
+        0,
+        0,
+        0,
+        40,
+        40,
+        10
+      ],
+      "mode": "new",
+      "corner_radius": 3
+    },
+    {
+      "part": "Opening",
+      "cylinder": [
+        0,
+        0,
+        0,
+        38,
+        10
+      ],
+      "mode": "cut"
+    },
+    {
+      "part": "Hub",
+      "cylinder": [
+        0,
+        0,
+        0,
+        22,
+        10
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Strut X",
+      "box": [
+        0,
+        0,
+        0,
+        39,
+        2,
+        3
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Strut Y",
+      "box": [
+        0,
+        0,
+        0,
+        2,
+        39,
+        3
+      ],
+      "mode": "join"
+    }
+  ],
+  "openings": [
+    {
+      "name": "Air flow",
+      "side": "+z",
+      "center": [
+        0,
+        0
+      ],
+      "size": [
+        38,
+        38
+      ]
+    }
+  ],
+  "step": "fan_40.step"
+}

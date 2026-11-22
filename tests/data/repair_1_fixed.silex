@@ -1,0 +1,301 @@
+{
+ "features": [
+  {
+   "id": "b06e762f-a89e-4a43-89b5-c0f1816c1276",
+   "name": "Plaque",
+   "params": {
+    "plane": {
+     "kind": "XY"
+    },
+    "sketch": {
+     "constraints": [
+      {
+       "a": [
+        "2b3c39b0-13e0-48a7-af52-8c9f1c94c031",
+        2
+       ],
+       "b": [
+        "f23b1650-1dba-4f39-b594-8cbc8d6bb5f5",
+        1
+       ],
+       "id": "716544cb-c7df-4098-b580-19e3938465aa",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "f23b1650-1dba-4f39-b594-8cbc8d6bb5f5",
+        2
+       ],
+       "b": [
+        "1c4ca9eb-6d0c-4411-9416-bccd36a99fd8",
+        1
+       ],
+       "id": "8e2d939a-9a15-4c4d-8a3c-0c59c907d011",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "1c4ca9eb-6d0c-4411-9416-bccd36a99fd8",
+        2
+       ],
+       "b": [
+        "cb9040f4-473c-4980-84b2-0f538fec45f5",
+        1
+       ],
+       "id": "e81522a6-322b-43e9-b31c-dacd058ed1fd",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "cb9040f4-473c-4980-84b2-0f538fec45f5",
+        2
+       ],
+       "b": [
+        "2b3c39b0-13e0-48a7-af52-8c9f1c94c031",
+        1
+       ],
+       "id": "eae28640-17ad-465f-b952-05027a39251c",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "2b3c39b0-13e0-48a7-af52-8c9f1c94c031",
+        0
+       ],
+       "id": "e84d8642-4c0d-4ae4-8792-5696931333bd",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "1c4ca9eb-6d0c-4411-9416-bccd36a99fd8",
+        0
+       ],
+       "id": "f738016a-c519-4f9c-97e6-5c22e60554d8",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "f23b1650-1dba-4f39-b594-8cbc8d6bb5f5",
+        0
+       ],
+       "id": "cc032586-58e9-438f-ae07-48a791321672",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "cb9040f4-473c-4980-84b2-0f538fec45f5",
+        0
+       ],
+       "id": "6f9c97ff-0b57-4972-a3a9-eb3723b4dcae",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "2b3c39b0-13e0-48a7-af52-8c9f1c94c031",
+        1
+       ],
+       "b": [
+        "@O",
+        1
+       ],
+       "id": "ee73f18b-ff9f-40c0-8227-75c6fdf34d30",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "2b3c39b0-13e0-48a7-af52-8c9f1c94c031",
+        0
+       ],
+       "expr": "largeur",
+       "id": "9bdb3025-c040-4a2a-87d9-ff2784679c72",
+       "kind": "Distance",
+       "value": 60.0
+      },
+      {
+       "a": [
+        "cb9040f4-473c-4980-84b2-0f538fec45f5",
+        0
+       ],
+       "id": "db9b7464-4ae8-4786-8b0a-b27372af85bd",
+       "kind": "Distance",
+       "value": 40.0
+      },
+      {
+       "a": [
+        "7f3a7b82-5b6b-4d68-a873-0f48f970f2b1",
+        0
+       ],
+       "id": "461d91b3-9532-4938-9f23-25ff24e97228",
+       "kind": "Diameter",
+       "value": 6.0
+      },
+      {
+       "a": [
+        "7f3a7b82-5b6b-4d68-a873-0f48f970f2b1",
+        0
+       ],
+       "b": [
+        "d0030b21-4781-46b0-b8f0-c78d899abab0",
+        0
+       ],
+       "id": "e2f0bb75-fab0-4197-8fd3-2aa7a2555579",
+       "kind": "Equal"
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "7f3a7b82-5b6b-4d68-a873-0f48f970f2b1",
+        3
+       ],
+       "id": "f68a60b1-3729-4dc0-86da-48943ccc5b84",
+       "kind": "DistanceY",
+       "value": 20.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "d0030b21-4781-46b0-b8f0-c78d899abab0",
+        3
+       ],
+       "id": "aeee0b7b-b106-4187-959b-c93ebc4c6ac4",
+       "kind": "DistanceY",
+       "value": 20.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "7f3a7b82-5b6b-4d68-a873-0f48f970f2b1",
+        3
+       ],
+       "id": "8fd241dc-50da-4c6d-b014-84164baf6b54",
+       "kind": "DistanceX",
+       "value": 15.0
+      },
+      {
+       "a": [
+        "d0030b21-4781-46b0-b8f0-c78d899abab0",
+        3
+       ],
+       "b": [
+        "f23b1650-1dba-4f39-b594-8cbc8d6bb5f5",
+        1
+       ],
+       "id": "93e73c7d-204c-4827-a314-0cabe3dc4a53",
+       "kind": "DistanceX",
+       "value": 15.0
+      }
+     ],
+     "geos": [
+      {
+       "id": "2b3c39b0-13e0-48a7-af52-8c9f1c94c031",
+       "kind": "Line",
+       "p1": [
+        0.0,
+        0.0
+       ],
+       "p2": [
+        60.0,
+        0.0
+       ]
+      },
+      {
+       "id": "f23b1650-1dba-4f39-b594-8cbc8d6bb5f5",
+       "kind": "Line",
+       "p1": [
+        60.0,
+        0.0
+       ],
+       "p2": [
+        60.0,
+        40.0
+       ]
+      },
+      {
+       "id": "1c4ca9eb-6d0c-4411-9416-bccd36a99fd8",
+       "kind": "Line",
+       "p1": [
+        60.0,
+        40.0
+       ],
+       "p2": [
+        0.0,
+        40.0
+       ]
+      },
+      {
+       "id": "cb9040f4-473c-4980-84b2-0f538fec45f5",
+       "kind": "Line",
+       "p1": [
+        0.0,
+        40.0
+       ],
+       "p2": [
+        0.0,
+        0.0
+       ]
+      },
+      {
+       "c": [
+        15.0,
+        20.0
+       ],
+       "id": "7f3a7b82-5b6b-4d68-a873-0f48f970f2b1",
+       "kind": "Circle",
+       "r": 3.0
+      },
+      {
+       "c": [
+        45.0,
+        20.0
+       ],
+       "id": "d0030b21-4781-46b0-b8f0-c78d899abab0",
+       "kind": "Circle",
+       "r": 3.0
+      }
+     ]
+    }
+   },
+   "type": "Sketch"
+  },
+  {
+   "id": "305d05bd-c243-4f44-8b5d-c89e88dff626",
+   "name": "Extrude1",
+   "params": {
+    "distance": 8.0,
+    "op": "NewBody",
+    "profile": {
+     "regions": [
+      "1c4ca9eb-6d0c-4411-9416-bccd36a99fd8,2b3c39b0-13e0-48a7-af52-8c9f1c94c031,cb9040f4-473c-4980-84b2-0f538fec45f5,f23b1650-1dba-4f39-b594-8cbc8d6bb5f5"
+     ],
+     "sketch": "b06e762f-a89e-4a43-89b5-c0f1816c1276"
+    },
+    "reversed": false,
+    "symmetric": false,
+    "targetBody": ""
+   },
+   "type": "Extrude"
+  }
+ ],
+ "format": "silex",
+ "marker": 2,
+ "parameters": [
+  {
+   "comment": "Largeur de la plaque",
+   "expression": "60",
+   "name": "largeur",
+   "unit": "mm",
+   "value": 60.0
+  }
+ ],
+ "schema_version": "0.4",
+ "version": 4
+}

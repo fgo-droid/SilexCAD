@@ -228,7 +228,7 @@ TEST(V02, SchemaVersionAndBackwardCompatibility)
     auto rect = makeRect(20, 10);
     auto sk = sketchFeature(rect.sk);
     const Json j = docToJson(docOf({sk, extrudeFeature(sk->id, 5)}));
-    EXPECT_EQ(j.at("schema_version"), "0.2");
+    EXPECT_EQ(j.at("schema_version"), kSchemaVersion);  // "0.3" since v0.3
 
     Json old = j;  // a v0.1 file: no schema_version, "version": 1
     old.erase("schema_version");

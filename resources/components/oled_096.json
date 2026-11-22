@@ -1,0 +1,86 @@
+{
+  "id": "oled_096",
+  "category": "display",
+  "name": {
+    "fr": "Écran OLED 0,96\" I2C",
+    "en": "OLED 0.96\" I2C display"
+  },
+  "description": {
+    "fr": "Module 27,3 × 27,8 mm, 4 trous Ø2 (M2), zone visible 21,7 × 10,9 mm, connecteur 4 broches.",
+    "en": "27.3 × 27.8 mm module, 4 Ø2 holes (M2), 21.7 × 10.9 mm active area, 4-pin header."
+  },
+  "pcb": {
+    "size": [
+      27.3,
+      27.8
+    ],
+    "thickness": 1.2,
+    "corner_radius": 0.5
+  },
+  "mounting_holes": [
+    {
+      "x": 2,
+      "y": 2,
+      "d": 2.0
+    },
+    {
+      "x": 25.3,
+      "y": 2,
+      "d": 2.0
+    },
+    {
+      "x": 2,
+      "y": 25.8,
+      "d": 2.0
+    },
+    {
+      "x": 25.3,
+      "y": 25.8,
+      "d": 2.0
+    }
+  ],
+  "screw": "M2",
+  "standoff_mm": 2,
+  "material": "PCB Vert",
+  "parts": [
+    {
+      "part": "Glass",
+      "box": [
+        13.65,
+        14.15,
+        0,
+        26.7,
+        19.3,
+        1.6
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Header",
+      "box": [
+        13.65,
+        25.6,
+        -9.7,
+        10.2,
+        2.54,
+        8.5
+      ],
+      "mode": "join"
+    }
+  ],
+  "openings": [
+    {
+      "name": "Active area",
+      "side": "+z",
+      "center": [
+        13.65,
+        15
+      ],
+      "size": [
+        21.7,
+        10.9
+      ]
+    }
+  ],
+  "step": "oled_096.step"
+}

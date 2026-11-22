@@ -135,6 +135,13 @@ std::optional<Uuid> inferTangentAtPoint(const Sketch& sk, const GeoRef& start, V
     return std::nullopt;
 }
 
+Vec2 snapToGrid(Vec2 p, double step)
+{
+    if (step <= 0)
+        return p;
+    return {std::round(p.x / step) * step, std::round(p.y / step) * step};
+}
+
 std::vector<SketchConstraint> constraintsFromSnap(const Snap& s, const GeoRef& newPoint)
 {
     std::vector<SketchConstraint> out;

@@ -2,9 +2,8 @@
   "mcpServers": {
     "silex": {
       "command": "python",
-      "args": ["C:/Projects/Silex/tools/mcp_bridge/mcp_server.py"],
+      "args": ["<SILEX_DIR>/mcp_server.py"],
       "env": {
-        "SILEX_EXE": "C:/Projects/Silex/build/bin/Release/silex.exe",
         "SILEX_PIPE": "cad_mcp"
       }
     }

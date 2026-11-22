@@ -1,0 +1,194 @@
+{
+  "id": "rpi4b",
+  "category": "board",
+  "name": {
+    "fr": "Raspberry Pi 4 modèle B",
+    "en": "Raspberry Pi 4 Model B"
+  },
+  "description": {
+    "fr": "Carte 85 × 56 mm, 4 trous M2,5 (entraxe 58 × 49).",
+    "en": "85 × 56 mm board, 4 M2.5 holes (58 × 49 spacing)."
+  },
+  "pcb": {
+    "size": [
+      85,
+      56
+    ],
+    "thickness": 1.4,
+    "corner_radius": 3
+  },
+  "mounting_holes": [
+    {
+      "x": 3.5,
+      "y": 3.5,
+      "d": 2.7
+    },
+    {
+      "x": 61.5,
+      "y": 3.5,
+      "d": 2.7
+    },
+    {
+      "x": 3.5,
+      "y": 52.5,
+      "d": 2.7
+    },
+    {
+      "x": 61.5,
+      "y": 52.5,
+      "d": 2.7
+    }
+  ],
+  "screw": "M2.5",
+  "standoff_mm": 3,
+  "material": "PCB Vert",
+  "parts": [
+    {
+      "part": "GPIO",
+      "box": [
+        32.5,
+        52.5,
+        0,
+        51,
+        5,
+        8.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "SoC",
+      "box": [
+        29,
+        32,
+        0,
+        15,
+        15,
+        2.4
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Ethernet",
+      "box": [
+        76.2,
+        45.75,
+        0,
+        21.8,
+        15.9,
+        13.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "USB 3.0",
+      "box": [
+        78.6,
+        27,
+        0,
+        17.4,
+        13.1,
+        16
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "USB 2.0",
+      "box": [
+        78.6,
+        9,
+        0,
+        17.4,
+        13.1,
+        16
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "USB-C",
+      "box": [
+        11.2,
+        2.7,
+        0,
+        8.9,
+        7.4,
+        3.2
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "micro HDMI 0",
+      "box": [
+        26,
+        2.6,
+        0,
+        7.5,
+        6.5,
+        3.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "micro HDMI 1",
+      "box": [
+        39.5,
+        2.6,
+        0,
+        7.5,
+        6.5,
+        3.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Audio",
+      "box": [
+        53.5,
+        5.5,
+        0,
+        7,
+        12,
+        6
+      ],
+      "mode": "join"
+    }
+  ],
+  "openings": [
+    {
+      "name": "USB-C",
+      "side": "-y",
+      "center": [
+        11.2,
+        1.6
+      ],
+      "size": [
+        8.9,
+        3.2
+      ]
+    },
+    {
+      "name": "micro HDMI",
+      "side": "-y",
+      "center": [
+        32.75,
+        1.75
+      ],
+      "size": [
+        21,
+        3.5
+      ]
+    },
+    {
+      "name": "Ethernet + USB",
+      "side": "+x",
+      "center": [
+        27.4,
+        8
+      ],
+      "size": [
+        50,
+        16
+      ]
+    }
+  ],
+  "step": "rpi4b.step"
+}

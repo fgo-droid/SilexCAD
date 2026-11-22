@@ -37,8 +37,8 @@ def annotate_overview():
         font = ImageFont.truetype("arialbd.ttf", 26)
     except OSError:
         font = ImageFont.load_default()
-    marks = {1: (150, 78), 2: (520, 78), 3: (250, 250), 4: (1350, 100), 5: (430, 805),
-             6: (775, 860), 7: (110, 760), 8: (1330, 905)}
+    marks = {1: (100, 74), 2: (640, 74), 3: (250, 300), 4: (1330, 420), 5: (430, 805),
+             6: (770, 860), 7: (110, 760), 8: (985, 905), 9: (960, 140), 10: (318, 74)}
     for n, (x, y) in marks.items():
         r = 21
         d.ellipse((x - r, y - r, x + r, y + r), fill=(255, 152, 0), outline=(255, 255, 255), width=3)
@@ -276,7 +276,7 @@ def build():
     para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     para.add_run().add_picture(str(IMG / "step_08.png"), width=Cm(13))
     d.add_paragraph()
-    m.p("Version 0.2  ·  Novembre 2026", size=11, color=GREY, align=WD_ALIGN_PARAGRAPH.CENTER)
+    m.p("Version 0.7  ·  Novembre 2026", size=11, color=GREY, align=WD_ALIGN_PARAGRAPH.CENTER)
     m.page_break()
 
     title = m.p("Sommaire", size=20, color=ACCENT)  # not a heading: it must not list itself
@@ -307,7 +307,9 @@ def build():
     m.h2("1.3 Installer et lancer Silex")
     m.p("Silex est **portable** : pas d'installateur, il suffit de copier son dossier.")
     m.steps([
-        "Copie le dossier `bin\\Release` (environ 110 Mo) où tu veux, par exemple `C:\\Silex`.",
+        "Copie le dossier `bin\\Release` (environ 120 Mo) où tu veux, par exemple `C:\\Silex` ou une clé USB. "
+        "Il contient tout : le programme, les leçons, les exemples, les composants, la police du texte, les licences "
+        "et la passerelle IA `mcp_server.py`. Aucun chemin n'est figé : le dossier marche partout.",
         "Double-clique sur `silex.exe`.",
         "Si Windows affiche une erreur à propos de `MSVCP140.dll` ou `VCRUNTIME140.dll`, installe le "
         "« Visual C++ Redistributable x64 » de Microsoft (commande : `winget install Microsoft.VCRedist.2015+.x64`).",
@@ -315,21 +317,24 @@ def build():
     m.p("Configuration nécessaire : Windows 10 ou 11 en 64 bits et une carte graphique compatible Direct3D 11 "
         "(c'est le cas de presque tous les PC récents).")
     m.box("tip", "Pour ouvrir directement un fichier : `silex.exe monprojet.silex`. Pour voir une pièce de "
-                 "démonstration : `silex.exe --demo`.")
+                 "démonstration : `silex.exe --demo`. Pour vérifier que l'installation est complète : "
+                 "`silex.exe --doctor` (voir § 4.40).")
 
     # ---------------------------------------------------------------- 2. basics
     m.h1("2. Prise en main : les fonctions de base")
     m.h2("2.1 L'écran de Silex")
     m.image(overview, "La fenêtre principale (pièce du tutoriel du chapitre 3 chargée)")
     m.table(["#", "Zone", "À quoi ça sert"], [
-        ["1", "Barre **Fichier**", "Nouveau, Ouvrir, Enregistrer, Importer STEP, Exporter STEP / STL, Annuler, Rétablir."],
-        ["2", "Barre **Modèle**", "Les outils de création : Sketch (esquisse), Extrude, Revolve, Fillet (congé), Chamfer, Shell (coque), Combine, Mirror (symétrie), Linear Pattern et Circular Pattern (répétitions), Fit (cadrer)."],
+        ["1", "Barre **Fichier**", "Nouveau, Ouvrir, Enregistrer, Importer STEP, Exporter (STEP, STL, 3MF), Annuler, Rétablir."],
+        ["2", "Barre **Modèle**", "Les outils : Sketch (esquisse), Create ▾ (boîte, cylindre, perçage, texte…), Extrude, Press/Pull, Revolve, Sweep, Loft, Modify ▾ (congé, chanfrein, coque…), Pattern ▾ (symétrie, répétitions), Combine, Thread, Construct ▾, Inspect ▾, Drawing, Parameters, Fit, Learn. Tout à droite : la bascule Essentiel / Complet (§ 4.34)."],
         ["3", "**Vue 3D**", "Là où tu vois et sélectionnes ta pièce. La grille représente le sol (plan XY)."],
         ["4", "**Inspecteur**", "Le panneau de droite : il montre les réglages de l'outil en cours, ou la liste des corps quand aucun outil n'est actif."],
         ["5", "**Timeline**", "Toutes les étapes de ta pièce, de gauche à droite. Double-clic sur une étape pour la modifier."],
         ["6", "**Marqueur de retour**", "La barre orange : tout ce qui est à sa droite est temporairement désactivé. Glisse-la pour « remonter le temps »."],
         ["7", "**Trièdre**", "Montre l'orientation : X rouge, Y vert, Z bleu (Z = vers le haut)."],
-        ["8", "**Barre d'état**", "Nombre de corps, temps de calcul, et le nombre d'erreurs ou d'avertissements s'il y en a."],
+        ["8", "**Barre d'état**", "Pastille MCP, nombre de corps et de triangles, temps de calcul, grille magnétique (Snap), plateau d'impression (Bed), et le nombre d'erreurs ou d'avertissements s'il y en a."],
+        ["9", "**ViewCube**", "Clique une face, une arête ou un coin pour changer de vue ; la maison revient à la vue d'ensemble (§ 4.24)."],
+        ["10", "Menu **?**", "À propos de Silex et licences, réglage de la sauvegarde automatique, dossier de récupération (§ 4.39 et 4.41)."],
     ], [0.8, 3.4, 12.8])
     m.box("tip", "Silex n'a pas d'« ateliers » à changer : les outils s'adaptent tout seuls à ce que tu fais. "
                  "Par exemple, la barre d'esquisse (Line, Rectangle, Circle…) n'apparaît que lorsque tu dessines.")
@@ -400,7 +405,7 @@ def build():
         ["Horizontale / Verticale", "`H` / `V`", "La ligne devient horizontale / verticale."],
         ["Coïncidence", "`I`", "Deux points se touchent (ou un point sur une courbe)."],
         ["Parallèle / Perpendiculaire", "`P` / `K`", "Deux lignes parallèles / à angle droit."],
-        ["Tangente", "`T`", "Une ligne et un cercle (ou deux cercles) se touchent sans faire d'angle."],
+        ["Tangente", "`Maj+T`", "Une ligne et un cercle (ou deux cercles) se touchent sans faire d'angle."],
         ["Égalité", "`Q`", "Deux lignes de même longueur, ou deux cercles de même rayon."],
         ["Blocage", "`F`", "Fige un point ou une courbe à sa position actuelle."],
     ], [4.8, 2.2, 10.0])
@@ -453,14 +458,18 @@ def build():
 
     m.h2("2.9 Enregistrer, ouvrir, exporter")
     m.table(["Action", "Raccourci", "Fichier"], [
-        ["Enregistrer / Enregistrer sous", "`Ctrl+S` / `Ctrl+Maj+S`", "`.silex` : ton projet complet et modifiable (format texte JSON, lisible et versionnable). Silex 0.2 enregistre au format 0.2 et ouvre sans problème les fichiers de la version 0.1."],
+        ["Enregistrer / Enregistrer sous", "`Ctrl+S` / `Ctrl+Maj+S`", "`.silex` : ton projet complet et modifiable (format texte JSON, lisible et versionnable). Silex 0.7 enregistre au format 0.7 (texte, images de référence…) et ouvre sans problème les fichiers des versions précédentes."],
         ["Ouvrir", "`Ctrl+O`", "`.silex` uniquement."],
         ["Importer un STEP", "`Ctrl+I`", "`.step` / `.stp` venant d'un autre logiciel ou d'un fabricant (pièce sans historique)."],
         ["Exporter STEP", "`Ctrl+E`", "Format d'échange universel pour les autres logiciels de CAO."],
         ["Exporter STL", "`Ctrl+Maj+E`", "Maillage pour l'impression 3D. Silex demande la précision (0,05 mm par défaut)."],
+        ["Exporter 3MF", "`Ctrl+3`", "Toutes les pièces dans un seul fichier pour le trancheur, avec noms et couleurs (§ 4.21)."],
     ], [4.6, 3.6, 8.8])
     m.box("warn", "Un fichier STEP ou STL ne contient que la forme, pas la recette : pour pouvoir modifier ta pièce "
                   "plus tard, garde toujours le fichier **.silex**.")
+    m.box("tip", "Silex fait une **sauvegarde automatique** toutes les 2 minutes tant que tu as des modifications non "
+                 "enregistrées. Après un plantage ou une coupure de courant, il te propose de récupérer ton travail au "
+                 "démarrage suivant (§ 4.39).")
     m.page_break()
 
     # ---------------------------------------------------------------- 3. tutorial
@@ -468,8 +477,8 @@ def build():
     m.p("Dans ce tutoriel, tu vas dessiner l'équerre ci-dessous en utilisant les fonctions les plus courantes : "
         "esquisse, cotes, extrusion (nouveau corps, joindre, couper), esquisse sur une face, chanfrein et congé. "
         "Compte environ 20 minutes.")
-    m.image(IMG / "plan_reference.png", "Le plan coté de la pièce (vues de dessus, de face et de droite)", width_cm=14)
-    m.p("En résumé (en mm) : semelle 40 × 85 × 10, rail avant 70 × 20 × 15 chanfreiné à 5 mm, "
+    m.image(IMG / "plan_reference.png", "Le plan de référence de la pièce", width_cm=12)
+    m.p("Interprétation retenue (en mm) : semelle 40 × 85 × 10, rail avant 70 × 20 × 15 chanfreiné à 5 mm, "
         "montant 40 × 20 × 65, renfort 40 × 10 jusqu'à 25 de haut, perçage Ø20 dans la semelle, deux trous Ø10 "
         "à 20 d'entraxe dans la tête, arrondis R10 en haut du montant. Repère : X vers la droite, Y vers l'arrière, "
         "Z vers le haut, origine au milieu de l'arête avant de la semelle.", italic=True, color=GREY)
@@ -693,16 +702,30 @@ def build():
     m.p("**Installation** (une seule fois) :")
     m.steps([
         "Installe Python 3.12 : `winget install --id Python.Python.3.12 -e --scope user`.",
-        "Installe la passerelle : `python -m pip install --user -r tools\\mcp_bridge\\requirements.txt`.",
-        "Déclare le serveur dans Claude Code : `claude mcp add --scope user silex -e SILEX_EXE=<chemin de silex.exe> -- python <chemin>\\tools\\mcp_bridge\\mcp_server.py`.",
+        "Installe la passerelle : `python -m pip install --user -r requirements.txt` (le fichier est à côté de `silex.exe`).",
+        "Déclare le serveur dans ton assistant, par exemple Claude Code : `claude mcp add --scope user silex -- python <dossier de Silex>\\mcp_server.py`. "
+        "Le fichier `mcp_config.example.json` donne le même réglage pour les autres clients (remplace `<SILEX_DIR>`).",
+        "Vérifie : `python <dossier de Silex>\\mcp_server.py --check`. Il contrôle Python, les modules, `silex.exe`, "
+        "la connexion et la version du protocole, et affiche OK ou ce qui manque.",
     ])
+    m.p("`mcp_server.py` est copié à côté de `silex.exe` : il le trouve tout seul, sans chemin à régler. Si Silex est "
+        "ailleurs, indique-le avec la variable `SILEX_EXE`.")
     m.table(["Famille", "Outils"], [
-        ["Inspection", "`get_model_tree`, `inspect_body` (volume, validité), `query_topology` (faces et arêtes), `list_solids`, `capture_viewport`"],
-        ["Esquisse", "`create_sketch`, `sketch_add_geometry`, `sketch_add_constraints`"],
-        ["Opérations", "`extrude`, `revolve`, `fillet_or_chamfer`, `shell`, `combine`, `mirror`, `linear_pattern`, `circular_pattern`"],
-        ["Historique", "`update_feature_parameter`, `undo`, `redo`"],
-        ["Fichiers", "`import_step`, `export_step`, `export_stl`, `save_design`"],
+        ["Document", "`new_document`, `open_document`, `get_active_document_info`, `save_design` (les deux premiers refusent d'effacer un travail non enregistré, sauf `discard_changes=true`)"],
+        ["Inspection", "`get_model_tree`, `inspect_body` (volume, validité), `query_topology` (faces et arêtes), `list_solids`, `capture_viewport`, `verify_dimensions` (cotes finies comparées aux cotes voulues)"],
+        ["Esquisse", "`create_sketch`, `sketch_add_geometry`, `sketch_add_constraints`, `sketch_import_vector` (SVG / DXF), `sketch_set_canvas` (image de référence)"],
+        ["Opérations", "`extrude`, `revolve`, `fillet_or_chamfer`, `shell`, `combine`, `mirror`, `linear_pattern`, `circular_pattern`, `sweep`, `loft`, `create_box`, `create_cylinder`, `press_pull`, `create_rib`, `create_thread`, `create_emboss_text`"],
+        ["Corps et faces", "`remove_body`, `defeature_faces`, `split_body`, `transform_body`, `align_bodies`, `create_construction_plane`"],
+        ["Makers", "`create_fastener_hole`, `list_components`, `insert_component`, `create_enclosure`, `lay_flat_on_bed`, `check_build_volume`, `check_printability`"],
+        ["Paramètres", "`get_parameters`, `set_parameter`, `delete_parameter` ; `update_feature_parameter` accepte une `expression`"],
+        ["Analyse", "`measure`, `check_interference`, `set_body_material`"],
+        ["Historique", "`undo`, `redo`, `begin_command_group` / `end_command_group` (plusieurs opérations de l'IA = un seul `Ctrl+Z` pour toi)"],
+        ["Fichiers", "`import_step`, `export_step`, `export_stl`, `export_3mf`, `export_drawing`"],
+        ["Pédagogie", "`get_pedagogical_context` (mode tuteur, § 4.28 et 4.35)"],
     ], [3.2, 13.8])
+    m.p("Quand une demande échoue, Silex répond avec un **code d'erreur** (`UNKNOWN_ID`, `REBUILD_FAILED`, "
+        "`DOCUMENT_DIRTY`…) et un **conseil** (`hint`) : l'assistant comprend ce qui ne va pas et corrige lui-même. "
+        "Une modification qui casserait la pièce est refusée et annulée.")
     m.box("tip", "Exemple de demande : « Avec le serveur silex, dessine un boîtier de 80 × 50 × 30 mm à parois de "
                  "2 mm, ajoute 4 trous de fixation Ø3, vérifie qu'il est valide, montre-moi une capture et exporte-le en STL. »")
     m.h2("4.13 Ligne de commande")
@@ -713,12 +736,508 @@ def build():
         ["`--pipe <nom>` / `--no-ipc`", "Change le nom du canal de pilotage / désactive le pilotage."],
         ["`--screenshot image.png`", "Ouvre, attend le calcul, enregistre une capture de la fenêtre puis quitte."],
         ["`--edit \"<fonction>\"`", "Ouvre directement l'éditeur d'une fonction (pour les captures et démonstrations)."],
+        ["`--tool <outil>`", "Ouvre un outil au démarrage : `measure`, `interference`, `section`, `drawing`, `parameters`, `properties` "
+                             "(et, pour la documentation, `essential`, `bed`, `hole`, `components`, `enclosure`, `recorder`, `ghost`)."],
+        ["`--size 1366x768`", "Taille de la fenêtre (pour vérifier l'affichage sur un petit écran)."],
+        ["`--tutor-mode`", "Tuteur IA socratique : l'assistant connecté peut observer, pas modéliser (§ 4.35)."],
+        ["`--doctor`", "Vérifie l'installation et affiche un rapport `[OK]` / `[WARN]` / `[FAIL]` (§ 4.40)."],
+        ["`--no-recovery`", "Ne propose pas de récupérer les sauvegardes automatiques au démarrage."],
+        ["`--recover <fichier>`", "Restaure directement une sauvegarde automatique (`*.autosave.json`), sans question."],
     ], [5.8, 11.2])
+
+    # ------------------------------------------------ v0.3
+    m.h2("4.14 Nouveautés de la version 0.3")
+    m.p("La version 0.3 ajoute quatre familles d'outils : le **contrôle mécanique** (mesure, interférences, coupe, "
+        "paramètres), la **modélisation avancée** (balayage et lissage), la **mise en plan 2D** et les **matériaux** "
+        "avec l'export **3MF** multi-corps.")
+    m.image(IMG / "v03_overview.png", "Un boîtier en PETG noir, son couvercle en résine translucide, un tuyau balayé et un "
+            "adaptateur carré-rond lissé", width_cm=15)
+
+    m.h2("4.15 Paramètres globaux (Ctrl+P)")
+    m.p("Au lieu de taper « 2 » dans dix champs différents, donne un nom à la valeur : `epaisseur_paroi = 2`. "
+        "Tu tapes ensuite `epaisseur_paroi` (ou `epaisseur_paroi * 2`, `largeur - 2 * marge`…) dans n'importe quel champ "
+        "numérique : cote d'esquisse, distance d'extrusion, rayon de congé, épaisseur de coque, nombre et pas d'une répétition.")
+    m.steps([
+        "`Ctrl+P` (ou le bouton **Parameters**) ouvre le tableau : **Name**, **Expression**, **Computed value**, **Unit**, **Comment**.",
+        "**Add** crée une ligne. Une expression peut utiliser les autres paramètres, `+ - * / ^ ( )`, `sin cos tan` (en degrés), "
+        "`sqrt abs min max round`, et des unités (`10 mm + 1 cm`).",
+        "**OK** ou **Apply** : toutes les fonctions qui utilisent un paramètre sont recalculées en cascade.",
+    ])
+    m.image(IMG / "v03_parameters.png", "Le tableau des paramètres globaux", width_cm=14)
+    m.box("tip", "Pour un assemblage imprimé en 3D, crée un paramètre `jeu_montage = 0.25` et utilise-le partout où deux "
+                 "pièces s'emboîtent. Si l'imprimante est plus ou moins précise, une seule valeur à changer.")
+    m.box("warn", "Une référence circulaire (`a = b + 1`, `b = a * 2`) ou un nom inconnu est signalé en rouge et refusé.")
+
+    m.h2("4.16 Mesurer (I)")
+    m.steps([
+        "Appuie sur `I` (ou **Measure**), puis clique une ou deux faces ou arêtes (coche **Pick whole bodies** pour mesurer entre deux pièces).",
+        "L'inspecteur affiche la **distance minimale** et ses composantes **ΔX ΔY ΔZ**, l'**angle** entre deux faces planes ou deux arêtes "
+        "droites, le **Ø**, le **R** et le **centre** d'une arête circulaire ou d'un cylindre.",
+        "Une cote temporaire jaune s'affiche dans la vue. Un troisième clic démarre une nouvelle mesure. `Échap` ferme l'outil.",
+    ])
+    m.image(IMG / "v03_measure.png", "Jeu de 0,25 mm mesuré entre le couvercle et le boîtier", width_cm=15)
+    m.p("Quand **une seule pièce** est sélectionnée (double-clic), l'inspecteur affiche en permanence son **volume**, sa "
+        "**surface**, sa **boîte englobante** et sa **masse estimée** d'après la densité de son matériau (PLA par défaut).")
+
+    m.h2("4.17 Vérifier l'emboîtement (Maj+I)")
+    m.p("L'outil d'interférences vérifie **chaque paire** de pièces sélectionnées (ou toutes) : les volumes qui se "
+        "chevauchent apparaissent en **rouge** dans une vue « rayons X », avec leur volume exact. Pour les pièces qui ne se "
+        "touchent pas, Silex mesure le **jeu** et applique le code couleur de l'impression FDM :")
+    m.table(["Couleur", "Jeu", "Signification"], [
+        ["**Rouge**", "collision", "Les pièces se chevauchent : impossible à assembler."],
+        ["**Orange**", "0 à 0,15 mm", "Très serré : risque de pièces soudées ou bloquées après impression."],
+        ["**Vert**", "≥ 0,15 mm", "Jeu fonctionnel valide."],
+    ], [2.6, 3.4, 11.0])
+    m.image(IMG / "v03_interference.png", "Le boîtier est trop haut de 1,75 mm : la lèvre du couvercle le chevauche (672 mm³ en rouge)",
+            width_cm=15)
+
+    m.h2("4.18 Vue en coupe (Alt+S)")
+    m.p("`Alt+S` tranche l'affichage selon le plan **XY**, **XZ**, **YZ** ou une **face plane sélectionnée**. Le curseur "
+        "**Offset** déplace le plan, **Flip** garde l'autre moitié. La matière coupée est peinte en orange plein : on voit "
+        "nettement les parois, les lèvres d'emboîtement et les filetages. La coupe ne modifie **ni la pièce ni la timeline**.")
+    m.image(IMG / "v03_section.png", "Coupe XZ du boîtier : les parois de 2 mm apparaissent en orange", width_cm=15)
+
+    m.h2("4.19 Balayage (Sweep, Maj+W)")
+    m.p("Le balayage fait glisser un **profil fermé** le long d'une **trajectoire** : tuyaux, conduits, poignées.")
+    m.steps([
+        "Dessine la trajectoire dans une esquisse (lignes et arcs bout à bout), puis le profil dans une autre esquisse, "
+        "**perpendiculaire** au début de la trajectoire (astuce : le champ **Plane offset** de l'esquisse décale son plan).",
+        "`Maj+W` : clique le profil ; choisis la trajectoire dans **Path** (ou **Pick edges** pour suivre des arêtes de la pièce).",
+        "**Orientation** : **Corrected Frenet** (par défaut) évite que le profil vrille sur une courbe 3D.",
+        "Choisis l'opération (**New body**, **Join**, **Cut**, **Intersect**) puis **OK**.",
+    ])
+    m.image(IMG / "v03_sweep.png", "Édition d'un balayage : coude Ø10 mm, aperçu en vert", width_cm=15)
+
+    m.h2("4.20 Lissage (Loft, Maj+L)")
+    m.p("Le lissage relie **au moins deux profils** posés sur des plans différents, par exemple un carré et un cercle "
+        "pour un raccord de ventilation.")
+    m.steps([
+        "Dessine chaque section dans sa propre esquisse, sur des plans décalés (**Plane offset**).",
+        "`Maj+L` puis clique les profils **dans l'ordre** ; un numéro s'affiche sur chacun. **Up**/**Down** les réordonnent.",
+        "**Ruled** donne des surfaces droites entre les sections ; décoché, la transition est lissée. **OK**.",
+    ])
+    m.image(IMG / "v03_loft.png", "Adaptateur carré 40 mm vers rond Ø24 mm", width_cm=15)
+
+    m.h2("4.21 Matériaux et export 3MF (Ctrl+3)")
+    m.p("Sélectionne une pièce (double-clic) : l'inspecteur propose un **matériau** (PLA Blanc, PETG Noir, ABS Gris, Résine "
+        "Translucide, PCB Vert, Aluminium, Acier), une **couleur**, une **opacité** (pour voir à travers un boîtier) et la "
+        "**densité** utilisée pour la masse.")
+    m.image(IMG / "v03_properties.png", "Propriétés physiques et matériau du boîtier (PETG, 17,31 g)", width_cm=15)
+    m.p("`Ctrl+3` exporte toutes les pièces (ou la sélection) dans **un seul fichier .3mf** : chaque pièce reste un objet "
+        "séparé avec son nom et sa couleur, l'unité millimètre est écrite dans le fichier (aucune erreur d'échelle dans "
+        "Cura, PrusaSlicer ou Bambu Studio) et les maillages sont étanches.")
+
+    m.h2("4.22 Mise en plan 2D (Ctrl+D)")
+    m.p("`Ctrl+D` ouvre la feuille de plan : les **3 vues** normalisées en projection européenne (vue de face, vue de dessus "
+        "en dessous, vue de droite à gauche), les arêtes **cachées en tirets**, les **axes** en trait mixte rouge, un cadre "
+        "et un **cartouche** (titre, échelle, unité, date, volume, masse, matériau).")
+    m.steps([
+        "Choisis **A4** ou **A3** et l'**échelle** (Auto choisit 2:1, 1:1, 1:2… pour que tout tienne).",
+        "Outils de cotation : **Linear** (clique deux sommets, puis la position de la cote ; `Maj` pour une cote alignée), "
+        "**Diameter** et **Radius** (clique un cercle puis la position du texte). Les points s'accrochent aux sommets et centres.",
+        "Clique une cote puis `Suppr` pour l'effacer. Remplis le cartouche à droite.",
+        "**Export PDF** ou **Export SVG**. Quand tu modifies la pièce 3D, le plan et ses cotes se mettent à jour.",
+    ])
+    m.image(IMG / "v03_drawing.png", "Mise en plan de l'équerre de référence à l'échelle 1:2", width_cm=15)
+
+    m.h2("4.23 Esquisse Pro : contraintes, formes et outils d'édition 2D")
+    m.p("L'esquisseur dispose des outils des modeleurs paramétriques de référence : des formes « intelligentes » déjà "
+        "contraintes, des outils pour découper, prolonger, arrondir, décaler, symétriser et répéter, et la saisie des "
+        "cotes **pendant** le tracé.")
+    m.image(IMG / "sketchpro_editor.png", "Rectangle centré avec congés R6, oblong, logement hexagonal Ø13 sur plats, "
+            "perçages symétriques (badge Sym) ; grille magnétique dans la barre d'état", width_cm=16.5)
+    m.h3("Nouvelles contraintes")
+    m.table(["Contrainte", "Touche", "Sélection et effet"], [
+        ["Milieu (Mid)", "`M`", "Un point + une ligne (ou un arc) : le point se place au milieu exact."],
+        ["Symétrie (Sym)", "`S`", "Deux points (ou deux lignes, cercles, arcs), puis **en dernier** la ligne d'axe (trait de construction ou axe X / Y). Deux cercles symétriques ont aussi le même diamètre."],
+        ["Concentrique (◎)", "`O`", "Deux cercles ou arcs (y compris une arête projetée) : même centre."],
+        ["Colinéaire (Col)", "bouton", "Deux lignes sur la même droite."],
+    ], [3.6, 1.8, 11.6])
+    m.h3("Formes intelligentes")
+    m.table(["Outil", "Accès", "Comment l'utiliser"], [
+        ["Rectangle par centre", "`Maj+R` ou ▾ sous Rectangle", "Clic au centre, clic sur un coin. Les diagonales de construction et la contrainte Milieu le gardent centré : 2 cotes suffisent."],
+        ["Polygone", "▾ sous Rectangle", "Choisis le nombre de côtés (3 à 12, 6 par défaut) et le mode dans le panneau, clic au centre, clic sur un sommet (inscrit) ou au milieu d'un côté (circonscrit : idéal pour un écrou, cote sur plats)."],
+        ["Oblong (Slot)", "`U`", "Centre à centre : clic centre 1, clic centre 2, clic pour la largeur. Par centre global : clic au centre, clic au bout de l'axe, clic pour la largeur. Côtés tangents et demi-cercles égaux déjà appliqués."],
+    ], [3.4, 3.4, 10.2])
+    m.h3("Outils d'édition 2D")
+    m.table(["Outil", "Accès", "Comment l'utiliser"], [
+        ["Ajuster (Trim)", "`T`", "Survole une courbe : la portion qui sera supprimée apparaît en rouge pointillé. Clique pour la couper aux intersections ; les contraintes valides restent."],
+        ["Prolonger (Extend)", "▾ sous Trim", "Clique près de l'extrémité d'une ligne ou d'un arc : il est prolongé jusqu'à la prochaine courbe (aperçu vert)."],
+        ["Congé d'esquisse", "`Maj+F`", "Clique le coin commun à deux lignes (ou les deux lignes) : un arc tangent est inséré et sa cote de rayon s'ouvre aussitôt. Les cotes de longueur deviennent des cotes « au coin virtuel »."],
+        ["Décaler (Offset)", "`Maj+O`", "Sélectionne un contour, tape la distance (négative = de l'autre côté), `Entrée`. Une seule cote pilote toute la copie."],
+        ["Miroir 2D", "bouton Mirror", "Sélectionne les éléments puis, en dernier, la ligne de symétrie : les copies sont liées par des contraintes Sym."],
+        ["Répétition 2D", "bouton Pattern", "Sélectionne les éléments (et un point centre pour une répétition circulaire), tape le nombre, `Tab`, le pas ou l'angle, `Entrée`. Le pas est une cote modifiable."],
+    ], [3.4, 2.8, 10.8])
+    m.h3("Assistance en temps réel")
+    m.bullets([
+        "**Cotes à la volée** : pendant le tracé d'une ligne, d'un rectangle, d'un cercle, d'un polygone ou d'un oblong, "
+        "tape directement une valeur. Des champs flottants suivent le curseur (`Tab` pour passer de *Largeur* à *Hauteur*, "
+        "`Entrée` pour valider). La cote correspondante est créée sans repasser par `D`. Les noms de paramètres globaux "
+        "sont acceptés (ex. `entraxe_x / 2`).",
+        "**Badges de contraintes** : `H`, `V`, `T`, `⊥`, `Sym`, `Mid`… s'affichent près des éléments. Survole un badge "
+        "pour surligner les éléments qu'il relie ; clique-le puis `Suppr` pour supprimer cette seule contrainte.",
+        "**Grille magnétique** : bouton **Snap** et pas (0,5 / 1 / 5 mm) en bas à droite de la barre d'état. "
+        "Maintiens `Alt` pour la désactiver le temps d'un clic.",
+        "**Show under-constrained** : fait pulser en bleu les éléments qui ont encore des degrés de liberté.",
+    ])
+    m.box("tip", "Pour un logement d'écrou M6 : `Polygone`, mode *Circumscribed*, clic au centre, tape `6`, `Tab`, `5.05`, "
+                 "`Entrée` : hexagone de 10,1 mm sur plats, déjà coté.")
+
+    m.h2("4.24 Navigation et modélisation directe")
+    m.h3("Le ViewCube")
+    m.p("Le cube d'orientation en haut à droite de la vue suit la caméra en temps réel. Ses libellés suivent la langue "
+        "du système (`TOP` / `DESSUS`, `FRONT` / `FACE`…).")
+    m.bullets([
+        "Clique une **face** pour une vue standard, une **arête** (bande au bord d'une face) pour une vue à 45°, un "
+        "**coin** pour une vue isométrique. La zone survolée s'allume en bleu, la caméra pivote en douceur (~200 ms).",
+        "Le bouton **Maison** (en haut à gauche du cube) revient à la vue isométrique et cadre toute la pièce.",
+        "Quand la vue est alignée sur une face, deux **flèches courbes** font pivoter la vue de 90° dans un sens ou dans l'autre.",
+    ])
+    m.h3("Pousser / Tirer (Press/Pull, `Q`)")
+    m.p("Un seul outil pour ajouter ou enlever de la matière, sans repasser par une esquisse :")
+    m.bullets([
+        "sur un **profil d'esquisse fermé**, `Q` lance l'**extrusion** habituelle (New body, Join, Cut) ;",
+        "sur une **face plane** d'une pièce, `Q` pousse ou tire directement la face : tire la **flèche orange** ou tape "
+        "une distance. L'aperçu est **bleu** si tu ajoutes de la matière, **rouge** si tu en retires.",
+    ])
+    m.image(IMG / "ergo_presspull.png", "Press/Pull de +8 mm sur la face du dessus : flèche orange, aperçu bleu, "
+            "ViewCube en haut à droite", width_cm=16.5)
+    m.p("L'opération devient une étape de la timeline (icône bloc + flèche) : double-clique pour changer la distance, "
+        "les étapes suivantes se recalculent.")
+    m.h3("Primitives rapides : Box (`Maj+B`) et Cylinder (`Maj+Y`)")
+    m.p("Menu déroulant **Box ▾** de la barre *Modèle*. Une boîte ou un cylindre est créé directement, sans esquisse :")
+    m.table(["Paramètre", "Effet"], [
+        ["Plan de base", "XY, XZ, YZ, ou une face plane cliquée dans la vue (le repère part alors du centre de la face)."],
+        ["Centre X / Y", "Position du centre de la base dans ce plan."],
+        ["Longueur, Largeur / Diamètre", "Taille de la base (Box : X et Y ; Cylinder : Ø)."],
+        ["Hauteur (Z)", "Le long de la normale du plan (négative = de l'autre côté). Aussi pilotable avec la flèche."],
+        ["Opération", "New body, Join (bossage) ou Cut (perçage, poche)."],
+    ], [4.5, 12.5])
+    m.image(IMG / "ergo_box.png", "Éditeur de la primitive Box : tous les champs acceptent les paramètres globaux", width_cm=16.5)
+    m.h3("La barre d'état")
+    m.table(["Indicateur", "Signification"], [
+        ["● MCP", "**Gris** : canal IA prêt, aucun agent connecté. **Vert** : un agent (Claude Code, Gemini CLI…) pilote "
+                  "Silex. **Orange** : canal déjà occupé par une autre instance (IPC désactivé)."],
+        ["Triangles", "Nombre de triangles du maillage affiché : un bon indicateur de la finesse avant un export STL ou 3MF."],
+        ["compute … ms", "Durée du dernier recalcul du modèle."],
+        ["Snap", "Clic : active / coupe la grille magnétique de l'esquisse ; flèche : Off, 0,5, 1, 2 ou 5 mm."],
+    ], [3.2, 13.8])
+
+    m.h2("4.25 v0.4 — Gérer les corps et les faces directement")
+    m.table(["Action", "Comment", "Ce qui se passe"], [
+        ["Supprimer un corps", "Double-clic sur la pièce, `Suppr`", "Une étape **RemoveBody** est ajoutée à la timeline : les fonctions qui ont créé la pièce restent intactes, `Ctrl+Z` la fait revenir."],
+        ["Masquer / montrer", "`V` (rien de sélectionné : tout réapparaît), œil dans l'Inspecteur", "Affichage seulement ; une pièce masquée ne se sélectionne plus. Clic droit > **Isolate** / **Unisolate**."],
+        ["Supprimer une face", "Clic sur la face (congé, chanfrein, poche, trou), `Suppr`", "Étape **DeleteFace** : la face disparaît et les faces voisines se prolongent pour refermer la pièce. Fonctionne aussi sur un STEP importé sans historique."],
+        ["Scinder un corps", "Barre *Modèle* > **Split Body**", "La pièce est coupée par un plan (XY / XZ / YZ décalé, face plane ou plan de construction) en `<Nom>_1` (sous le plan) et `<Nom>_2`. Idéal pour faire fond + couvercle d'un boîtier fermé."],
+        ["Déplacer / copier", "Clic droit > **Move / Copy**", "Gizmo : 3 flèches (translation) et 3 arcs (rotation), `Ctrl` pour arrondir au mm / à 15°, champs ΔX…Rz (paramètres acceptés), case **Create copy**."],
+    ], [3.2, 4.6, 9.2])
+    m.image(IMG / "v04_move.png", "Move / Copy : gizmo de translation et de rotation, fantôme du couvercle déplacé", width_cm=16.5)
+
+    m.h2("4.26 v0.4 — Plans de construction, nervures, alignement")
+    m.bullets([
+        "**Plane ▾** : plan *décalé* (d'un plan ou d'une face, distance pilotable), *incliné* (d'un angle autour de X / Y / Z ou "
+        "d'une arête droite) ou *milieu* (entre deux faces parallèles). Il apparaît en orange dans la vue et dans le dossier "
+        "**Construction** de l'Inspecteur (bouton *Sketch* pour esquisser dessus). Esquisses, primitives et Split Body l'acceptent.",
+        "**Rib** (nervure) : dessine une simple ligne ouverte dans une esquisse qui coupe la pièce (par exemple un plan au milieu "
+        "d'une équerre), d'une paroi à l'autre ; la nervure d'épaisseur choisie remplit l'espace jusqu'aux parois.",
+        "**Align** : clique une face du corps à déplacer puis une face du corps fixe. Mode *face à face* avec un jeu "
+        "(`jeu_montage` = 0,25 mm par exemple, centres alignés) ou *coaxial* (deux trous de vis). **Flip** inverse le sens. "
+        "L'alignement est recalculé si les pièces changent.",
+    ])
+
+    m.h2("4.27 v0.4 — Assistant d'impression 3D et filetages réels")
+    m.p("**Printability** (barre *Modèle*) colore les faces en porte-à-faux selon leur angle par rapport à la verticale : "
+        "orange de 45 à 60°, rouge au-delà (supports nécessaires), et en magenta les parois plus fines que le minimum "
+        "(0,8 mm = 2 passes d'une buse 0,4). Change la direction d'impression pour trouver l'orientation sans supports : "
+        "un « T » imprimé à l'envers n'en demande plus aucun.")
+    m.image(IMG / "v04_printability.png", "Boîte à parois de 0,5 mm signalée en magenta, bloc plein correct", width_cm=16.5)
+    m.p("**Thread** : clique la face cylindrique d'une tige (vis, modélisée au diamètre nominal : M6 → Ø6) ou d'un trou "
+        "(écrou, modélisé au diamètre de perçage : M6 → Ø5). Tailles M3 à M12, pas normal ou fin, **jeu FDM** (0,15 mm par "
+        "défaut) pour qu'une vis et un écrou imprimés se vissent sans forcer. Les filets de deux pièces coaxiales "
+        "s'engrènent toujours. Mode *cosmétique* : simple annotation (anneaux pointillés + « M6x1 »), sans géométrie.")
+    m.box("tip", "Après avoir fileté une vis et son écrou, lance `Maj+I` : la vérification d'interférences doit être "
+                 "verte, avec un jeu de 0,15 mm.")
+
+    m.h2("4.28 v0.4 — Apprendre avec Silex : mode guidé et diagnostic")
+    m.bullets([
+        "**Learn** (`F1`) ouvre le panneau *Apprendre / Mode guidé* : trois parcours (l'équerre — débutant, le boîtier à "
+        "couvercle — intermédiaire, la bride et sa mise en plan — avancé). Chaque étape se coche **toute seule** dès que "
+        "ton modèle remplit l'objectif, quelle que soit ta façon de dessiner. Le bouton **Hint** fait clignoter l'outil "
+        "attendu sans faire le travail à ta place.",
+        "Dans une esquisse, **Expliquer** dit en clair ce qui manque : « Ce rectangle a ses bonnes dimensions (40 × 85 mm), "
+        "mais il peut encore glisser en X et Y. Attache son centre à l'origine avec la contrainte Milieu (M)… », et fait "
+        "pulser les éléments encore bleus.",
+        "Une étape en rouge est expliquée dans l'Inspecteur (💡) : rayon de congé trop grand pour la hauteur disponible, "
+        "contour non fermé, profil qui traverse l'axe d'une révolution, coque trop épaisse…",
+        "**Guided tour** : sur un fichier annoté (`annotation` sur chaque étape), le marqueur avance étape par étape et "
+        "affiche l'intention de conception de chaque fonction.",
+        "Langue des explications : FR / EN en haut du panneau.",
+    ])
+    m.image(IMG / "v04_learn.png", "Panneau Apprendre : parcours de l'équerre, critères validés automatiquement", width_cm=16.5)
+    m.image(IMG / "v04_tour.png", "Visite guidée d'une équerre annotée : étape 1 / 14 et son intention de conception", width_cm=16.5)
+    m.p("**Mode tuteur IA** : demande à ton assistant « Active le mode tuteur : guide-moi pour modéliser un support mural "
+        "sans jamais dessiner à ma place ». L'outil MCP `get_pedagogical_context` lui donne les degrés de liberté "
+        "expliqués, les erreurs récentes et l'étape de la leçon en cours.")
+
+    m.h2("4.29 Finitions : barre d'outils, sélection et raccourcis")
+    m.bullets([
+        "La barre *Modèle* tient sur un écran de 1366 px : les outils secondaires sont rangés dans **Create ▾** (Box, "
+        "Cylinder, Rib, Hole / Insert, Text, Insert Component, Enclosure Wizard),**Modify ▾** (Fillet, Chamfer, Shell, Split Body, Delete Face, Move/Copy, Align), "
+        "**Pattern ▾** (Mirror, Linear, Circular), **Construct ▾** (Offset / Angled Plane, Midplane) et **Inspect ▾** "
+        "(Measure, Interference, Section, Printability). Leurs raccourcis clavier marchent toujours directement.",
+        "Couleurs : une sélection en esquisse est **cyan vif** et plus épaisse ; le survol (2D et 3D) est **jaune clair**. "
+        "Blanc = contraint, bleu = encore libre, orange pointillé = construction, rouge = sur-contraint.",
+        "**Sélection par cadre** en glissant dans le vide : vers la **droite** (cadre bleu plein) seuls les éléments "
+        "entièrement dedans sont pris ; vers la **gauche** (cadre vert pointillé) tout ce que le cadre touche. "
+        "En 3D, le cadre sélectionne des pièces.",
+        "En esquisse, **N** (ou le bouton œil à côté d'*Expliquer*) remet la vue bien à plat face au plan. "
+        "**Ctrl+A** sélectionne toute l'esquisse. Le **clic droit** sur une sélection propose directement les contraintes "
+        "compatibles (2 points + 1 ligne → Symétrie, Milieu…). Le bas du panneau résume tous les raccourcis.",
+    ])
+    m.image(IMG / "v04f_toolbar_1366.png", "Barre d'outils regroupée : tout tient en 1366 × 768", width_cm=16.5)
+    m.image(IMG / "v04f_sketch_selection.png", "Sélection en esquisse : cyan vif, trait de 3 px", width_cm=16.5)
+
+    m.h2("4.30 Les 9 parcours guidés et leurs exemples annotés")
+    m.p("Le menu du panneau **Learn** (`F1`) range les parcours par niveau. Chaque parcours a un bouton "
+        "**Ouvrir l'exemple annoté** : la pièce finie s'ouvre et la visite guidée explique chaque étape (FR / EN).")
+    m.table(["Parcours", "Niveau", "Ce qu'on apprend"], [
+        ["1 — Équerre de fixation", "Débutant", "esquisse contrainte, extrusion, perçage, congé, modification paramétrique"],
+        ["4 — Dé à jouer paramétrique", "Débutant", "rectangle par le centre, esquisses sur les 6 faces, répétition 2D, congés sur 12 arêtes, paramètre « cote »"],
+        ["2 — Boîtier à couvercle", "Intermédiaire", "paramètre de jeu, coque, Split Body, Align, interférences"],
+        ["5 — Cadre de pince de serrage", "Intermédiaire", "profil en C avec congés 2D, nervures, bossage, taraudage M8 avec jeu FDM"],
+        ["6 — Poulie à gorge", "Intermédiaire", "demi-profil et révolution, alésage, rainure de clavette (oblong), répétition circulaire, mise en plan"],
+        ["7 — Support de roulement", "Intermédiaire", "demi-pièce + symétrie, trou oblong de réglage, logement concentrique (O), trou de graissage"],
+        ["3 — Bride et mise en plan", "Avancé", "révolution, répétition, taraudage, plan PDF"],
+        ["8 — Raccord carré-rond", "Avancé", "plan décalé, lissage carré → cercle, coque ouverte aux deux bouts, Printability"],
+        ["9 — Coude à brides", "Avancé", "balayage le long d'un arc, brides percées, paramètres diametre_tube / epaisseur_paroi, export 3MF et PDF"],
+    ], [4.6, 2.6, 9.8])
+    m.image(IMG / "v04f_learn_list.png", "Le menu Learn : 9 parcours classés Débutant / Intermédiaire / Avancé", width_cm=16.5)
+    m.image(IMG / "v04f_cas_ecole.png", "Quatre des cas d'école : pince, poulie, support de roulement, raccord carré-rond", width_cm=16.5)
+
+    # ---------------------------------------------------------------- v0.5 Makers & Pedagogy
+    m.h2("4.31 Perçages normalisés et inserts (Hole / Insert, Maj+H)")
+    m.p("Plus besoin de chercher les cotes d'un lamage ou d'un insert laiton : clique une face plane, le trou se pose "
+        "où tu cliques. Il s'accroche au centre de la face, aux points d'esquisse, aux axes des trous existants "
+        "(par exemple les trous d'une carte insérée) et à la grille. **Ctrl+clic** ajoute un autre trou dans la même étape.")
+    m.table(["Type", "Ce que Silex perce (M3)", "Pour"], [
+        ["Passage (clearance)", "Ø3,2 serré ou Ø3,4 normal, traversant ou borgne", "une vis qui traverse librement"],
+        ["Lamage (counterbore)", "Ø3,4 + logement Ø6,1 × 3,2", "vis à tête cylindrique CHC (DIN 912)"],
+        ["Fraisage (countersink)", "Ø3,4 + cône 90° Ø6,4", "vis à tête fraisée FHC (DIN 7991), tête affleurante"],
+        ["Insert thermofusible", "Ø4,0 × 5,7 avec chanfrein d'entrée 0,4", "insert laiton posé au fer (type Ruthex / CNC Kitchen)"],
+        ["Écrou prisonnier", "hexagone 5,5 + 2 × 0,15 de jeu, puis passage Ø3,4", "écrou M3 glissé dans la pièce"],
+    ], [3.8, 6.2, 7.0])
+    m.p("Tailles M2 à M6. C'est une étape paramétrique `FastenerHole` de la timeline (double-clic pour la modifier), "
+        "et l'outil MCP `create_fastener_hole` fait la même chose.")
+    m.image(IMG / "v05_hole.png", "Outil Hole / Insert sur le couvercle : type, taille, ajustement, profondeur", width_cm=16.5)
+    m.h3("Bibliothèque de composants (Create ▾ > Insert Component)")
+    m.p("Raspberry Pi 4B et 5, Raspberry Pi Pico, ESP32 DevKit V1, Arduino Uno R3, écran OLED 0,96\", bouton 6 × 6, "
+        "embase USB-C et ventilateur 40 × 40 × 10. Ce sont des modèles simplifiés aux cotes officielles : contour, "
+        "trous de fixation, encombrement des connecteurs.")
+    m.bullets([
+        "Le composant arrive comme **corps de référence verrouillé** 🔒, avec son matériau (PCB vert…). On le place "
+        "avec *Move/Copy* ou *Align*, on projette ses arêtes dans une esquisse et on vérifie les interférences.",
+        "Il ne peut pas être modifié : une étape qui tenterait de le percer ou de le fusionner passe en rouge, avec "
+        "un message clair. Un *Join* sans cible choisit automatiquement ta pièce, pas la carte.",
+        "Il n'est ni exporté (STL, 3MF, STEP « tout ») ni contrôlé par *Printability* : on n'imprime pas la carte.",
+    ])
+    m.image(IMG / "v05_composants.png", "La bibliothèque : description, vis, entretoises et trous de fixation de chaque carte", width_cm=12)
+
+    m.h2("4.32 Impression 3D sans échec")
+    m.bullets([
+        "**Bed** (barre d'état) : affiche le plateau et le volume d'impression (Prusa MK4 / Ender 3 220 × 220 × 250, "
+        "Bambu Lab P1 / X1 256³, Prusa Mini 180³ ou taille personnalisée). Une pièce qui dépasse passe le volume en "
+        "**rouge**, avec son nom en bas de la vue.",
+        "**Poser à plat** (Modify ▾ > Lay Flat on Bed, ou clic droit sur une face) : clique la face qui doit toucher le "
+        "plateau, la pièce se couche dessus, centrée, prête pour le trancheur. C'est une étape recalculée avec le modèle.",
+        "**Split Body avec pions** : coche *Add alignment pins / pegs*. Silex pose 2 pions (ou plus) sur la moitié du "
+        "bas, aussi écartés que possible dans la section, et perce les logements dans l'autre moitié avec 0,20 mm de "
+        "jeu radial. Les deux impressions se recollent sans décalage.",
+        "**Assistant boîtier** (Create ▾ > Enclosure Wizard) : dimensions intérieures, paroi, rayon des coins et "
+        "fermeture (lèvre emboîtable, 4 colonnettes M3 avec inserts, ou couvercle coulissant). Ce n'est pas un bloc "
+        "opaque : il écrit une **timeline commentée** (Box → Fillet → Shell → Split → fermeture) et des paramètres "
+        "(`int_longueur`, `paroi`…). On change une cote dans `Ctrl+P` et tout le boîtier suit.",
+    ])
+    m.image(IMG / "v05_assistant_boitier.png", "L'assistant boîtier : 3 clics", width_cm=7)
+    m.image(IMG / "v05_boitier_pi.png", "Boîtier généré (colonnettes M3, inserts) avec un Raspberry Pi 4 verrouillé sur ses entretoises", width_cm=16.5)
+    m.image(IMG / "v05_plateau.png", "Plateau Prusa Mini : la pièce de 200 mm dépasse, le volume passe en rouge", width_cm=16.5)
+
+    m.h2("4.33 Défis de dépannage et fantôme avant / après")
+    m.p("Dans **Learn** (`F1`), la catégorie **Défis de dépannage (5 min)** ouvre une pièce cassée à réparer. Le défi se "
+        "valide tout seul quand le but est atteint **et** que le *test de robustesse* passe : Silex change lui-même une "
+        "cote sur une copie de la pièce, la recalcule et revérifie.")
+    m.table(["Défi", "Le problème", "Ce que vérifie Silex"], [
+        ["1 — L'esquisse élastique", "les trous se décentrent quand la largeur passe de 60 à 80 mm",
+         "esquisse 0 DOF ; à 80 mm, les trous restent symétriques"],
+        ["2 — Le couvercle bloqué", "collision rouge entre bac et couvercle (`jeu_montage` négatif)",
+         "jeu 0,1 à 0,5 mm, aucune collision, même boîte rallongée à 80 mm"],
+        ["3 — Le congé impossible", "un congé plus grand que l'épaisseur (étape rouge)",
+         "le congé existe et passe, même avec une plaque de 6 mm"],
+        ["4 — Le contour ouvert", "l'extrusion n'a plus de profil fermé",
+         "extrusion verte, volume complet, contour toujours fermé à 55 mm de haut"],
+        ["5 — La pièce STEP à modifier", "bossage inutile et trou mal placé, sans historique",
+         "bossage supprimé (Delete Face), trou déplacé à X = −15 mm"],
+    ], [4.0, 6.3, 6.7])
+    m.image(IMG / "v05_defi4.png", "Défi 4 : l'extrusion est rouge, les critères attendent la réparation", width_cm=16.5)
+    m.p("**Fantôme avant / après** : quand tu modifies une cote, une étape de la timeline ou un paramètre (`Ctrl+P`), "
+        "la silhouette filaire **gris pâle** de l'état précédent reste affichée pendant toute l'édition, puis 3 secondes. "
+        "On voit tout de suite le sens et l'ampleur de la modification.")
+    m.image(IMG / "v05_fantome.png", "Le paramètre « cote » passe de 20 à 26 : le fantôme montre le dé d'avant", width_cm=16.5)
+
+    m.h2("4.34 Interface Essentiel / Complet et cartes d'intention")
+    m.bullets([
+        "Le bouton tout à droite de la barre *Modèle* bascule entre **Essentiel** (débutants, ateliers) et **Complet**. "
+        "En Essentiel, la barre ne garde que les 7 commandes fondamentales : Sketch, Extrude, Press/Pull, "
+        "Fillet / Chamfer, Hole / Insert, Measure, Export STL/3MF (plus Fit et Learn). La barre d'esquisse garde les "
+        "outils de base, et les options avancées des panneaux (Intersect…) sont masquées.",
+        "La bascule est instantanée et ne touche jamais au document ; les raccourcis clavier marchent dans les deux profils.",
+        "**Cartes d'intention** : laisse la souris 1,2 s sur un outil (ou une entrée de menu). Une carte montre le nom "
+        "FR / EN, le raccourci, une miniature **avant → après** et une phrase en langage maker.",
+    ])
+    m.image(IMG / "v05_essentiel.png", "Profil Essentiel : 7 commandes", width_cm=16.5)
+    m.image(IMG / "v05_carte_intention.png", "Carte d'intention de la coque : « Creuse un volume plein en gardant une épaisseur de paroi constante »", width_cm=16.5)
+
+    m.h2("4.35 Formateurs : enregistreur de leçons et tuteur IA socratique")
+    m.bullets([
+        "**Créer une leçon depuis ce projet** (panneau Learn) : Silex lit la timeline de ta pièce et propose une étape "
+        "par fonction, avec des critères automatiques. Ce sont le type d'étape, l'esquisse entièrement contrainte, les "
+        "cotes clés (distance, rayon, épaisseur, taille M3…), puis le nombre de corps et le volume final (± 2 %).",
+        "Tu écris la consigne et l'indice de chaque étape (FR / EN), puis **Exporter le pack** (`.json` + `.silex`) pour "
+        "le distribuer, ou **Ajouter à mes leçons** : la leçon apparaît dans le menu Learn, avec la pièce de référence "
+        "pour la visite guidée.",
+        "**Tuteur IA (mode socratique)** (bouton du panneau Learn, ou `silex --tutor-mode`) : l'assistant connecté par "
+        "MCP ne peut plus qu'**observer** (arbre, degrés de liberté, captures, mesures). Silex refuse ses commandes de "
+        "modélisation : il guide l'élève par des questions et des indices, sans faire à sa place. La barre d'état "
+        "affiche « · tutor ». Le pont MCP lancé avec `--tutor-mode` n'expose que les outils de lecture.",
+    ])
+    m.image(IMG / "v05_enregistreur.png", "L'enregistreur : une étape par fonction, consignes et indices à compléter", width_cm=16.5)
+    m.image(IMG / "v05_learn_defis.png", "Le menu Learn : 9 parcours et 5 défis de dépannage", width_cm=16.5)
+
+    # ---------------------------------------------------------------- v0.7 Trio Makers + reliability
+    m.h2("4.36 v0.7 — Texte en relief ou gravé, qui suit tes paramètres (Maj+T)")
+    m.p("Écris un nom, une référence ou une cote **sur** ta pièce : en relief (la matière dépasse) ou gravé (creusé "
+        "dedans). Le texte peut afficher la valeur de tes paramètres globaux et se met à jour avec eux.")
+    m.image(IMG / "v07_overview.png", "Texte en relief « Silex v2 - 80 mm » (il suit les paramètres), texte gravé "
+            "« MAKERS » et une étoile importée d'un SVG", width_cm=15)
+    m.steps([
+        "**Create ▾ > Text (Emboss / Engrave)**, `Maj+T` (en dehors d'une esquisse), ou clic droit sur une face.",
+        "Clique une **face plane** : le texte se centre dessus. Reclique ailleurs sur la face pour le déplacer "
+        "(il s'accroche au centre). Les plans XY / XZ / YZ et les plans de construction marchent aussi.",
+        "Tape le texte. Plusieurs lignes sont possibles. Le menu **{x} Parameter** insère un paramètre global entre accolades.",
+        "Règle la **police**, la **hauteur** (celle des majuscules), la **profondeur**, la **rotation**, l'**alignement** "
+        "(gauche, centre, droite) et la **position** X / Y. Tous ces champs acceptent les paramètres (`hauteur_texte`, `paroi / 2`…).",
+        "**OK** : le texte devient une étape `Text` de la timeline (double-clic pour le modifier).",
+    ])
+    m.table(["Tu écris…", "Silex affiche (largeur = 80, version = 2)"], [
+        ["`W={largeur}`", "W=80"],
+        ["`Boîtier v{version} - {largeur} mm`", "Boîtier v2 - 80 mm"],
+        ["`{largeur / 7:2}`", "11.43 (`:2` = deux décimales)"],
+        ["`{{texte}}`", "{texte} (accolades doublées = accolades affichées)"],
+    ], [7.0, 10.0])
+    m.p("Sous le texte, la ligne **Shown as** montre le résultat. Change `largeur` dans `Ctrl+P` : la pièce s'allonge "
+        "**et** le texte devient « W=100 ».")
+    m.bullets([
+        "**Profondeur positive** = relief (ajoute de la matière) ; **négative** = gravure (enlève de la matière).",
+        "Police : **Liberation Sans** est fournie avec Silex (le fichier `.silex` s'ouvre pareil sur un autre PC). "
+        "Les polices installées sur Windows sont aussi proposées.",
+        "Les trous des lettres (o, e, A, 8…) sont respectés : un « o » gravé laisse bien son îlot central.",
+    ])
+    m.image(IMG / "v07_text_editor.png", "L'éditeur de texte : le paramètre {largeur} devient « 80 », trait de 0,77 mm "
+            "imprimable avec une buse de 0,4 mm", width_cm=16.5)
+    m.box("warn", "Si les traits des lettres sont **plus fins que la buse** (0,4 mm), le panneau l'écrit en orange et "
+                  "l'étape passe en avertissement : l'imprimante risque de ne pas les tracer. Agrandis le texte "
+                  "(au moins 3 mm de haut environ en Liberation Sans) ou choisis une police plus grasse.")
+
+    m.h2("4.37 v0.7 — Importer un dessin SVG ou DXF dans une esquisse (Ctrl+Maj+I)")
+    m.p("Récupère un logo dessiné dans Inkscape, un contour exporté d'un logiciel de découpe laser ou un plan DXF, "
+        "et transforme-le en esquisse Silex que tu peux extruder.")
+    m.steps([
+        "Ouvre une esquisse, puis **Import SVG/DXF** dans la barre d'esquisse (ou `Ctrl+Maj+I`) et choisis le fichier.",
+        "Règle la **taille** : un facteur d'échelle, ou directement la **largeur voulue** en mm. Puis le **centre** X / Y "
+        "et la **rotation**.",
+        "Laisse **Group as rigid block** coché (conseillé) : le dessin se déplace d'un seul bloc sans se déformer. "
+        "Coche **As construction geometry** si tu veux seulement un guide pour redessiner.",
+        "**OK** : la barre d'état indique le nombre de lignes, arcs et cercles importés, et combien d'extrémités ont été "
+        "raccordées. Les contours fermés sont prêts à extruder.",
+    ])
+    m.bullets([
+        "SVG : chemins (courbes de Bézier comprises), rectangles, cercles, ellipses, lignes, polylignes, polygones, "
+        "transformations et unités (mm, cm, in, px).",
+        "DXF (texte) : lignes, cercles, arcs, polylignes (avec arrondis), splines, ellipses ; l'unité du fichier est lue.",
+        "Les courbes sont approchées à **0,02 mm** près ; deux extrémités à moins de **0,01 mm** sont collées entre elles.",
+        "Un **bloc rigide** garde 2 degrés de liberté : place-le en cotant son point central (`D`) par rapport à "
+        "l'origine. Supprimer ce point central libère le bloc : chaque ligne redevient modifiable.",
+    ])
+    m.box("tip", "Un SVG en pixels n'a pas de vraie taille. Utilise plutôt l'option **Target width** : tape la largeur "
+                 "voulue en millimètres et tout le dessin est mis à l'échelle d'un coup.")
+
+    m.h2("4.38 v0.7 — Redessiner d'après une photo : l'image de référence")
+    m.p("Pour reproduire une pièce cassée, pose-la sur une feuille quadrillée à côté d'une règle, prends une photo bien "
+        "de face, et glisse la photo **sous** ton esquisse pour la décalquer.")
+    m.steps([
+        "Dans l'esquisse, bouton **Image** de la barre (ou groupe *Import / reference image* du panneau) : choisis une "
+        "photo PNG, JPG, BMP ou WebP. Elle s'affiche en transparence sous le dessin.",
+        "**Calibre** l'image : clic droit > **Calibrate image (2 points)** (ou bouton **Calibrate**). Clique deux points "
+        "dont tu connais la distance (deux graduations de la règle, l'entraxe de deux trous), puis tape cette distance. "
+        "L'image passe à l'échelle 1:1 ; le premier point cliqué ne bouge pas.",
+        "Règle l'**opacité** avec le curseur, retourne l'image avec **Flip H** / **Flip V** si la photo est en miroir.",
+        "Redessine les contours par-dessus avec les outils habituels, puis cote-les.",
+    ])
+    m.image(IMG / "v07_canvas_sketch.png", "Photo d'une équerre sur papier quadrillé, calibrée sur la règle jaune, "
+            "sous une esquisse qui contient aussi l'étoile SVG importée en bloc rigide (2 DOF)", width_cm=16.5)
+    m.bullets([
+        "L'image est **enregistrée dans le fichier .silex** : tu peux l'envoyer à quelqu'un, elle sera là. Au-delà de "
+        "12 Mo, Silex garde seulement un lien vers le fichier image, pour ne pas alourdir le projet.",
+        "L'image sert seulement de guide : elle ne change ni la pièce, ni son volume, ni les exports. Elle n'est visible "
+        "que pendant l'édition de l'esquisse. **Remove image** la retire.",
+    ])
+    m.box("tip", "Pour une bonne mesure, photographie de loin avec le zoom (moins de déformation) et bien d'aplomb. "
+                 "Calibre sur la plus grande distance possible : l'erreur de clic compte moins.")
+
+    m.h2("4.39 Sauvegarde automatique et récupération après un plantage")
+    m.bullets([
+        "Toutes les **2 minutes**, si ton document a des modifications non enregistrées, Silex en fait une copie de "
+        "secours dans `%LOCALAPPDATA%\\Silex\\recovery`. Ton fichier `.silex` n'est jamais touché.",
+        "Quand tu enregistres ou que tu fermes Silex normalement, la copie de secours est effacée.",
+        "Si Silex s'arrête brutalement (plantage, coupure de courant), il te propose au démarrage suivant de "
+        "**Restaurer**, **Ignorer** (la garder pour plus tard) ou **Supprimer** chaque copie trouvée. Après une "
+        "restauration, pense à enregistrer (`Ctrl+S`).",
+        "Menu **?** > **Autosave** : intervalle de 1, 2, 5, 10 ou 15 minutes, ou désactivé ; **Open the recovery folder** "
+        "ouvre le dossier des copies.",
+    ])
+    m.box("eli", "C'est comme le brouillon enregistré tout seul dans un traitement de texte : tu peux toujours perdre "
+                 "les dernières minutes, mais jamais une après-midi de travail.")
+
+    m.h2("4.40 Vérifier l'installation : silex --doctor")
+    m.p("Si quelque chose ne marche pas (leçons absentes, IA qui ne se connecte pas…), lance le diagnostic dans une "
+        "fenêtre PowerShell ouverte dans le dossier de Silex :")
+    m.p("`.\\silex.exe --doctor | Out-Host`")
+    m.p("Silex affiche une ligne par vérification, marquée **[OK]**, **[WARN]** (ça marche, mais une option manque) "
+        "ou **[FAIL]** (à réparer) :")
+    m.table(["Vérification", "Ce qui est contrôlé"], [
+        ["Ressources", "les 9 leçons, les exemples, les 9 composants et leurs modèles STEP, les défis, la police du texte"],
+        ["Moteur 3D", "OpenCascade calcule un solide de test"],
+        ["Esquisse", "le solveur de contraintes PlaneGCS résout un cercle de test"],
+        ["Dossiers", "les dossiers de récupération et de leçons sont accessibles en écriture"],
+        ["IA (MCP)", "le canal de pilotage s'ouvre et répond ; Python et le module `mcp` sont installés ; `mcp_server.py` est à côté de `silex.exe`"],
+    ], [3.4, 13.6])
+    m.box("tip", "Le `| Out-Host` est nécessaire parce que `silex.exe` est une application fenêtrée : sans lui, "
+                 "PowerShell n'attend pas la fin du rapport.")
+
+    m.h2("4.41 À propos et licences")
+    m.p("Menu **?** > **About Silex / Licenses** : version, identifiant de compilation (commit Git), versions de Qt et "
+        "d'OpenCascade, et le texte de toutes les licences.")
+    m.bullets([
+        "Silex est un logiciel libre sous **licence MIT** (« The Silex contributors ») : tu peux l'utiliser, le copier, le "
+        "modifier et le redistribuer, y compris dans un cadre commercial, en gardant la mention de licence.",
+        "Les bibliothèques utilisées gardent leur propre licence (OpenCascade, Qt, PlaneGCS, FreeType…). La liste complète "
+        "est dans `THIRD-PARTY-NOTICES.txt`, à côté de `silex.exe`. La police Liberation Sans est sous licence SIL OFL.",
+    ])
     m.page_break()
 
     # ---------------------------------------------------------------- 5. troubleshooting
     m.h1("5. Dépannage")
     m.table(["Problème", "Solution"], [
+        ["La pastille MCP est orange.", "Une autre fenêtre Silex utilise déjà le canal IA. Ferme-la ou lance celle-ci avec `--pipe autre_nom`."],
         ["Silex ne démarre pas (`MSVCP140.dll` manquant).", "Installe le Visual C++ Redistributable x64 (§ 1.3)."],
         ["L'extrusion ne trouve pas de profil.", "Le contour n'est pas fermé : vérifie que chaque extrémité est collée à la suivante (carré jaune à l'accrochage). Un contour fermé apparaît en bleu clair."],
         ["L'esquisse refuse une contrainte.", "Elle rendrait l'esquisse sur-contrainte (deux règles contradictoires). Supprime la cote en trop ou utilise-en une autre."],
@@ -726,24 +1245,37 @@ def build():
         ["Une étape est soulignée en orange.", "Une référence a été « re-trouvée » par sa géométrie. Vérifie que le congé ou l'esquisse est au bon endroit."],
         ["Mon fichier STEP n'apparaît pas dans « Ouvrir ».", "Normal : « Ouvrir » ne lit que les `.silex`. Utilise **Importer STEP** (`Ctrl+I`)."],
         ["La barre d'état indique « IPC disabled ».", "Une autre instance de Silex utilise déjà le canal de pilotage. Ferme-la, ou lance celle-ci avec `--pipe autre_nom`."],
+        ["« … is a locked reference component »", "L'étape vise une carte de la bibliothèque (🔒). Choisis ta pièce comme cible : on ne modifie pas un composant de référence."],
+        ["L'assistant IA répond « Tutor mode ».", "Le mode tuteur est actif : l'IA guide sans modéliser. Désactive « Tuteur IA » dans le panneau Learn pour qu'elle puisse dessiner."],
+        ["Des leçons, exemples ou composants manquent, ou l'IA ne se connecte pas.", "Lance `.\\silex.exe --doctor | Out-Host` (§ 4.40) : chaque ligne **[FAIL]** dit quoi réparer. Pour l'IA, lance aussi `python mcp_server.py --check`."],
+        ["Silex a planté : ai-je perdu mon travail ?", "Relance Silex : il propose de **restaurer** la dernière sauvegarde automatique (au plus 2 minutes de travail perdues). Enregistre ensuite avec `Ctrl+S` (§ 4.39)."],
+        ["Le texte en relief est orange (avertissement).", "Ses traits sont plus fins que la buse de 0,4 mm. Agrandis le texte ou choisis une police plus grasse (§ 4.36)."],
+        ["Le texte affiche une erreur de paramètre.", "Un nom entre accolades n'existe pas, ou une accolade n'est pas fermée. Vérifie dans `Ctrl+P` ; pour afficher une accolade, double-la : `{{`."],
+        ["Le SVG importé n'a pas la bonne taille.", "Le fichier est en pixels. Refais l'import avec **Target width** et la largeur voulue en mm (§ 4.37)."],
+        ["Le dessin importé ne s'extrude pas.", "Un contour n'est pas fermé dans le fichier d'origine (écart de plus de 0,01 mm). Ferme-le avec une ligne, ou corrige le fichier dans Inkscape."],
+        ["Je ne vois plus l'image de référence.", "Elle n'apparaît que pendant l'édition de l'esquisse : double-clique l'esquisse dans la timeline. Vérifie aussi le curseur d'opacité."],
     ], [6.2, 10.8])
 
     # ---------------------------------------------------------------- 6. cheat sheet
     m.h1("6. Aide-mémoire des raccourcis")
     m.table(["Contexte", "Raccourcis"], [
-        ["Modèle", "`S` esquisse · `E` extrusion · `R` révolution · `F` congé · `C` chanfrein · `H` coque · `B` combiner · `M` symétrie · `Maj+P` répétition linéaire · `Maj+C` répétition circulaire · `W` cadrer · `0 1 3 7` vues"],
-        ["Esquisse", "`L` ligne · `R` rectangle · `C` cercle · `A` arc · `D` cote · `X` construction · `Suppr` effacer · `Entrée` terminer"],
-        ["Contraintes", "`H` horizontal · `V` vertical · `I` coïncident · `P` parallèle · `K` perpendiculaire · `T` tangent · `Q` égal · `F` bloquer"],
-        ["Fichier", "`Ctrl+N` nouveau · `Ctrl+O` ouvrir · `Ctrl+S` enregistrer · `Ctrl+I` importer STEP · `Ctrl+E` STEP · `Ctrl+Maj+E` STL"],
+        ["Modélisation directe", "`Q` pousser / tirer · `Maj+B` boîte · `Maj+Y` cylindre · ViewCube : clic face / arête / coin, Maison"],
+        ["Corps & faces (v0.4)", "`Suppr` supprimer corps / face (étape annulable) · `V` masquer / montrer · clic droit : Isolate, Move / Copy, Align, Split body"],
+        ["Apprendre (v0.4)", "`F1` mode guidé · Expliquer (esquisse) · Hint · Guided tour"],
+        ["Makers (v0.5)", "`Maj+H` perçage / insert · Create ▾ : Insert Component, Enclosure Wizard · Modify ▾ : Lay Flat on Bed · Bed (barre d'état) · Learn : défis, Créer une leçon, Tuteur IA · bouton de profil Essentiel / Complet"],
+        ["Trio Makers (v0.7)", "`Maj+T` texte en relief / gravé (hors esquisse) · `{paramètre}` dans le texte · esquisse : `Ctrl+Maj+I` importer SVG / DXF, bouton Image, clic droit > Calibrate image"],
+        ["Fiabilité (v0.7)", "menu **?** : About / Licenses, Autosave (1 à 15 min), dossier de récupération · `silex --doctor` · `--recover <fichier>`"],
+        ["Sélection", "glisser dans le vide : → fenêtre (entièrement dedans) · ← capture (touché) · Ctrl+A (esquisse) · N vue normale (esquisse) · clic droit : contraintes compatibles"],
+        ["Modèle", "`S` esquisse · `E` extrusion · `R` révolution · `F` congé · `C` chanfrein · `H` coque · `B` combiner · `M` symétrie · `Maj+P` répétition linéaire · `Maj+C` répétition circulaire · `Maj+W` balayage · `Maj+L` lissage · `W` cadrer · `0 1 3 7` vues"],
+        ["Analyse (v0.3)", "`I` mesure · `Maj+I` interférences · `Alt+S` vue en coupe · `Ctrl+P` paramètres · `Ctrl+D` mise en plan"],
+        ["Esquisse", "`L` ligne · `R` rectangle · `Maj+R` rectangle par centre · `C` cercle · `A` arc · `U` oblong · `D` cote · `E` projeter · `X` construction · `Suppr` effacer · `Entrée` terminer"],
+        ["Édition 2D", "`T` ajuster · `Maj+F` congé · `Maj+O` décaler · valeur + `Tab` / `Entrée` pendant le tracé · `Alt` ignore la grille"],
+        ["Contraintes", "`H` horizontal · `V` vertical · `I` coïncident · `P` parallèle · `K` perpendiculaire · `Maj+T` tangent · `Q` égal · `F` bloquer · `M` milieu · `S` symétrie · `O` concentrique"],
+        ["Fichier", "`Ctrl+N` nouveau · `Ctrl+O` ouvrir · `Ctrl+S` enregistrer · `Ctrl+I` importer STEP · `Ctrl+E` STEP · `Ctrl+Maj+E` STL · `Ctrl+3` 3MF"],
         ["Édition", "`Ctrl+Z` annuler · `Ctrl+Y` rétablir · `Entrée` valider · `Échap` annuler / désélectionner"],
         ["Souris", "Molette : zoom · Milieu : panoramique · `Maj`+milieu ou `Alt`+gauche : orbite · Clic droit maintenu : menu radial · Double-clic : pièce entière"],
     ], [3.0, 14.0])
 
-    cp = d.core_properties
-    cp.author = "Silex"
-    cp.last_modified_by = "Silex"
-    cp.title = "Silex — Manuel utilisateur"
-    cp.subject = "CAO 3D paramétrique"
     d.save(OUT)
     print("written", OUT)
 

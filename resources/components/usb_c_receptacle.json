@@ -1,0 +1,44 @@
+{
+  "id": "usb_c_receptacle",
+  "category": "connector",
+  "name": {
+    "fr": "Connecteur USB-C femelle",
+    "en": "USB-C receptacle"
+  },
+  "description": {
+    "fr": "Embase 8,94 × 3,26 mm, profondeur 7,35 mm. Ouverture au plan y = 0, origine au centre bas.",
+    "en": "8.94 × 3.26 mm receptacle, 7.35 mm deep. Opening on the y = 0 plane, origin at the bottom center."
+  },
+  "mounting_holes": [],
+  "screw": "",
+  "standoff_mm": 0,
+  "material": "Aluminium",
+  "parts": [
+    {
+      "part": "Shell",
+      "stadium": [
+        0,
+        0,
+        8.94,
+        3.26,
+        7.35
+      ],
+      "mode": "new"
+    }
+  ],
+  "openings": [
+    {
+      "name": "USB-C",
+      "side": "-y",
+      "center": [
+        0,
+        1.63
+      ],
+      "size": [
+        9.3,
+        3.6
+      ]
+    }
+  ],
+  "step": "usb_c_receptacle.step"
+}

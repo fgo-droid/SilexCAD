@@ -1,0 +1,294 @@
+{
+ "features": [
+  {
+   "id": "0d774365-5869-4085-a29c-b1b4225e3d89",
+   "name": "Profil_L",
+   "params": {
+    "plane": {
+     "kind": "XY"
+    },
+    "sketch": {
+     "constraints": [
+      {
+       "a": [
+        "cae199a2-d25a-45d4-908e-0b20bdc65c31",
+        2
+       ],
+       "b": [
+        "c9f9caba-1eb7-4de5-8dc4-64a5e4d67a30",
+        1
+       ],
+       "id": "6e8bd837-9892-435c-aea5-c36a126f8ca1",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "c9f9caba-1eb7-4de5-8dc4-64a5e4d67a30",
+        2
+       ],
+       "b": [
+        "731fae9d-5573-461d-ac65-90c18d9b959b",
+        1
+       ],
+       "id": "506aba0b-82b0-4f48-8cb8-86d644645b00",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "731fae9d-5573-461d-ac65-90c18d9b959b",
+        2
+       ],
+       "b": [
+        "9ecd2c3c-061f-4133-b31d-65645e938d6b",
+        1
+       ],
+       "id": "ef2a547d-4692-4ad9-8e96-ea23cf373749",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "9ecd2c3c-061f-4133-b31d-65645e938d6b",
+        2
+       ],
+       "b": [
+        "b0647024-49ad-429b-928c-9421ab6d7351",
+        1
+       ],
+       "id": "7b758c4a-8cf4-4960-9a99-e2dce639c4f8",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "b0647024-49ad-429b-928c-9421ab6d7351",
+        2
+       ],
+       "b": [
+        "e5bebd42-91dd-4c9c-bef6-aa83421ce79f",
+        1
+       ],
+       "id": "9d80e994-a32f-480b-9c20-f73ce152f192",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "cae199a2-d25a-45d4-908e-0b20bdc65c31",
+        1
+       ],
+       "b": [
+        "@O",
+        1
+       ],
+       "id": "2b7403f0-a0fb-4b29-878d-e64458de859b",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "cae199a2-d25a-45d4-908e-0b20bdc65c31",
+        0
+       ],
+       "id": "170f265b-62c5-4a7e-b472-7b8b45e67b03",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "c9f9caba-1eb7-4de5-8dc4-64a5e4d67a30",
+        0
+       ],
+       "id": "f44281b2-5206-4e39-9af6-13f3a32c336c",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "731fae9d-5573-461d-ac65-90c18d9b959b",
+        0
+       ],
+       "id": "4d9da7c9-dac5-4842-8d40-7b0988d78b73",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "9ecd2c3c-061f-4133-b31d-65645e938d6b",
+        0
+       ],
+       "id": "da25f543-eb61-4635-ac82-add354b47a6d",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "b0647024-49ad-429b-928c-9421ab6d7351",
+        0
+       ],
+       "id": "f24e96bb-b519-422b-a7ee-680e16513cf6",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "e5bebd42-91dd-4c9c-bef6-aa83421ce79f",
+        0
+       ],
+       "id": "a16ef719-2ee4-4f58-92ba-1a57676f7129",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "c9f9caba-1eb7-4de5-8dc4-64a5e4d67a30",
+        1
+       ],
+       "id": "745411a0-0264-4184-9764-3c08511d7c9b",
+       "kind": "DistanceX",
+       "value": 50.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "731fae9d-5573-461d-ac65-90c18d9b959b",
+        1
+       ],
+       "id": "4067dd5c-9964-46ac-8543-ab975437473b",
+       "kind": "DistanceY",
+       "value": 10.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "9ecd2c3c-061f-4133-b31d-65645e938d6b",
+        1
+       ],
+       "id": "94656532-840c-4042-86ac-e2f9196ce389",
+       "kind": "DistanceX",
+       "value": 10.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "b0647024-49ad-429b-928c-9421ab6d7351",
+        1
+       ],
+       "expr": "hauteur",
+       "id": "eec7fd0a-bf85-4cb1-b64b-dcd9b3aa29dc",
+       "kind": "DistanceY",
+       "value": 40.0
+      }
+     ],
+     "geos": [
+      {
+       "id": "cae199a2-d25a-45d4-908e-0b20bdc65c31",
+       "kind": "Line",
+       "p1": [
+        0.0,
+        0.0
+       ],
+       "p2": [
+        50.0,
+        0.0
+       ]
+      },
+      {
+       "id": "c9f9caba-1eb7-4de5-8dc4-64a5e4d67a30",
+       "kind": "Line",
+       "p1": [
+        50.0,
+        0.0
+       ],
+       "p2": [
+        50.0,
+        10.0
+       ]
+      },
+      {
+       "id": "731fae9d-5573-461d-ac65-90c18d9b959b",
+       "kind": "Line",
+       "p1": [
+        50.0,
+        10.0
+       ],
+       "p2": [
+        10.0,
+        10.0
+       ]
+      },
+      {
+       "id": "9ecd2c3c-061f-4133-b31d-65645e938d6b",
+       "kind": "Line",
+       "p1": [
+        10.0,
+        10.0
+       ],
+       "p2": [
+        10.0,
+        40.0
+       ]
+      },
+      {
+       "id": "b0647024-49ad-429b-928c-9421ab6d7351",
+       "kind": "Line",
+       "p1": [
+        10.0,
+        40.0
+       ],
+       "p2": [
+        0.0,
+        40.0
+       ]
+      },
+      {
+       "id": "e5bebd42-91dd-4c9c-bef6-aa83421ce79f",
+       "kind": "Line",
+       "p1": [
+        0.0,
+        40.0
+       ],
+       "p2": [
+        0.0,
+        3.0
+       ]
+      }
+     ]
+    }
+   },
+   "type": "Sketch"
+  },
+  {
+   "id": "a0dc4976-b550-494a-837d-8c95bf6289c5",
+   "name": "Extrude1",
+   "params": {
+    "distance": 20.0,
+    "op": "NewBody",
+    "profile": {
+     "regions": [],
+     "sketch": "0d774365-5869-4085-a29c-b1b4225e3d89"
+    },
+    "reversed": false,
+    "symmetric": false,
+    "targetBody": ""
+   },
+   "type": "Extrude"
+  }
+ ],
+ "format": "silex",
+ "marker": 2,
+ "parameters": [
+  {
+   "comment": "Hauteur du profil en L",
+   "expression": "40",
+   "name": "hauteur",
+   "unit": "mm",
+   "value": 40.0
+  }
+ ],
+ "schema_version": "0.4",
+ "version": 4
+}

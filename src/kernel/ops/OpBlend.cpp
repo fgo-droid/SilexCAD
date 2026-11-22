@@ -53,6 +53,7 @@ public:
             ctx.warnings.push_back(std::to_string(lost) + " edge reference(s) lost");
 
         for (auto& [bodyId, edges] : perBody) {
+            requireEditable(ctx.state, bodyId);
             NamedShape& body = ctx.state.bodies.at(bodyId);
             NamedShape result;
             if (m_fillet) {

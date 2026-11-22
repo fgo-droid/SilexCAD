@@ -31,6 +31,11 @@ public:
 
     bool listen(const QString& name, QString* error = nullptr);
     QString endpoint() const;
+    int clientCount() const { return m_clients; }
+
+signals:
+    /// Ergonomics lot: drives the MCP indicator of the status bar.
+    void clientCountChanged(int count);
 
 private:
     void onNewConnection();
@@ -38,6 +43,7 @@ private:
 
     IpcCommandDispatcher* m_dispatcher;
     QLocalServer* m_server;
+    int m_clients = 0;
 };
 
 }  // namespace silex::ipc

@@ -1,0 +1,492 @@
+{
+  "features": [
+    {
+      "id": "eb86bd1b-a22b-4961-979e-1e740b6ed9c0",
+      "name": "Trajectoire",
+      "params": {
+        "plane": {
+          "kind": "XZ"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "8aa5d287-9a62-40ac-9ce7-844ab2f950ec",
+                2
+              ],
+              "b": [
+                "@O",
+                1
+              ],
+              "id": "63e215d4-9dae-456e-93d3-0400d0d47db3",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "8aa5d287-9a62-40ac-9ce7-844ab2f950ec",
+                0
+              ],
+              "id": "ec7492a9-9d20-4ad7-a2bf-f910d89ecbfd",
+              "kind": "Radius",
+              "value": 45.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "8aa5d287-9a62-40ac-9ce7-844ab2f950ec",
+                1
+              ],
+              "id": "21a08cb8-341c-464b-a569-4e98eea369f0",
+              "kind": "DistanceX",
+              "value": 45.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "8aa5d287-9a62-40ac-9ce7-844ab2f950ec",
+                1
+              ],
+              "id": "1ccb69bc-fda2-4985-9e13-a126e3133990",
+              "kind": "DistanceY",
+              "value": 45.0
+            }
+          ],
+          "geos": [
+            {
+              "a0": 1.5707963267948966,
+              "a1": 3.141592653589793,
+              "c": [
+                45.0,
+                0.0
+              ],
+              "id": "8aa5d287-9a62-40ac-9ce7-844ab2f950ec",
+              "kind": "Arc",
+              "r": 45.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "La trajectoire : un arc de 90° de rayon 45 mm, dans le plan XZ.",
+      "annotation_en": "The path: a 90° arc of radius 45 mm, in the XZ plane."
+    },
+    {
+      "id": "dfd034f9-213d-4a4b-9c76-995e2f895aac",
+      "name": "Section",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "ac8a9667-3486-4568-838d-5e25eec87e6e",
+                3
+              ],
+              "b": [
+                "@O",
+                1
+              ],
+              "id": "0d0f2cd0-a227-4714-be8a-805fde2dfe82",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "ac8a9667-3486-4568-838d-5e25eec87e6e",
+                0
+              ],
+              "b": [
+                "ad19bd06-57d3-4080-b2b8-36669c69362f",
+                0
+              ],
+              "id": "dc82871e-8d33-4463-b93c-97ff578bcc77",
+              "kind": "Concentric"
+            },
+            {
+              "a": [
+                "ac8a9667-3486-4568-838d-5e25eec87e6e",
+                0
+              ],
+              "expr": "diametre_tube",
+              "id": "68ccc2c7-903f-44f5-809e-6120dc500dd8",
+              "kind": "Diameter",
+              "value": 30.0
+            },
+            {
+              "a": [
+                "ad19bd06-57d3-4080-b2b8-36669c69362f",
+                0
+              ],
+              "expr": "diametre_tube - 2 * epaisseur_paroi",
+              "id": "c1333d9c-be3d-478b-baf8-5ac2a6efac68",
+              "kind": "Diameter",
+              "value": 24.0
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "ac8a9667-3486-4568-838d-5e25eec87e6e",
+              "kind": "Circle",
+              "r": 15.0
+            },
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "ad19bd06-57d3-4080-b2b8-36669c69362f",
+              "kind": "Circle",
+              "r": 12.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "La section annulaire, perpendiculaire au départ de la trajectoire. Ses diamètres suivent les paramètres diametre_tube et epaisseur_paroi (Ctrl+P).",
+      "annotation_en": "The ring section, perpendicular to the start of the path. Its diameters follow the parameters diametre_tube and epaisseur_paroi (Ctrl+P)."
+    },
+    {
+      "id": "23b26b19-b993-41be-b3b1-860f2442e5ea",
+      "name": "Sweep1",
+      "params": {
+        "op": "NewBody",
+        "orientation": "CorrectedFrenet",
+        "path": {
+          "curves": [],
+          "sketch": "eb86bd1b-a22b-4961-979e-1e740b6ed9c0"
+        },
+        "profile": {
+          "regions": [
+            "ac8a9667-3486-4568-838d-5e25eec87e6e"
+          ],
+          "sketch": "dfd034f9-213d-4a4b-9c76-995e2f895aac"
+        },
+        "targetBody": ""
+      },
+      "type": "Sweep",
+      "annotation": "Le balayage (Maj+W) pousse la section le long de l'arc : un coude creux d'un seul coup.",
+      "annotation_en": "The sweep (Shift+W) pushes the section along the arc: a hollow elbow in one go."
+    },
+    {
+      "id": "2a5f6a85-85bb-4f16-b0b6-9e1cb5e67a3b",
+      "name": "Cylinder1",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 70.0,
+        "height": -8.0,
+        "length": 20.0,
+        "op": "Join",
+        "plane": {
+          "kind": "XY"
+        },
+        "targetBody": "23b26b19-b993-41be-b3b1-860f2442e5ea",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "Bride d'entrée Ø70 × 8, puis alésée au diamètre intérieur.",
+      "annotation_en": "Inlet flange Ø70 × 8, then bored to the inner diameter."
+    },
+    {
+      "id": "ba58396a-da9f-4a16-bc0a-be98c307ac83",
+      "name": "Cylinder2",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 24.0,
+        "height": -8.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "XY"
+        },
+        "targetBody": "23b26b19-b993-41be-b3b1-860f2442e5ea",
+        "width": 20.0
+      },
+      "type": "Cylinder"
+    },
+    {
+      "id": "92493c19-c1c7-47de-a5ca-7da16b474853",
+      "name": "Cylinder3",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 45.0,
+        "diameter": 70.0,
+        "height": 8.0,
+        "length": 20.0,
+        "op": "Join",
+        "plane": {
+          "kind": "YZ",
+          "offset": 45.0
+        },
+        "targetBody": "23b26b19-b993-41be-b3b1-860f2442e5ea",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "Bride de sortie, sur le plan YZ décalé à l'extrémité de l'arc.",
+      "annotation_en": "Outlet flange, on the YZ plane offset to the end of the arc."
+    },
+    {
+      "id": "0c3afc12-4ebd-46d2-89f7-9b232da72a59",
+      "name": "Cylinder4",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 45.0,
+        "diameter": 24.0,
+        "height": 8.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "YZ",
+          "offset": 45.0
+        },
+        "targetBody": "23b26b19-b993-41be-b3b1-860f2442e5ea",
+        "width": 20.0
+      },
+      "type": "Cylinder"
+    },
+    {
+      "id": "b8ad0482-0aed-430f-a8c7-a8d5f366e4ff",
+      "name": "Trou_bride_1",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "d409cba7-1e0e-4d42-911c-dabe22112a2e",
+                0
+              ],
+              "id": "ef59947e-a378-4e93-a6cc-0bffe9f0d61d",
+              "kind": "Diameter",
+              "value": 5.5
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "d409cba7-1e0e-4d42-911c-dabe22112a2e",
+                3
+              ],
+              "id": "def9fb02-c676-4672-8abe-0fdf7310d9d6",
+              "kind": "DistanceX",
+              "value": 25.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "d409cba7-1e0e-4d42-911c-dabe22112a2e",
+                3
+              ],
+              "id": "6b9e4e15-1bd0-4335-8ba6-388143c5885b",
+              "kind": "DistanceY",
+              "value": 0.0
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                25.0,
+                0.0
+              ],
+              "id": "d409cba7-1e0e-4d42-911c-dabe22112a2e",
+              "kind": "Circle",
+              "r": 2.75
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "e5ad7151-1f88-4a2b-8f53-6832e36abe2d",
+      "name": "Extrude1",
+      "params": {
+        "distance": 8.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "b8ad0482-0aed-430f-a8c7-a8d5f366e4ff"
+        },
+        "reversed": true,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "44228de0-5114-41f6-ac1b-89d8e27a571d",
+      "name": "CircularPattern1",
+      "params": {
+        "axis": {
+          "kind": "Z"
+        },
+        "count": 4,
+        "equalSpacing": true,
+        "reverse": false,
+        "targets": {
+          "ids": [
+            "e5ad7151-1f88-4a2b-8f53-6832e36abe2d"
+          ],
+          "type": "feature"
+        },
+        "totalAngle": 360.0
+      },
+      "type": "CircularPattern",
+      "annotation": "4 trous M5 (Ø5,5 de passage) sur un cercle Ø50 : un trou + une répétition circulaire.",
+      "annotation_en": "4 M5 holes (Ø5.5 clearance) on a Ø50 circle: one hole + a circular pattern."
+    },
+    {
+      "id": "6530633e-fc9a-4d3b-acce-f76c42bf6cb7",
+      "name": "Trou_bride_2",
+      "params": {
+        "plane": {
+          "kind": "YZ",
+          "offset": 45.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "ae84acbe-d53f-40be-b957-02d2904a9278",
+                0
+              ],
+              "id": "de9289b6-3441-4cfa-a7a1-b53c59044190",
+              "kind": "Diameter",
+              "value": 5.5
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "ae84acbe-d53f-40be-b957-02d2904a9278",
+                3
+              ],
+              "id": "56f31c77-022e-40a9-8204-3d0c8df58730",
+              "kind": "DistanceX",
+              "value": 25.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "ae84acbe-d53f-40be-b957-02d2904a9278",
+                3
+              ],
+              "id": "6d794706-b4b7-4264-90d5-0c215cc4a7c8",
+              "kind": "DistanceY",
+              "value": 45.0
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                25.0,
+                45.0
+              ],
+              "id": "ae84acbe-d53f-40be-b957-02d2904a9278",
+              "kind": "Circle",
+              "r": 2.75
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "afbd17cf-d761-4e5b-9879-fe369bd11df5",
+      "name": "Extrude2",
+      "params": {
+        "distance": 8.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "6530633e-fc9a-4d3b-acce-f76c42bf6cb7"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "d22fdd7f-712d-4389-ace2-06c7a9a65d6e",
+      "name": "CircularPattern2",
+      "params": {
+        "axis": {
+          "kind": "Face",
+          "ref": {
+            "name": "92493c19-c1c7-47de-a5ca-7da16b474853:side",
+            "sig": {
+              "c": [
+                49.0,
+                -7.105427357601002e-15,
+                45.0
+              ],
+              "d": [
+                0.0,
+                -1.0,
+                1.2246467991473532e-16
+              ],
+              "s": 1759.291886010284,
+              "t": 1
+            }
+          }
+        },
+        "count": 4,
+        "equalSpacing": true,
+        "reverse": false,
+        "targets": {
+          "ids": [
+            "afbd17cf-d761-4e5b-9879-fe369bd11df5"
+          ],
+          "type": "feature"
+        },
+        "totalAngle": 360.0
+      },
+      "type": "CircularPattern"
+    }
+  ],
+  "format": "silex",
+  "marker": 13,
+  "parameters": [
+    {
+      "comment": "Diamètre extérieur du tube",
+      "expression": "30",
+      "name": "diametre_tube",
+      "unit": "mm",
+      "value": 30.0
+    },
+    {
+      "comment": "Épaisseur de la paroi",
+      "expression": "3",
+      "name": "epaisseur_paroi",
+      "unit": "mm",
+      "value": 3.0
+    }
+  ],
+  "schema_version": "0.4",
+  "version": 4
+}

@@ -3,6 +3,7 @@
 
 #include <optional>
 
+#include "TestPaths.h"
 #include "kernel/KernelEngine.h"
 #include "model/Document.h"
 #include "model/Features.h"

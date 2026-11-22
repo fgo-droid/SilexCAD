@@ -18,6 +18,7 @@
 #include "kernel/NamedShape.h"
 #include "model/Document.h"
 #include "model/Features.h"
+#include "model/RenderModel.h"
 #include "model/Sketch.h"
 
 namespace silex::kernel {
@@ -52,6 +53,13 @@ struct ModelState
     std::map<Uuid, std::string> bodyNames;
     std::map<Uuid, SketchOutput> sketches;
     std::map<Uuid, FeatureTool> featureTools;
+    std::map<Uuid, Placement> planes;  ///< v0.4: construction planes (feature id -> plane)
+    std::vector<ThreadView> cosmeticThreads;  ///< v0.4 lot 2
+    std::map<Uuid, std::string> lockedBodies; ///< v0.5 lot 1: reference components (body id -> catalog id)
+    std::map<Uuid, std::string> defaultMaterials;  ///< v0.5 lot 1: material preset when none is assigned
+
+    /// Last body that may be modified (locked reference components are skipped); empty if none.
+    Uuid lastEditableBody() const;
 
     double modelSize() const;
 };
@@ -138,6 +146,8 @@ std::vector<const SketchRegion*> selectRegions(const ExecContext& ctx, const Pro
 /// Combines `tool` with the target body (or creates a new body) and propagates names.
 /// Returns the id of the body that received the result.
 Uuid applyBoolean(ExecContext& ctx, const NamedShape& tool, BooleanOp op, const Uuid& targetBody);
+/// v0.5 lot 1: throws when `body` is a locked reference component (electronic board...).
+void requireEditable(const ModelState& st, const Uuid& body);
 
 /// Fuses several named tools into one (names propagated).
 NamedShape fuseAll(ExecContext& ctx, const std::vector<NamedShape>& tools);

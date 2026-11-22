@@ -46,6 +46,20 @@ std::string DocState::nextName(const std::string& type) const
     }
 }
 
+const Parameter* DocState::parameter(const std::string& name) const
+{
+    for (const auto& p : parameters)
+        if (p.name == name)
+            return &p;
+    return nullptr;
+}
+
+BodyMaterial DocState::materialOf(const Uuid& body) const
+{
+    auto it = materials.find(body);
+    return it != materials.end() ? it->second : defaultMaterial();
+}
+
 // ------------------------------------------------------------------ DAG
 
 std::set<Uuid> dependenciesOf(const FeatureNode& f)
@@ -92,13 +106,26 @@ Json docToJson(const DocState& s)
         Json jf{{"id", f->id}, {"type", f->type}, {"name", f->name}, {"params", f->params}};
         if (f->suppressed)
             jf["suppressed"] = true;
+        if (!f->annotation.empty())
+            jf["annotation"] = f->annotation;
+        if (!f->annotationEn.empty())
+            jf["annotation_en"] = f->annotationEn;
         feats.push_back(std::move(jf));
     }
-    return Json{{"format", "silex"},
-                {"schema_version", kSchemaVersion},
-                {"version", kFileFormatVersion},
-                {"marker", s.marker},
-                {"features", feats}};
+    Json j{{"format", "silex"},
+           {"schema_version", kSchemaVersion},
+           {"version", kFileFormatVersion},
+           {"marker", s.marker},
+           {"parameters", s.parameters},
+           {"features", feats}};
+    Json bodies = Json::array();
+    for (const auto& [id, m] : s.materials)
+        bodies.push_back(Json{{"id", id}, {"material", m}});
+    if (!bodies.empty())
+        j["bodies"] = bodies;
+    if (!s.drawing.is_null())
+        j["drawing"] = s.drawing;
+    return j;
 }
 
 namespace {
@@ -134,10 +161,37 @@ DocState docFromJson(const Json& j)
         f->name = jf.value("name", f->type);
         f->suppressed = jf.value("suppressed", false);
         f->params = jf.value("params", Json::object());
+        f->annotation = jf.value("annotation", std::string{});
+        f->annotationEn = jf.value("annotation_en", std::string{});
         s.features.push_back(std::move(f));
     }
+    if (j.contains("annotations") && j["annotations"].is_object())
+        for (auto& f : s.features)
+            for (const auto& key : {f->id, f->name})
+                if (j["annotations"].contains(key)) {
+                    auto n = std::make_shared<FeatureNode>(*f);
+                    const Json& a = j["annotations"][key];
+                    if (a.is_object()) {  // {"fr": "...", "en": "..."}
+                        n->annotation = a.value("fr", a.value("en", std::string{}));
+                        n->annotationEn = a.value("en", std::string{});
+                    }
+                    else
+                        n->annotation = a.get<std::string>();
+                    f = n;
+                }
     s.marker = std::clamp(j.value("marker", static_cast<int>(s.features.size())), 0,
                           static_cast<int>(s.features.size()));
+    // v0.3 additions (absent from 0.1 / 0.2 files)
+    if (j.contains("parameters") && j["parameters"].is_array()) {
+        s.parameters = j["parameters"].get<std::vector<Parameter>>();
+        evaluateParameters(s.parameters);
+    }
+    if (j.contains("bodies") && j["bodies"].is_array())
+        for (const auto& jb : j["bodies"])
+            if (jb.contains("id") && jb.contains("material"))
+                s.materials[jb["id"].get<std::string>()] = jb["material"].get<BodyMaterial>();
+    if (j.contains("drawing"))
+        s.drawing = j["drawing"];
     return s;
 }
 
@@ -224,6 +278,31 @@ DocState ReorderFeatureCommand::apply(const DocState& s) const
     return n;
 }
 
+DocState SetParametersCommand::apply(const DocState& s) const
+{
+    DocState n = s;
+    n.parameters = m_params;
+    evaluateParameters(n.parameters);
+    return n;
+}
+
+DocState SetBodyMaterialCommand::apply(const DocState& s) const
+{
+    DocState n = s;
+    if (m_material)
+        n.materials[m_body] = *m_material;
+    else
+        n.materials.erase(m_body);
+    return n;
+}
+
+DocState SetDrawingCommand::apply(const DocState& s) const
+{
+    DocState n = s;
+    n.drawing = m_drawing;
+    return n;
+}
+
 // ------------------------------------------------------------------ History
 
 void History::reset(DocState s)
@@ -231,21 +310,57 @@ void History::reset(DocState s)
     m_current = std::move(s);
     m_undo.clear();
     m_redo.clear();
+    m_group.reset();
     m_dirty = false;
 }
 
 void History::execute(const Command& cmd)
 {
-    m_undo.emplace_back(m_current, cmd.label());
+    DocState next = cmd.apply(m_current);
+    if (m_group) {
+        // the first command of a group opens its single undo entry; the next ones extend it
+        if (m_group->steps.empty())
+            m_undo.emplace_back(m_current, m_group->label);
+        m_group->steps.push_back(m_current);
+    }
+    else
+        m_undo.emplace_back(m_current, cmd.label());
     if (m_undo.size() > kMaxUndo)
         m_undo.erase(m_undo.begin());
     m_redo.clear();
-    m_current = cmd.apply(m_current);
+    m_current = std::move(next);
     m_dirty = true;
+}
+
+bool History::beginGroup(std::string label)
+{
+    if (m_group)
+        return false;
+    m_group = Group{label.empty() ? std::string("Command group") : std::move(label), {}};
+    return true;
+}
+
+int History::endGroup()
+{
+    if (!m_group)
+        return 0;
+    const int n = static_cast<int>(m_group->steps.size());
+    m_group.reset();
+    return n;
 }
 
 bool History::undo()
 {
+    if (m_group && !m_group->steps.empty()) {
+        // inside a group: step back one command, the group entry stays while it has commands
+        m_current = std::move(m_group->steps.back());
+        m_group->steps.pop_back();
+        if (m_group->steps.empty() && !m_undo.empty())
+            m_undo.pop_back();
+        m_dirty = true;
+        return true;
+    }
+    m_group.reset();
     if (m_undo.empty())
         return false;
     m_redo.emplace_back(m_current, m_undo.back().second);
@@ -257,6 +372,7 @@ bool History::undo()
 
 bool History::redo()
 {
+    m_group.reset();
     if (m_redo.empty())
         return false;
     m_undo.emplace_back(m_current, m_redo.back().second);

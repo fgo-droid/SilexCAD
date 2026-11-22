@@ -3,6 +3,7 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QVariant>
+#include <algorithm>
 
 #include "IpcCommandDispatcher.hpp"
 
@@ -48,7 +49,13 @@ void IpcServer::onNewConnection()
 {
     while (QLocalSocket* s = m_server->nextPendingConnection()) {
         connect(s, &QLocalSocket::readyRead, this, [this, s] { onReadyRead(s); });
+        connect(s, &QLocalSocket::disconnected, this, [this] {
+            m_clients = std::max(0, m_clients - 1);
+            emit clientCountChanged(m_clients);
+        });
         connect(s, &QLocalSocket::disconnected, s, &QObject::deleteLater);
+        ++m_clients;
+        emit clientCountChanged(m_clients);
     }
 }
 

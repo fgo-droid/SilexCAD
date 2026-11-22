@@ -60,10 +60,12 @@ double segDist(QPointF p, QPointF a, QPointF b, double* tOut)
 }
 }  // namespace
 
-void Picker::build(std::shared_ptr<const ModelSnapshot> snap, const std::vector<bool>& profileVisible)
+void Picker::build(std::shared_ptr<const ModelSnapshot> snap, const std::vector<bool>& profileVisible,
+                   const std::set<Uuid>& hiddenBodies)
 {
     m_snap = std::move(snap);
     m_profileVisible = profileVisible;
+    m_hiddenBodies = hiddenBodies;
     m_tris.clear();
     m_nodes.clear();
     if (!m_snap)
@@ -76,7 +78,8 @@ void Picker::build(std::shared_ptr<const ModelSnapshot> snap, const std::vector<
         }
     };
     for (size_t b = 0; b < m_snap->bodies.size(); ++b)
-        addMesh(m_snap->bodies[b].mesh, int(b));
+        if (!m_hiddenBodies.count(m_snap->bodies[b].id))  // v0.4: hidden bodies cannot be picked
+            addMesh(m_snap->bodies[b].mesh, int(b));
     for (size_t p = 0; p < m_snap->profiles.size(); ++p)
         if (p < m_profileVisible.size() && m_profileVisible[p])
             addMesh(m_snap->profiles[p].mesh, -int(p) - 1);
@@ -139,6 +142,8 @@ bool Picker::hitTris(const Ray& r, uint32_t filter, float& tBest, int& triBest) 
             float tt;
             if (!rayTri(r, t.a, t.b, t.c, tt))
                 continue;
+            if (clipped(r.origin + r.dir * tt))
+                continue;
             // Profiles lie on body faces: give them priority at (almost) equal depth.
             const float bias = isProfile ? 1e-3f * std::max(1.f, tt) : 0.f;
             if (tt - bias < tBest) {
@@ -195,11 +200,15 @@ SelItem Picker::pick(const Camera& cam, QSize size, QPointF px, uint32_t filter)
         double bestPx = 7.0;
         SelItem edgeHit;
         for (size_t b = 0; b < m_snap->bodies.size(); ++b) {
+            if (m_hiddenBodies.count(m_snap->bodies[b].id))
+                continue;
             const RenderMesh& m = m_snap->bodies[b].mesh;
             for (size_t ei = 0; ei < m.edges.size(); ++ei) {
                 const MeshEdge& e = m.edges[ei];
                 for (uint32_t k = e.first; k + 1 < e.first + e.count; k += 2) {
                     const QVector3D a = V(&m.edgePoints[3 * k]), c = V(&m.edgePoints[3 * (k + 1)]);
+                    if (clipped((a + c) * 0.5f))
+                        continue;
                     QPointF pa, pc;
                     if (!cam.project(a, size, &pa) || !cam.project(c, size, &pc))
                         continue;

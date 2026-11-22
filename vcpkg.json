@@ -1,8 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
   "name": "silex",
-  "version": "0.2.0",
-  "license": "LGPL-2.1-or-later",
+  "version": "0.7.0",
   "description": "Silex - open-source parametric 3D CAD (OCCT + PlaneGCS + Qt6)",
   "builtin-baseline": "e1ff419d28c7f0a94abaf0a848fe0aeeb69b2de3",
   "dependencies": [

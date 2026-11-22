@@ -13,6 +13,7 @@ layout(std140, binding = 0) uniform Buf {
     vec4 eye;     // xyz = camera position, w = 1 for orthographic
     vec4 params;  // x = alpha multiplier, y = depth bias, z = view dir x (ortho), w unused
     vec4 viewDir; // xyz = camera forward (used in orthographic mode)
+    vec4 clip;    // v0.3 section plane: discard where dot(xyz, p) > w (xyz = 0: disabled)
 } ubuf;
 
 void main()

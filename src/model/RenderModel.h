@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "model/Features.h"
+#include "model/Material.h"
 #include "model/Math.h"
 #include "model/TopoRef.h"
 #include "model/Uuid.h"
@@ -50,6 +51,13 @@ struct BodyView
     std::string name;
     RenderMesh mesh;
     uint64_t meshVersion = 0;  ///< changes only when the tessellation changes
+    // v0.3 physical properties (BRepGProp) and appearance
+    double volume = 0;         ///< mm3
+    double area = 0;           ///< mm2
+    BodyMaterial material;
+    std::string component;  ///< v0.5 lot 1: catalog id of a locked reference component ("" = part)
+    bool locked() const { return !component.empty(); }
+    double mass() const { return massGrams(volume, material.density); }
 };
 
 struct ProfileView
@@ -65,6 +73,25 @@ struct SketchView
     Uuid id;
     Placement plane;
     bool resolved = true;
+    Sketch sketch;  ///< v0.3: as computed (projected edges re-attached to the model, re-solved)
+};
+
+/// v0.4 lot 1: construction plane (drawn as a translucent square, usable as a sketch / split plane).
+struct PlaneView
+{
+    Uuid id;
+    std::string name;
+    Placement plane;
+    double size = 50;  ///< half side of the displayed square (mm)
+};
+
+/// v0.4 lot 2: cosmetic thread (annotation only), drawn as dashed rings with its label.
+struct ThreadView
+{
+    Uuid id;
+    std::string label;  ///< "M6x1"
+    Vec3 a, b;          ///< axis segment of the thread
+    double radius = 0;
 };
 
 enum class FeatureStatus { Ok, Warning, Error, Suppressed, RolledBack };
@@ -83,6 +110,8 @@ struct ModelSnapshot
     std::vector<BodyView> bodies;
     std::vector<ProfileView> profiles;
     std::vector<SketchView> sketches;
+    std::vector<PlaneView> planes;  ///< v0.4
+    std::vector<ThreadView> threads;  ///< v0.4 cosmetic threads
     std::vector<FeatureResult> results;
     std::optional<RenderMesh> preview;  ///< tool body of the feature being edited
     BooleanOp previewOp = BooleanOp::NewBody;

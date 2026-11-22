@@ -79,6 +79,20 @@ void registerBuiltinFeatures()
     r.add(FeatureType::Mirror, makeOpMirror);
     r.add(FeatureType::LinearPattern, makeOpLinearPattern);
     r.add(FeatureType::CircularPattern, makeOpCircularPattern);
+    r.add(FeatureType::Sweep, makeOpSweep);
+    r.add(FeatureType::Loft, makeOpLoft);
+    r.add(FeatureType::OffsetFace, makeOpOffsetFace);
+    r.add(FeatureType::Box, makeOpBox);
+    r.add(FeatureType::Cylinder, makeOpCylinder);
+    r.add(FeatureType::RemoveBody, makeOpRemoveBody);
+    r.add(FeatureType::DefeatureFace, makeOpDefeature);
+    r.add(FeatureType::SplitBody, makeOpSplitBody);
+    r.add(FeatureType::TransformBody, makeOpTransformBody);
+    r.add(FeatureType::ConstructionPlane, makeOpConstructionPlane);
+    r.add(FeatureType::Rib, makeOpRib);
+    r.add(FeatureType::Thread, makeOpThread);
+    r.add(FeatureType::FastenerHole, makeOpFastenerHole);
+    r.add(FeatureType::EmbossText, makeOpText);
 }
 
 // ------------------------------------------------------------------ helpers
@@ -178,6 +192,23 @@ NamedShape fuseAll(ExecContext& ctx, const std::vector<NamedShape>& tools)
     return propagateNames(fuse.Shape(), in, historyOf(fuse), ctx.node.id);
 }
 
+Uuid ModelState::lastEditableBody() const
+{
+    for (auto it = bodyOrder.rbegin(); it != bodyOrder.rend(); ++it)
+        if (!lockedBodies.count(*it))
+            return *it;
+    return {};
+}
+
+void requireEditable(const ModelState& st, const Uuid& body)
+{
+    if (body.empty() || !st.lockedBodies.count(body))
+        return;
+    const auto n = st.bodyNames.find(body);
+    throw FeatureError("'" + (n != st.bodyNames.end() ? n->second : std::string("Component")) +
+                       "' is a locked reference component: it cannot be modified (use it to place, project or check)");
+}
+
 Uuid applyBoolean(ExecContext& ctx, const NamedShape& tool, BooleanOp op, const Uuid& targetBody)
 {
     ModelState& st = ctx.state;
@@ -188,8 +219,9 @@ Uuid applyBoolean(ExecContext& ctx, const NamedShape& tool, BooleanOp op, const 
         ctx.warnings.push_back("Target body not found: using the last body");
         target.clear();
     }
-    if (target.empty() && !st.bodyOrder.empty())
-        target = st.bodyOrder.back();
+    if (target.empty())
+        target = st.lastEditableBody();
+    requireEditable(st, target);
 
     if (op == BooleanOp::NewBody || target.empty()) {
         if (op == BooleanOp::Cut || op == BooleanOp::Intersect)

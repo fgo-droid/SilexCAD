@@ -11,6 +11,8 @@
 #include <BRepBndLib.hxx>
 #include <BRepCheck_Analyzer.hxx>
 #include <BRepMesh_IncrementalMesh.hxx>
+#include <BRepPrimAPI_MakeBox.hxx>
+#include <Standard_Version.hxx>
 #include <Bnd_Box.hxx>
 #include <StlAPI_Writer.hxx>
 #include <BRepGProp.hxx>
@@ -20,10 +22,12 @@
 #include <TopExp_Explorer.hxx>
 #include <TopoDS_Compound.hxx>
 
+#include "kernel/Analysis.h"
 #include "kernel/Recompute.h"
 #include "kernel/StepIO.h"
 #include "kernel/Tessellator.h"
 #include "kernel/TopoNaming.h"
+#include "kernel/ops/TextOutline.h"
 
 namespace silex {
 
@@ -36,6 +40,7 @@ struct MeshCacheEntry
     TopoDS_Shape shape;
     RenderMesh mesh;
     uint64_t version = 0;
+    MassProps props;
 };
 
 struct MeshCache
@@ -44,7 +49,7 @@ struct MeshCache
     uint64_t nextVersion = 1;
 };
 
-std::shared_ptr<ModelSnapshot> buildSnapshot(const ComputeOutput& out, MeshCache* cache)
+std::shared_ptr<ModelSnapshot> buildSnapshot(const ComputeOutput& out, MeshCache* cache, const DocState& doc)
 {
     auto snap = std::make_shared<ModelSnapshot>();
     const TessellationParams tp = tessellationFor(out.state.modelSize());
@@ -56,23 +61,36 @@ std::shared_ptr<ModelSnapshot> buildSnapshot(const ComputeOutput& out, MeshCache
         bv.id = id;
         auto nameIt = out.state.bodyNames.find(id);
         bv.name = nameIt != out.state.bodyNames.end() ? nameIt->second : "Body";
+        MassProps props;
         if (cache) {
             auto it = cache->entries.find(id);
             if (it != cache->entries.end() && it->second.shape.IsEqual(ns.shape())) {
                 bv.mesh = it->second.mesh;
                 bv.meshVersion = it->second.version;
+                props = it->second.props;
             }
             else {
                 bv.mesh = tessellate(ns, tp);
                 bv.meshVersion = cache->nextVersion++;
+                props = massProps(ns.shape());
             }
-            nextEntries[id] = MeshCacheEntry{ns.shape(), bv.mesh, bv.meshVersion};
+            nextEntries[id] = MeshCacheEntry{ns.shape(), bv.mesh, bv.meshVersion, props};
         }
         else {
             bv.mesh = tessellate(ns, tp);
             static std::atomic<uint64_t> uncachedVersion{1ull << 40};  // never reused: forces re-upload
             bv.meshVersion = uncachedVersion++;
+            props = massProps(ns.shape());
         }
+        bv.volume = props.volume;
+        bv.area = props.area;
+        bv.material = doc.materialOf(id);
+        if (!doc.materials.count(id))
+            if (auto dm = out.state.defaultMaterials.find(id); dm != out.state.defaultMaterials.end())
+                if (const BodyMaterial* pm = findMaterialPreset(dm->second))
+                    bv.material = *pm;
+        if (auto lk = out.state.lockedBodies.find(id); lk != out.state.lockedBodies.end())
+            bv.component = lk->second;
         snap->bbox.add(bv.mesh.bbox);
         snap->bodies.push_back(std::move(bv));
     }
@@ -82,7 +100,7 @@ std::shared_ptr<ModelSnapshot> buildSnapshot(const ComputeOutput& out, MeshCache
     TessellationParams flat = tp;
     flat.withEdges = false;
     for (const auto& [sid, so] : out.state.sketches) {
-        snap->sketches.push_back(SketchView{sid, so.plane, true});
+        snap->sketches.push_back(SketchView{sid, so.plane, true, so.sketch});
         for (const auto& r : so.regions) {
             ProfileView pv;
             pv.sketchId = sid;
@@ -94,6 +112,22 @@ std::shared_ptr<ModelSnapshot> buildSnapshot(const ComputeOutput& out, MeshCache
             snap->profiles.push_back(std::move(pv));
         }
     }
+
+    {
+        // v0.4: construction planes, sized after the model
+        const double half = snap->bbox.valid() ? std::max(20.0, (snap->bbox.max - snap->bbox.min).length() * 0.35) : 50.0;
+        for (const auto& [pid, pl] : out.state.planes) {
+            PlaneView v;
+            v.id = pid;
+            if (const auto f = doc.find(pid))
+                v.name = f->name;
+            v.plane = pl;
+            v.size = half;
+            snap->planes.push_back(v);
+        }
+    }
+
+    snap->threads = out.state.cosmeticThreads;
 
     if (out.preview && !out.preview->IsNull()) {
         snap->preview = tessellate(*out.preview, flat);
@@ -122,6 +156,9 @@ struct KernelEngine::Impl
     bool quit = false;
     Recompute recompute;
     MeshCache meshCache;
+    // geometry of the last published result, for instantaneous analysis services (UI thread)
+    mutable std::mutex stateMutex;
+    std::shared_ptr<const ModelState> lastState;
     std::thread thread;
 
     void loop()
@@ -144,7 +181,12 @@ struct KernelEngine::Impl
                 ComputeOutput out = recompute.run(job.state, job.preview, token);
                 if (out.cancelled || token.stop_requested())
                     continue;
-                auto snap = buildSnapshot(out, &meshCache);
+                std::shared_ptr<ModelSnapshot> snap;
+                {
+                    std::lock_guard lk(stateMutex);  // tessellation writes triangulations into shapes
+                    snap = buildSnapshot(out, &meshCache, job.state);
+                    lastState = std::make_shared<const ModelState>(std::move(out.state));
+                }
                 if (token.stop_requested())
                     continue;
                 snap->revision = job.revision;
@@ -194,7 +236,43 @@ std::shared_ptr<const ModelSnapshot> KernelEngine::computeSnapshot(const DocStat
 {
     Recompute r;
     ComputeOutput out = r.run(state, previewFeature, {});
-    return buildSnapshot(out, nullptr);
+    return buildSnapshot(out, nullptr, state);
+}
+
+MeasureResult KernelEngine::measure(const DocState& state, const std::vector<MeasureRef>& refs)
+{
+    Recompute r;
+    ComputeOutput out = r.run(state, {}, {});
+    return measureIn(out.state, refs);
+}
+
+MeasureResult KernelEngine::measureLast(const std::vector<MeasureRef>& refs) const
+{
+    std::lock_guard lk(d->stateMutex);
+    if (!d->lastState) {
+        MeasureResult r;
+        r.error = "The model is not computed yet";
+        return r;
+    }
+    return measureIn(*d->lastState, refs);
+}
+
+InterferenceReport KernelEngine::checkInterference(const DocState& state, const std::vector<Uuid>& bodies, bool meshes)
+{
+    Recompute r;
+    ComputeOutput out = r.run(state, {}, {});
+    return interferenceIn(out.state, bodies, meshes);
+}
+
+InterferenceReport KernelEngine::checkInterferenceLast(const std::vector<Uuid>& bodies, bool meshes) const
+{
+    std::lock_guard lk(d->stateMutex);
+    if (!d->lastState) {
+        InterferenceReport r;
+        r.error = "The model is not computed yet";
+        return r;
+    }
+    return interferenceIn(*d->lastState, bodies, meshes);
 }
 
 Analysis KernelEngine::analyze(const DocState& state)
@@ -224,6 +302,7 @@ Analysis KernelEngine::analyze(const DocState& state)
             m.bbox.add(Vec3{x1, y1, z1});
         }
         m.valid = BRepCheck_Analyzer(ns.shape()).IsValid();
+        m.locked = out.state.lockedBodies.count(id) > 0;
         for (TopExp_Explorer ex(ns.shape(), TopAbs_SOLID); ex.More(); ex.Next()) {
             ++m.solids;
             SolidMetrics sm;
@@ -262,7 +341,8 @@ TopoDS_Compound bodiesCompound(const ComputeOutput& out, const Uuid& bodyId)
     b.MakeCompound(c);
     int n = 0;
     for (const Uuid& id : out.state.bodyOrder)
-        if (bodyId.empty() || id == bodyId) {
+        // v0.5: "everything" leaves out the locked reference components (boards, fans...)
+        if ((bodyId.empty() && !out.state.lockedBodies.count(id)) || id == bodyId) {
             b.Add(c, out.state.bodies.at(id).shape());
             ++n;
         }
@@ -308,6 +388,68 @@ std::optional<std::string> KernelEngine::exportStep(const DocState& state, const
     catch (const std::exception& e) {
         return std::string(e.what());
     }
+}
+
+void KernelEngine::addFontDirectory(const std::string& dir)
+{
+    kernel::addFontDirectory(dir);
+}
+
+std::vector<std::string> KernelEngine::fontFamilies()
+{
+    return kernel::fontFamilies();
+}
+
+KernelEngine::TextMetrics KernelEngine::measureText(const std::string& text, const std::string& font, double height)
+{
+    TextMetrics m;
+    try {
+        kernel::TextLayout L;
+        L.text = text;
+        L.font = font;
+        L.height = height;
+        Placement pl;
+        pl.origin = {0, 0, 0};
+        pl.normal = {0, 0, 1};
+        pl.xDir = {1, 0, 0};
+        const auto o = kernel::buildTextOutline(L, pl);
+        m.ok = true;
+        m.area = o.area;
+        m.strokeWidth = o.strokeWidth;
+        m.faces = o.faceCount;
+        m.fontFile = o.fontFile;
+    }
+    catch (const std::exception& e) {
+        m.error = e.what();
+    }
+    return m;
+}
+
+std::string KernelEngine::occtVersion()
+{
+    return OCC_VERSION_COMPLETE;
+}
+
+KernelSelfTest KernelEngine::selfTest()
+{
+    KernelSelfTest r;
+    try {
+        const TopoDS_Shape box = BRepPrimAPI_MakeBox(10.0, 20.0, 30.0).Shape();
+        BRepCheck_Analyzer check(box);
+        GProp_GProps props;
+        BRepGProp::VolumeProperties(box, props);
+        const double v = props.Mass();
+        r.ok = check.IsValid() && std::abs(v - 6000.0) < 1e-6;
+        r.detail = std::string("OCCT ") + OCC_VERSION_COMPLETE + ": box 10x20x30 " +
+                   (check.IsValid() ? "valid" : "INVALID") + ", volume " + std::to_string(v) + " mm3";
+    }
+    catch (const Standard_Failure& e) {
+        r.detail = std::string("OCCT exception: ") + (e.GetMessageString() ? e.GetMessageString() : "?");
+    }
+    catch (const std::exception& e) {
+        r.detail = e.what();
+    }
+    return r;
 }
 
 std::string KernelEngine::importStepAsBrep(const std::string& path)

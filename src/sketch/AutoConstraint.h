@@ -30,6 +30,9 @@ Vec2 applyHint(Vec2 a, Vec2 b, LineHint hint);
 /// tangentially (within tolDeg), returns that arc id.
 std::optional<Uuid> inferTangentAtPoint(const Sketch& sk, const GeoRef& start, Vec2 dir, double tolDeg = 4.0);
 
+/// Sketcher Pro: rounds p to the nearest node of a square grid of `step` (no-op if step <= 0).
+Vec2 snapToGrid(Vec2 p, double step);
+
 /// Builds the constraints implied by a snap for a point of a newly drawn geometry.
 std::vector<SketchConstraint> constraintsFromSnap(const Snap& s, const GeoRef& newPoint);
 

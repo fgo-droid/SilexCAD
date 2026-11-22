@@ -13,6 +13,7 @@
 #include <QVariantAnimation>
 #include <memory>
 #include <optional>
+#include <set>
 #include <rhi/qrhi.h>
 #include <vector>
 
@@ -23,6 +24,8 @@
 
 namespace silex::ui {
 
+class ViewCube;
+
 class Viewport : public QRhiWidget
 {
     Q_OBJECT
@@ -32,12 +35,34 @@ public:
 
     void setClient(ViewportClient* c) { m_client = c; }
     void setSnapshot(std::shared_ptr<const ModelSnapshot> snap);
+
+    /// v0.3: extra translucent meshes (interference volumes...) drawn in the OIT pass.
+    struct OverlayMesh
+    {
+        RenderMesh mesh;
+        QColor color;
+        float alpha = 0.6f;
+    };
+    void setOverlayMeshes(std::vector<OverlayMesh> meshes);
+
+    /// v0.5 lot 4: printer build plate (centered on the origin, Z = 0 up to `size.z`), drawn with the grid.
+    struct BedSpec
+    {
+        bool on = false;
+        QVector3D size{220, 220, 250};
+        bool exceeded = false;  ///< a body leaves the build volume: drawn in red
+        bool operator==(const BedSpec&) const = default;
+    };
+    void setBed(const BedSpec& bed);
     void highlightChanged();  ///< call when the client's HighlightState changed
 
     Camera& camera() { return m_camera; }
     const Camera& camera() const { return m_camera; }
-    void animateTo(const QQuaternion& rot, std::optional<QVector3D> target = {}, std::optional<float> distance = {});
+    void animateTo(const QQuaternion& rot, std::optional<QVector3D> target = {}, std::optional<float> distance = {},
+                   int durationMs = 320);
     void fitAll(bool animated = true);
+    /// Default isometric view, fitted on the model (ViewCube Home button, key 0 + W).
+    void homeView();
     void setStandardView(int which);
 
     SelItem pickAt(QPointF px, uint32_t filter) const;
@@ -54,6 +79,8 @@ signals:
     void cameraChanged();
 
 protected:
+    /// Tab belongs to the sketch editor (switches the floating dimension inputs), not to focus chains.
+    bool focusNextPrevChild(bool) override { return false; }
     void initialize(QRhiCommandBuffer* cb) override;
     void render(QRhiCommandBuffer* cb) override;
     void releaseResources() override;
@@ -99,7 +126,9 @@ private:
                                        int colorTargets, int blendMode, bool lineVertexLayout);
     void drawMesh(QRhiCommandBuffer* cb, const GpuMesh& g);
     void drawEdges(QRhiCommandBuffer* cb, const GpuMesh& g);
-    void writeUbo(QRhiResourceUpdateBatch* u, QRhiBuffer* ubo, const QMatrix4x4& mvp, float alpha, float bias);
+    void writeUbo(QRhiResourceUpdateBatch* u, QRhiBuffer* ubo, const QMatrix4x4& mvp, float alpha, float bias,
+                  bool clip = true);
+    bool bodyTranslucent(size_t i) const;
 
     // --- state
     Camera m_camera;
@@ -108,12 +137,17 @@ private:
     bool m_geometryDirty = true;
     uint64_t m_colorVersion = ~0ull;
     std::vector<bool> m_pickerProfiles;
+    std::set<Uuid> m_pickerHidden;
+    bool bodyHidden(size_t i) const;
     Picker m_picker;
     QWidget* m_overlay = nullptr;
     QVariantAnimation* m_anim = nullptr;
+    ViewCube* m_viewCube = nullptr;  ///< ergonomics lot: orientation cube (top-right)
     enum class Nav { None, Orbit, Pan } m_nav = Nav::None;
     QPointF m_lastPos;
     float m_gridStep = 0;
+    BedSpec m_bed;
+    bool m_bedDirty = false;
     float m_planeSize = 0;
 
     // --- RHI
@@ -148,6 +182,9 @@ private:
     QRhiGraphicsPipeline* m_psComposite = nullptr;
 
     std::vector<GpuMesh> m_bodies;
+    std::vector<OverlayMesh> m_overlaySrc;
+    std::vector<GpuMesh> m_overlays;
+    bool m_overlaysDirty = false;
     std::vector<GpuMesh> m_profiles;
     GpuMesh m_preview;
     GpuMesh m_planes;

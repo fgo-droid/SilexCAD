@@ -1,0 +1,132 @@
+{
+ "features": [
+  {
+   "id": "338ecad9-9f2d-4a45-8462-b5d614984230",
+   "name": "Box1",
+   "params": {
+    "centerX": 0.0,
+    "centerY": 0.0,
+    "diameter": 20.0,
+    "expr": {
+     "/length": "longueur"
+    },
+    "height": 20.0,
+    "length": 60.0,
+    "op": "NewBody",
+    "plane": {
+     "kind": "XY"
+    },
+    "width": 40.0
+   },
+   "type": "Box"
+  },
+  {
+   "id": "86dd08bc-e1ed-4177-a1d2-e66a6647380a",
+   "name": "Box2",
+   "params": {
+    "centerX": 0.0,
+    "centerY": 0.0,
+    "diameter": 20.0,
+    "expr": {
+     "/length": "longueur - 4"
+    },
+    "height": 18.0,
+    "length": 56.0,
+    "op": "Cut",
+    "plane": {
+     "kind": "XY",
+     "offset": 2.0
+    },
+    "targetBody": "338ecad9-9f2d-4a45-8462-b5d614984230",
+    "width": 36.0
+   },
+   "type": "Box"
+  },
+  {
+   "id": "26663d19-9f06-4fc1-87b4-3b64c339868c",
+   "name": "Box3",
+   "params": {
+    "centerX": 0.0,
+    "centerY": 0.0,
+    "diameter": 20.0,
+    "expr": {
+     "/length": "longueur"
+    },
+    "height": 2.0,
+    "length": 60.0,
+    "op": "NewBody",
+    "plane": {
+     "kind": "XY",
+     "offset": 20.0
+    },
+    "width": 40.0
+   },
+   "type": "Box"
+  },
+  {
+   "id": "f922c979-edfb-4fcd-9ae1-f8d5c67c2ba3",
+   "name": "Box4",
+   "params": {
+    "centerX": 0.0,
+    "centerY": 0.0,
+    "diameter": 20.0,
+    "expr": {
+     "/length": "longueur - 4 - 2 * jeu_montage",
+     "/width": "36 - 2 * jeu_montage"
+    },
+    "height": -3.0,
+    "length": 56.4,
+    "op": "Join",
+    "plane": {
+     "kind": "XY",
+     "offset": 20.0
+    },
+    "targetBody": "26663d19-9f06-4fc1-87b4-3b64c339868c",
+    "width": 36.4
+   },
+   "type": "Box"
+  },
+  {
+   "id": "45ec4ce2-4238-4dbc-b1f8-d45178fb401f",
+   "name": "Box5",
+   "params": {
+    "centerX": 0.0,
+    "centerY": 0.0,
+    "diameter": 20.0,
+    "expr": {
+     "/length": "longueur - 8"
+    },
+    "height": -3.5,
+    "length": 52.0,
+    "op": "Cut",
+    "plane": {
+     "kind": "XY",
+     "offset": 20.0
+    },
+    "targetBody": "26663d19-9f06-4fc1-87b4-3b64c339868c",
+    "width": 32.0
+   },
+   "type": "Box"
+  }
+ ],
+ "format": "silex",
+ "marker": 5,
+ "parameters": [
+  {
+   "comment": "Longueur extérieure",
+   "expression": "60",
+   "name": "longueur",
+   "unit": "mm",
+   "value": 60.0
+  },
+  {
+   "comment": "Jeu entre lèvre et bac",
+   "expression": "-0.2",
+   "name": "jeu_montage",
+   "unit": "mm",
+   "value": -0.2
+  }
+ ],
+ "schema_version": "0.4",
+ "version": 4
+}

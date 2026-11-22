@@ -9,6 +9,7 @@ layout(std140, binding = 0) uniform Buf {
     vec4 eye;
     vec4 params;
     vec4 viewDir;
+    vec4 clip;
 } ubuf;
 
 vec3 shade(vec3 base, vec3 n, vec3 v)
@@ -32,6 +33,16 @@ vec3 viewVector()
 
 void main()
 {
+    if (dot(ubuf.clip.xyz, ubuf.clip.xyz) > 0.0) {
+        if (dot(ubuf.clip.xyz, vWorld) > ubuf.clip.w)
+            discard;  // section view: material beyond the cutting plane is removed
+        if (!gl_FrontFacing) {
+            // Seen from inside a closed solid = cut material: solid cap colour with a light hatch.
+            float h = mod(gl_FragCoord.x + gl_FragCoord.y, 9.0) < 1.2 ? 0.82 : 1.0;
+            fragColor = vec4(vec3(0.93, 0.42, 0.24) * h, 1.0);
+            return;
+        }
+    }
     vec3 c = shade(vColor.rgb, normalize(vNormal), viewVector());
     fragColor = vec4(c, 1.0);
 }

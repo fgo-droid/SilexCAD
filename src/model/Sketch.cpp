@@ -1,5 +1,8 @@
 #include "model/Sketch.h"
 
+#include <cmath>
+#include <stdexcept>
+
 #include <algorithm>
 #include <array>
 
@@ -33,7 +36,7 @@ bool SketchGeo::hasPoint(PointPos pos) const
 }
 
 namespace {
-constexpr std::array<std::pair<ConstraintKind, const char*>, 15> kKindNames{{
+constexpr std::array<std::pair<ConstraintKind, const char*>, 19> kKindNames{{
     {ConstraintKind::Coincident, "Coincident"},
     {ConstraintKind::Horizontal, "Horizontal"},
     {ConstraintKind::Vertical, "Vertical"},
@@ -49,6 +52,10 @@ constexpr std::array<std::pair<ConstraintKind, const char*>, 15> kKindNames{{
     {ConstraintKind::Radius, "Radius"},
     {ConstraintKind::Diameter, "Diameter"},
     {ConstraintKind::Angle, "Angle"},
+    {ConstraintKind::Midpoint, "Midpoint"},
+    {ConstraintKind::Symmetric, "Symmetric"},
+    {ConstraintKind::Concentric, "Concentric"},
+    {ConstraintKind::Collinear, "Collinear"},
 }};
 
 const char* geoKindName(GeoKind k)
@@ -148,9 +155,7 @@ void Sketch::removeGeo(const Uuid& id)
     geos.erase(std::remove_if(geos.begin(), geos.end(), [&](const SketchGeo& g) { return g.id == id; }),
                geos.end());
     constraints.erase(std::remove_if(constraints.begin(), constraints.end(),
-                                     [&](const SketchConstraint& c) {
-                                         return c.a.geo == id || c.b.geo == id;
-                                     }),
+                                     [&](const SketchConstraint& c) { return c.references(id); }),
                       constraints.end());
 }
 
@@ -207,6 +212,8 @@ void to_json(Json& j, const SketchGeo& g)
     j = Json{{"id", g.id}, {"kind", geoKindName(g.kind)}};
     if (g.construction)
         j["construction"] = true;
+    if (g.external())
+        j["ref"] = g.ext;
     switch (g.kind) {
         case GeoKind::Point: j["p"] = g.p1; break;
         case GeoKind::Line:
@@ -231,6 +238,9 @@ void from_json(const Json& j, SketchGeo& g)
     g.id = j.at("id").get<std::string>();
     g.kind = geoKindFrom(j.at("kind").get<std::string>());
     g.construction = j.value("construction", false);
+    g.ext = j.value("ref", TopoRef{});
+    if (g.external())
+        g.construction = true;
     switch (g.kind) {
         case GeoKind::Point: g.p1 = j.at("p").get<Vec2>(); break;
         case GeoKind::Line:
@@ -263,12 +273,18 @@ void to_json(Json& j, const SketchConstraint& c)
     j = Json{{"id", c.id}, {"kind", toString(c.kind)}, {"a", refToJson(c.a)}};
     if (c.b.valid())
         j["b"] = refToJson(c.b);
-    if (isDimensional(c.kind) || c.kind == ConstraintKind::Fixed)
+    if (c.c.valid())
+        j["c"] = refToJson(c.c);
+    if (isDimensional(c.kind) || c.kind == ConstraintKind::Fixed || (c.kind == ConstraintKind::Symmetric && c.value != 0))
         j["value"] = c.value;
     if (c.kind == ConstraintKind::Fixed)
         j["value2"] = c.value2;
     if (c.labelOffset.x != 0 || c.labelOffset.y != 0)
         j["label"] = c.labelOffset;
+    if (!c.expr.empty())
+        j["expr"] = c.expr;
+    if (!c.group.empty())
+        j["group"] = c.group;
 }
 
 void from_json(const Json& j, SketchConstraint& c)
@@ -278,9 +294,13 @@ void from_json(const Json& j, SketchConstraint& c)
     c.a = refFromJson(j.at("a"));
     if (j.contains("b"))
         c.b = refFromJson(j["b"]);
+    if (j.contains("c"))
+        c.c = refFromJson(j["c"]);
     c.value = j.value("value", 0.0);
     c.value2 = j.value("value2", 0.0);
     c.labelOffset = j.value("label", Vec2{});
+    c.expr = j.value("expr", std::string{});
+    c.group = j.value("group", std::string{});
 }
 
 void to_json(Json& j, const Sketch& s) { j = Json{{"geos", s.geos}, {"constraints", s.constraints}}; }
@@ -291,4 +311,97 @@ void from_json(const Json& j, Sketch& s)
     s.constraints = j.value("constraints", std::vector<SketchConstraint>{});
 }
 
+// ------------------------------------------------------------------ v0.7 lot C: calibrated image
+
+SketchCanvas makeCanvas(int pxWidth, int pxHeight, double widthMm, Vec2 center)
+{
+    SketchCanvas c;
+    c.pxWidth = pxWidth;
+    c.pxHeight = pxHeight;
+    c.widthMm = widthMm;
+    c.heightMm = pxWidth > 0 ? widthMm * double(pxHeight) / double(pxWidth) : widthMm;
+    c.center = center;
+    return c;
+}
+
+Vec2 canvasPixelToSketch(const SketchCanvas& c, Vec2 px)
+{
+    if (c.pxWidth <= 0 || c.pxHeight <= 0)
+        throw std::invalid_argument("The image has no pixel size");
+    double u = (px.x / c.pxWidth - 0.5) * c.widthMm;
+    double v = (0.5 - px.y / c.pxHeight) * c.heightMm;
+    if (c.flipH)
+        u = -u;
+    if (c.flipV)
+        v = -v;
+    const double a = c.angleDeg * kPi / 180.0;
+    return {c.center.x + u * std::cos(a) - v * std::sin(a), c.center.y + u * std::sin(a) + v * std::cos(a)};
+}
+
+Vec2 canvasSketchToPixel(const SketchCanvas& c, Vec2 p)
+{
+    if (c.pxWidth <= 0 || c.pxHeight <= 0 || c.widthMm == 0 || c.heightMm == 0)
+        throw std::invalid_argument("The image has no size");
+    const double a = c.angleDeg * kPi / 180.0;
+    const Vec2 d{p.x - c.center.x, p.y - c.center.y};
+    double u = d.x * std::cos(a) + d.y * std::sin(a);
+    double v = -d.x * std::sin(a) + d.y * std::cos(a);
+    if (c.flipH)
+        u = -u;
+    if (c.flipV)
+        v = -v;
+    return {(u / c.widthMm + 0.5) * c.pxWidth, (0.5 - v / c.heightMm) * c.pxHeight};
+}
+
+bool calibrateCanvas(SketchCanvas& c, Vec2 px1, Vec2 px2, double distanceMm, std::string* error)
+{
+    auto fail = [&](const char* m) {
+        if (error)
+            *error = m;
+        return false;
+    };
+    if (c.pxWidth <= 0 || c.pxHeight <= 0)
+        return fail("The image has no pixel size");
+    if (!(distanceMm > 0))
+        return fail("The real distance must be positive");
+    const double pixels = std::hypot(px2.x - px1.x, px2.y - px1.y);
+    if (pixels < 1e-9)
+        return fail("Pick two different points on the image");
+    const Vec2 keep = canvasPixelToSketch(c, px1);
+    const double mmPerPixel = distanceMm / pixels;
+    c.widthMm = c.pxWidth * mmPerPixel;
+    c.heightMm = c.pxHeight * mmPerPixel;
+    // the first picked point stays where it was: the photo does not jump away
+    const Vec2 moved = canvasPixelToSketch(c, px1);
+    c.center = {c.center.x + keep.x - moved.x, c.center.y + keep.y - moved.y};
+    return true;
+}
+
+void to_json(Json& j, const SketchCanvas& c)
+{
+    j = Json{{"image_path", c.imagePath}, {"mime", c.mime},          {"image_px", {c.pxWidth, c.pxHeight}},
+             {"opacity", c.opacity},      {"width_mm", c.widthMm},   {"height_mm", c.heightMm},
+             {"center_xy", {c.center.x, c.center.y}}, {"angle_deg", c.angleDeg}, {"flip_h", c.flipH},
+             {"flip_v", c.flipV},         {"visible", c.visible},    {"image_data", c.imageData}};
+}
+
+void from_json(const Json& j, SketchCanvas& c)
+{
+    c.imagePath = j.value("image_path", std::string{});
+    c.imageData = j.value("image_data", std::string{});
+    c.mime = j.value("mime", std::string("image/png"));
+    if (const Json px = j.value("image_px", Json::array()); px.is_array() && px.size() == 2) {
+        c.pxWidth = px[0].get<int>();
+        c.pxHeight = px[1].get<int>();
+    }
+    c.opacity = j.value("opacity", 0.5);
+    c.widthMm = j.value("width_mm", 100.0);
+    c.heightMm = j.value("height_mm", 100.0);
+    if (const Json ce = j.value("center_xy", Json::array()); ce.is_array() && ce.size() == 2)
+        c.center = {ce[0].get<double>(), ce[1].get<double>()};
+    c.angleDeg = j.value("angle_deg", 0.0);
+    c.flipH = j.value("flip_h", false);
+    c.flipV = j.value("flip_v", false);
+    c.visible = j.value("visible", true);
+}
 }  // namespace silex

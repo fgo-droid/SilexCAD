@@ -1,0 +1,103 @@
+{
+  "features": [
+    {
+      "id": "966268c2-e268-4233-a631-60e961ed8503",
+      "name": "Box1",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 20.0,
+        "length": 60.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 40.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "ba13364f-3357-4872-b037-c3a2e3240d8f",
+      "name": "Cylinder1",
+      "params": {
+        "centerX": 18.0,
+        "centerY": 0.0,
+        "diameter": 10.0,
+        "height": 20.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 20.0
+      },
+      "type": "Cylinder"
+    },
+    {
+      "id": "24acf835-6f7f-473b-a1a5-5a166ef0fb8c",
+      "name": "PressPull1",
+      "params": {
+        "body": "966268c2-e268-4233-a631-60e961ed8503",
+        "distance": 8.0,
+        "face": {
+          "name": "966268c2-e268-4233-a631-60e961ed8503:top",
+          "sig": {
+            "c": [
+              -0.6089773600537898,
+              3.332288512588935e-16,
+              20.0
+            ],
+            "d": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "s": 2321.460183660255,
+            "t": 0
+          }
+        }
+      },
+      "type": "OffsetFace"
+    },
+    {
+      "id": "6dfd0abc-20d1-4b5c-96e8-550db2a84da6",
+      "name": "Cylinder2",
+      "params": {
+        "centerX": -15.0,
+        "centerY": 0.0,
+        "diameter": 14.0,
+        "height": 10.0,
+        "length": 20.0,
+        "op": "Join",
+        "plane": {
+          "face": {
+            "name": "24acf835-6f7f-473b-a1a5-5a166ef0fb8c:end",
+            "sig": {
+              "c": [
+                -0.6089773600537898,
+                3.332288512588935e-16,
+                28.0
+              ],
+              "d": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "s": 2321.460183660255,
+              "t": 0
+            }
+          },
+          "kind": "Face"
+        },
+        "width": 20.0
+      },
+      "type": "Cylinder"
+    }
+  ],
+  "format": "silex",
+  "marker": 4,
+  "parameters": [],
+  "schema_version": "0.3",
+  "version": 3
+}

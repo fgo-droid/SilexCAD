@@ -1,0 +1,115 @@
+{
+ "features": [
+  {
+   "id": "f10ea930-cd87-4d64-a5df-00abcef19467",
+   "name": "Box1",
+   "params": {
+    "centerX": 0.0,
+    "centerY": 0.0,
+    "diameter": 20.0,
+    "expr": {
+     "/height": "epaisseur"
+    },
+    "height": 10.0,
+    "length": 60.0,
+    "op": "NewBody",
+    "plane": {
+     "kind": "XY"
+    },
+    "width": 40.0
+   },
+   "type": "Box"
+  },
+  {
+   "id": "bc8eefc6-a40c-4553-83dd-234bef56ec7a",
+   "name": "Fillet1",
+   "params": {
+    "edges": [
+     {
+      "name": "E[f10ea930-cd87-4d64-a5df-00abcef19467:top|f10ea930-cd87-4d64-a5df-00abcef19467:xmin]",
+      "sig": {
+       "c": [
+        -30.0,
+        8.881784197001252e-16,
+        10.0
+       ],
+       "d": [
+        -0.0,
+        1.0,
+        0.0
+       ],
+       "s": 40.0,
+       "t": 0
+      }
+     },
+     {
+      "name": "E[f10ea930-cd87-4d64-a5df-00abcef19467:top|f10ea930-cd87-4d64-a5df-00abcef19467:xmax]",
+      "sig": {
+       "c": [
+        30.0,
+        8.881784197001252e-16,
+        10.0
+       ],
+       "d": [
+        -0.0,
+        1.0,
+        0.0
+       ],
+       "s": 40.0,
+       "t": 0
+      }
+     },
+     {
+      "name": "E[f10ea930-cd87-4d64-a5df-00abcef19467:top|f10ea930-cd87-4d64-a5df-00abcef19467:ymin]",
+      "sig": {
+       "c": [
+        0.0,
+        -20.0,
+        10.0
+       ],
+       "d": [
+        1.0,
+        0.0,
+        -0.0
+       ],
+       "s": 60.0,
+       "t": 0
+      }
+     },
+     {
+      "name": "E[f10ea930-cd87-4d64-a5df-00abcef19467:top|f10ea930-cd87-4d64-a5df-00abcef19467:ymax]",
+      "sig": {
+       "c": [
+        0.0,
+        20.0,
+        10.0
+       ],
+       "d": [
+        1.0,
+        0.0,
+        -0.0
+       ],
+       "s": 60.0,
+       "t": 0
+      }
+     }
+    ],
+    "value": 12.0
+   },
+   "type": "Fillet"
+  }
+ ],
+ "format": "silex",
+ "marker": 2,
+ "parameters": [
+  {
+   "comment": "Épaisseur de la plaque",
+   "expression": "10",
+   "name": "epaisseur",
+   "unit": "mm",
+   "value": 10.0
+  }
+ ],
+ "schema_version": "0.4",
+ "version": 4
+}

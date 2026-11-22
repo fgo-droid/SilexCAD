@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "id": "949adc91-3c9c-4a67-a53e-960ebd2afb26",
+      "name": "Box1",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 30.0,
+        "length": 80.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 50.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "ea4397c2-7d58-4e68-8252-aa8eb2329b3b",
+      "name": "Shell1",
+      "params": {
+        "body": "949adc91-3c9c-4a67-a53e-960ebd2afb26",
+        "outward": false,
+        "removedFaces": [],
+        "thickness": 2.0
+      },
+      "type": "Shell"
+    },
+    {
+      "id": "3f3b474d-e4d3-4aeb-ba97-bd4bdaf01ca1",
+      "name": "Split1",
+      "params": {
+        "body": "949adc91-3c9c-4a67-a53e-960ebd2afb26",
+        "plane": {
+          "kind": "XY",
+          "offset": 22.0
+        }
+      },
+      "type": "SplitBody"
+    },
+    {
+      "id": "762bc182-096c-4be7-a434-b5190339ad3f",
+      "name": "Move1",
+      "params": {
+        "bodies": [
+          "3f3b474d-e4d3-4aeb-ba97-bd4bdaf01ca1#2"
+        ],
+        "copy": false,
+        "dx": 0.0,
+        "dy": 0.0,
+        "dz": 25.0,
+        "rx": 0.0,
+        "ry": 0.0,
+        "rz": 0.0
+      },
+      "type": "TransformBody"
+    },
+    {
+      "id": "605f7eda-67b7-4478-ac87-8b5654c8b47f",
+      "name": "Plan_reference",
+      "params": {
+        "base": {
+          "kind": "XY",
+          "offset": 60.0
+        },
+        "mode": "offset"
+      },
+      "type": "ConstructionPlane"
+    }
+  ],
+  "format": "silex",
+  "marker": 5,
+  "parameters": [],
+  "schema_version": "0.3",
+  "version": 3
+}

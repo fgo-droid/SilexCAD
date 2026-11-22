@@ -13,8 +13,11 @@
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <algorithm>
+#include <cmath>
 
+#include "ExprSpinBox.h"
 #include "Icons.h"
+#include "model/Bindings.h"
 #include "ModelController.h"
 #include "Theme.h"
 #include "Viewport.h"
@@ -27,6 +30,10 @@ TransformEditor::TransformEditor(Workspace& ws, std::string type, FeaturePtr exi
     if (m_existing) {
         m_id = m_existing->id;
         m_name = m_existing->name;
+        if (m_existing->params.contains("expr") && m_existing->params["expr"].is_object())
+            for (const auto& [ptr, e] : m_existing->params["expr"].items())
+                if (e.is_string())
+                    m_exprs[ptr] = e.get<std::string>();
         if (isMirror()) {
             const auto p = m_existing->as<MirrorParams>();
             m_targets = p.targets;
@@ -105,6 +112,8 @@ FeaturePtr TransformEditor::buildNode() const
         p.reverse = m_reverse;
         n->params = Json(p);
     }
+    for (const auto& [ptr, e] : m_exprs)
+        setFieldExpression(n->params, ptr, e);
     return n;
 }
 
@@ -400,22 +409,33 @@ QWidget* TransformEditor::createPanel(QWidget* parent)
         QComboBox* b = box;
         QObject::connect(b, &QComboBox::currentIndexChanged, b, [this, b, &ref](int) { onRefCombo(b, ref); });
     };
-    auto spinI = [&](QWidget* p, int lo, int hi, int& v) {
-        auto* s = new QSpinBox(p);
+    auto bindExpr = [&](ExprSpinBox* s, const std::string& ptr, double v) {
+        auto it = m_exprs.find(ptr);
+        s->setValueAndExpression(v, it != m_exprs.end() ? it->second : std::string{});
+        QObject::connect(s, &ExprSpinBox::exprChanged, s, [this, ptr](const QString& e) {
+            if (e.isEmpty())
+                m_exprs.erase(ptr);
+            else
+                m_exprs[ptr] = e.toStdString();
+        });
+    };
+    auto spinI = [&](QWidget* p, int lo, int hi, int& v, const std::string& ptr) {
+        auto* s = new ExprSpinBox(p);
+        s->setDecimals(0);
         s->setRange(lo, hi);
-        s->setValue(v);
-        QObject::connect(s, &QSpinBox::valueChanged, s, [this, &v](int x) {
-            v = x;
+        bindExpr(s, ptr, v);
+        QObject::connect(s, &QDoubleSpinBox::valueChanged, s, [this, &v](double x) {
+            v = int(std::lround(x));
             pushPreview();
         });
         return s;
     };
-    auto spinD = [&](QWidget* p, double lo, double hi, double& v, const QString& suffix) {
-        auto* s = new QDoubleSpinBox(p);
+    auto spinD = [&](QWidget* p, double lo, double hi, double& v, const QString& suffix, const std::string& ptr) {
+        auto* s = new ExprSpinBox(p);
         s->setRange(lo, hi);
         s->setDecimals(2);
         s->setSuffix(suffix);
-        s->setValue(v);
+        bindExpr(s, ptr, v);
         QObject::connect(s, &QDoubleSpinBox::valueChanged, s, [this, &v](double x) {
             v = x;
             pushPreview();
@@ -444,16 +464,16 @@ QWidget* TransformEditor::createPanel(QWidget* parent)
         auto* g1 = new QGroupBox(QObject::tr("Direction 1"), w);
         auto* f1 = new QFormLayout(g1);
         refRow(g1, f1, QObject::tr("Direction"), m_ref1Box, m_pick1, Slot::Ref1, m_ref1, false);
-        f1->addRow(QObject::tr("Count"), spinI(g1, 2, 2000, m_d1.count));
-        f1->addRow(QObject::tr("Spacing"), spinD(g1, 0.01, 1e5, m_d1.spacing, " mm"));
+        f1->addRow(QObject::tr("Count"), spinI(g1, 2, 2000, m_d1.count, "/dir1/count"));
+        f1->addRow(QObject::tr("Spacing"), spinD(g1, 0.01, 1e5, m_d1.spacing, " mm", "/dir1/spacing"));
         f1->addRow("", check(g1, QObject::tr("Reverse"), m_d1.reverse));
         f1->addRow("", check(g1, QObject::tr("Symmetric"), m_d1.symmetric));
         lay->addWidget(g1);
         auto* g2 = new QGroupBox(QObject::tr("Direction 2 (optional)"), w);
         auto* f2 = new QFormLayout(g2);
         refRow(g2, f2, QObject::tr("Direction"), m_ref2Box, m_pick2, Slot::Ref2, m_ref2, false);
-        f2->addRow(QObject::tr("Count"), spinI(g2, 1, 2000, m_d2.count));
-        f2->addRow(QObject::tr("Spacing"), spinD(g2, 0.01, 1e5, m_d2.spacing, " mm"));
+        f2->addRow(QObject::tr("Count"), spinI(g2, 1, 2000, m_d2.count, "/dir2/count"));
+        f2->addRow(QObject::tr("Spacing"), spinD(g2, 0.01, 1e5, m_d2.spacing, " mm", "/dir2/spacing"));
         f2->addRow("", check(g2, QObject::tr("Reverse"), m_d2.reverse));
         f2->addRow("", check(g2, QObject::tr("Symmetric"), m_d2.symmetric));
         lay->addWidget(g2);
@@ -462,8 +482,8 @@ QWidget* TransformEditor::createPanel(QWidget* parent)
         auto* g = new QGroupBox(QObject::tr("Axis and occurrences"), w);
         auto* f = new QFormLayout(g);
         refRow(g, f, QObject::tr("Axis"), m_ref1Box, m_pick1, Slot::Ref1, m_ref1, false);
-        f->addRow(QObject::tr("Count"), spinI(g, 2, 2000, m_count));
-        f->addRow(QObject::tr("Total angle"), spinD(g, -360, 360, m_angle, QString(QChar(0xB0))));
+        f->addRow(QObject::tr("Count"), spinI(g, 2, 2000, m_count, "/count"));
+        f->addRow(QObject::tr("Total angle"), spinD(g, -360, 360, m_angle, QString(QChar(0xB0)), "/totalAngle"));
         f->addRow("", check(g, QObject::tr("Equal spacing"), m_equal));
         f->addRow("", check(g, QObject::tr("Reverse"), m_reverse));
         lay->addWidget(g);

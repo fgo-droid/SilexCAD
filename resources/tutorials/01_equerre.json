@@ -1,0 +1,238 @@
+{
+  "id": "equerre",
+  "order": 1,
+  "title": {
+    "fr": "Parcours 1 — L'équerre de fixation",
+    "en": "Path 1 — The mounting bracket"
+  },
+  "level": {
+    "fr": "Débutant",
+    "en": "Beginner"
+  },
+  "level_rank": 0,
+  "minutes": 15,
+  "intro": {
+    "fr": "Tu vas dessiner une semelle, la mettre en volume, ajouter un montant, la percer, l'arrondir, puis la modifier en un clic : le cœur de la CAO paramétrique.",
+    "en": "You will draw a base, give it volume, add an upright, drill it, round it, then change it in one click: the heart of parametric CAD."
+  },
+  "example": "equerre_annotee",
+  "steps": [
+    {
+      "title": {
+        "fr": "La semelle",
+        "en": "The base"
+      },
+      "goal": {
+        "fr": "Dessine un rectangle de 85 × 40 mm sur le plan XY (S, puis R) et rends-le entièrement contraint (blanc) : deux cotes D et un coin sur l'origine.",
+        "en": "Draw an 85 × 40 mm rectangle on the XY plane (S, then R) and make it fully constrained (white): two dimensions D and a corner on the origin."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S → plan XY, R → deux clics, D sur deux côtés, puis I entre un coin et l'origine.",
+          "en": "S → XY plane, R → two clicks, D on two sides, then I between a corner and the origin."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse existe",
+            "en": "A sketch exists"
+          }
+        },
+        {
+          "type": "sketch_dof",
+          "value": 0,
+          "label": {
+            "fr": "L'esquisse est entièrement contrainte (0 DOF)",
+            "en": "The sketch is fully constrained (0 DOF)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le volume",
+        "en": "The volume"
+      },
+      "goal": {
+        "fr": "Termine l'esquisse (Entrée) et extrude-la de 10 mm (E).",
+        "en": "Finish the sketch (Enter) and extrude it by 10 mm (E)."
+      },
+      "hint": {
+        "tool": "Extrude",
+        "text": {
+          "fr": "E, puis tape 10 dans la distance.",
+          "en": "E, then type 10 as the distance."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "label": {
+            "fr": "Une extrusion",
+            "en": "An extrusion"
+          }
+        },
+        {
+          "type": "body_count",
+          "min": 1,
+          "label": {
+            "fr": "Une pièce existe",
+            "en": "A body exists"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le montant",
+        "en": "The upright"
+      },
+      "goal": {
+        "fr": "Esquisse sur la face du dessus (ou un plan) et extrude un montant en mode Join.",
+        "en": "Sketch on the top face (or a plane) and extrude an upright in Join mode."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "Clique la face du dessus puis S, dessine un rectangle, E en mode Join.",
+          "en": "Click the top face then S, draw a rectangle, E in Join mode."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "min": 2,
+          "label": {
+            "fr": "Deux extrusions",
+            "en": "Two extrusions"
+          }
+        },
+        {
+          "type": "body_count",
+          "min": 1,
+          "max": 1,
+          "label": {
+            "fr": "Toujours une seule pièce (Join)",
+            "en": "Still a single body (Join)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le perçage",
+        "en": "The hole"
+      },
+      "goal": {
+        "fr": "Perce la semelle : un cercle extrudé en Cut, ou un cylindre (Maj+Y) en Cut.",
+        "en": "Drill the base: a circle extruded in Cut, or a cylinder (Shift+Y) in Cut."
+      },
+      "hint": {
+        "tool": "Extrude",
+        "text": {
+          "fr": "Esquisse un cercle sur la semelle, puis E et choisis Cut.",
+          "en": "Sketch a circle on the base, then E and choose Cut."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "label": {
+            "fr": "Un enlèvement de matière (Cut)",
+            "en": "A material removal (Cut)"
+          },
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Cut"
+            },
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Cut"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Les arrondis",
+        "en": "The roundings"
+      },
+      "goal": {
+        "fr": "Arrondis des arêtes verticales avec un congé (F).",
+        "en": "Round vertical edges with a fillet (F)."
+      },
+      "hint": {
+        "tool": "Fillet",
+        "text": {
+          "fr": "F, clique les arêtes, règle le rayon.",
+          "en": "F, click the edges, set the radius."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Fillet",
+          "label": {
+            "fr": "Un congé",
+            "en": "A fillet"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La magie du paramétrique",
+        "en": "Parametric magic"
+      },
+      "goal": {
+        "fr": "Double-clique la première extrusion dans la timeline et passe l'épaisseur de la semelle à 15 mm : tout se recalcule.",
+        "en": "Double-click the first extrusion in the timeline and set the base thickness to 15 mm: everything is recomputed."
+      },
+      "hint": {
+        "tool": "",
+        "text": {
+          "fr": "Double-clic sur la première icône d'extrusion de la timeline, distance = 15.",
+          "en": "Double-click the first extrusion icon of the timeline, distance = 15."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature_param",
+          "feature": "Extrude",
+          "which": "first",
+          "pointer": "/distance",
+          "value": 15,
+          "tol": 1e-06,
+          "label": {
+            "fr": "Semelle à 15 mm",
+            "en": "Base at 15 mm"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Toujours aucune erreur",
+            "en": "Still no error"
+          }
+        }
+      ]
+    }
+  ]
+}

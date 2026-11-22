@@ -40,6 +40,10 @@ public:
             ctx.warnings.push_back("The imported file contains no solid (surfaces only)");
 
         ctx.state.bodies[m_node.id] = std::move(ns);
+        if (!p.material.empty())
+            ctx.state.defaultMaterials[m_node.id] = p.material;
+        if (p.locked)
+            ctx.state.lockedBodies[m_node.id] = p.component.empty() ? std::string("step") : p.component;
         ctx.state.bodyOrder.push_back(m_node.id);
         ctx.state.bodyNames[m_node.id] = m_node.name;
     }

@@ -1,0 +1,157 @@
+{
+  "features": [
+    {
+      "id": "1b14fc79-34d1-4d81-809d-4fb6232a1a42",
+      "name": "Box1",
+      "params": {
+        "centerX": -30.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 25.0,
+        "length": 12.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 12.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "9929bb18-7fc3-474c-8cf8-ea2ca9644257",
+      "name": "Box2",
+      "params": {
+        "centerX": -30.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 5.0,
+        "length": 45.0,
+        "op": "Join",
+        "plane": {
+          "kind": "XY",
+          "offset": 25.0
+        },
+        "width": 12.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "a3dbef8a-72cb-4b7e-a8c1-bcfed9a2c4b1",
+      "name": "Cylinder1",
+      "params": {
+        "centerX": 25.0,
+        "centerY": 0.0,
+        "diameter": 8.0,
+        "height": 30.0,
+        "length": 20.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 20.0
+      },
+      "type": "Cylinder"
+    },
+    {
+      "id": "40996a29-168a-4c36-87f7-74f879fd6831",
+      "name": "Box3",
+      "params": {
+        "centerX": 25.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 8.0,
+        "length": 16.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY",
+          "offset": 30.0
+        },
+        "width": 16.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "fc095974-17f2-4da8-aa5e-5eb040d8cd92",
+      "name": "Cylinder2",
+      "params": {
+        "centerX": 25.0,
+        "centerY": 0.0,
+        "diameter": 6.8,
+        "height": 8.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "XY",
+          "offset": 30.0
+        },
+        "width": 20.0
+      },
+      "type": "Cylinder"
+    },
+    {
+      "id": "9e440e40-9abd-480d-86cf-d2c7340e6e74",
+      "name": "Thread1",
+      "params": {
+        "clearance": 0.15,
+        "face": {
+          "name": "a3dbef8a-72cb-4b7e-a8c1-bcfed9a2c4b1:side",
+          "sig": {
+            "c": [
+              25.0,
+              -2.3964103637927753e-16,
+              15.000000000000002
+            ],
+            "d": [
+              -1.0,
+              1.2246467991473532e-16,
+              0.0
+            ],
+            "s": 753.9822368615503,
+            "t": 1
+          }
+        },
+        "fine": false,
+        "length": 0.0,
+        "modeled": true,
+        "pitch": 0.0,
+        "size": "M8"
+      },
+      "type": "Thread"
+    },
+    {
+      "id": "552b17f0-bfa4-4c93-af20-b8c0fbbd382b",
+      "name": "Thread2",
+      "params": {
+        "clearance": 0.15,
+        "face": {
+          "name": "fc095974-17f2-4da8-aa5e-5eb040d8cd92:side",
+          "sig": {
+            "c": [
+              25.0,
+              -1.412340659526292e-17,
+              34.0
+            ],
+            "d": [
+              1.0,
+              -1.2246467991473532e-16,
+              -0.0
+            ],
+            "s": 170.90264035528475,
+            "t": 1
+          }
+        },
+        "fine": false,
+        "length": 0.0,
+        "modeled": true,
+        "pitch": 0.0,
+        "size": "M8"
+      },
+      "type": "Thread"
+    }
+  ],
+  "format": "silex",
+  "marker": 7,
+  "parameters": [],
+  "schema_version": "0.4",
+  "version": 4
+}

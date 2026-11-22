@@ -1,0 +1,113 @@
+{
+  "id": "repair_5",
+  "category": "repair",
+  "order": 5,
+  "level": {
+    "fr": "Défi de dépannage",
+    "en": "Repair challenge"
+  },
+  "level_rank": 3,
+  "minutes": 5,
+  "start": "repair_5_piece_step",
+  "title": {
+    "fr": "Défi 5 — La pièce STEP à modifier",
+    "en": "Challenge 5 — The STEP part to modify"
+  },
+  "intro": {
+    "fr": "Ce support vient d'un fichier STEP : il n'a pas d'historique, on ne peut pas éditer ses cotes. Il faut pourtant enlever le bossage inutile et déplacer le perçage de 10 mm vers le centre. La modélisation directe est faite pour ça.",
+    "en": "This support comes from a STEP file: it has no history, its dimensions cannot be edited. Yet the useless boss must go and the hole must move 10 mm towards the center. Direct modelling is made for this."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Supprimer le bossage",
+        "en": "Delete the boss"
+      },
+      "goal": {
+        "fr": "Sélectionne les faces du bossage cylindrique (dessus + côté) et appuie sur Suppr (Delete Face) : la face du dessous se referme toute seule.",
+        "en": "Select the faces of the cylindrical boss (top + side) and press Del (Delete Face): the face underneath heals by itself."
+      },
+      "hint": {
+        "tool": "Delete Face",
+        "text": {
+          "fr": "Delete Face retire des faces et prolonge les faces voisines pour refermer le solide.",
+          "en": "Delete Face removes faces and extends the neighbouring faces to close the solid."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "DefeatureFace",
+          "min": 1,
+          "label": {
+            "fr": "Une étape Delete Face",
+            "en": "A Delete Face step"
+          }
+        },
+        {
+          "type": "no_hole_at",
+          "x": 10,
+          "y": 0,
+          "tol": 1,
+          "label": {
+            "fr": "Le bossage a disparu",
+            "en": "The boss is gone"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en erreur",
+            "en": "No failed step"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Déplacer le perçage",
+        "en": "Move the hole"
+      },
+      "goal": {
+        "fr": "Supprime la face du trou (Suppr), puis perce un nouveau trou Ø6 (Hole / Insert, Maj+H) à X = -15 mm (10 mm plus près du centre).",
+        "en": "Delete the face of the hole (Del), then drill a new Ø6 hole (Hole / Insert, Shift+H) at X = -15 mm (10 mm closer to the center)."
+      },
+      "hint": {
+        "tool": "Hole / Insert",
+        "text": {
+          "fr": "Sur une face, l'origine de l'outil Hole est le centre de la face : regarde les cotes X / Y du panneau.",
+          "en": "On a face, the origin of the Hole tool is the face center: look at the X / Y fields of the panel."
+        }
+      },
+      "criteria": [
+        {
+          "type": "no_hole_at",
+          "x": -25,
+          "y": 0,
+          "tol": 1,
+          "label": {
+            "fr": "L'ancien trou (X = -25) est bouché",
+            "en": "The old hole (X = -25) is filled"
+          }
+        },
+        {
+          "type": "hole_at",
+          "x": -15,
+          "y": 0,
+          "tol": 0.5,
+          "label": {
+            "fr": "Un trou à X = -15 mm",
+            "en": "A hole at X = -15 mm"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en erreur",
+            "en": "No failed step"
+          }
+        }
+      ]
+    }
+  ]
+}

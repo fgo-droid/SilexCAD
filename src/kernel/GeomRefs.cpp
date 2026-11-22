@@ -157,7 +157,7 @@ void replicateTargets(ExecContext& ctx, const TransformTargets& targets, const s
         if (targets.type == "feature") {
             auto it = ctx.state.featureTools.find(id);
             if (it == ctx.state.featureTools.end())
-                throw FeatureError("The copied feature is missing, failed, or is not an extrusion / revolution");
+                throw FeatureError("The copied feature is missing, failed, or is not an extrusion / revolution / sweep / loft");
             src = &it->second.tool;
             op = it->second.op;
             body = ctx.state.bodies.count(it->second.body) ? it->second.body : Uuid{};

@@ -1,0 +1,256 @@
+{
+  "id": "coude",
+  "order": 9,
+  "title": {
+    "fr": "Parcours 9 — Le coude de tuyauterie à brides",
+    "en": "Path 9 — The flanged pipe elbow"
+  },
+  "level": {
+    "fr": "Avancé",
+    "en": "Advanced"
+  },
+  "level_rank": 2,
+  "minutes": 30,
+  "intro": {
+    "fr": "Un balayage le long d'un arc, deux brides percées en cercle, des paramètres globaux qui pilotent le tube, puis l'export 3MF et le plan.",
+    "en": "A sweep along an arc, two flanges drilled on a bolt circle, global parameters driving the tube, then the 3MF export and the drawing."
+  },
+  "example": "coude_brides",
+  "steps": [
+    {
+      "title": {
+        "fr": "Les paramètres",
+        "en": "The parameters"
+      },
+      "goal": {
+        "fr": "Crée diametre_tube = 30 et epaisseur_paroi = 3 (Ctrl+P).",
+        "en": "Create diametre_tube = 30 and epaisseur_paroi = 3 (Ctrl+P)."
+      },
+      "hint": {
+        "tool": "Parameters",
+        "text": {
+          "fr": "Ctrl+P, Ajouter deux fois.",
+          "en": "Ctrl+P, Add twice."
+        }
+      },
+      "criteria": [
+        {
+          "type": "parameter",
+          "name": "diametre_tube",
+          "label": {
+            "fr": "Paramètre diametre_tube",
+            "en": "Parameter diametre_tube"
+          }
+        },
+        {
+          "type": "parameter",
+          "name": "epaisseur_paroi",
+          "label": {
+            "fr": "Paramètre epaisseur_paroi",
+            "en": "Parameter epaisseur_paroi"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La trajectoire",
+        "en": "The path"
+      },
+      "goal": {
+        "fr": "Sur XZ, un arc de 90° de rayon 45 mm qui part de l'origine vers le haut.",
+        "en": "On XZ, a 90° arc of radius 45 mm starting at the origin and going up."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S → XZ, A (arc), rayon 45.",
+          "en": "S → XZ, A (arc), radius 45."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse de trajectoire",
+            "en": "A path sketch"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La section",
+        "en": "The section"
+      },
+      "goal": {
+        "fr": "Sur XY, deux cercles concentriques à l'origine, cotés par diametre_tube et diametre_tube − 2 × epaisseur_paroi.",
+        "en": "On XY, two concentric circles at the origin, dimensioned by diametre_tube and diametre_tube − 2 × epaisseur_paroi."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "Tape les noms des paramètres dans les cotes D.",
+          "en": "Type the parameter names in the D dimensions."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "min": 2,
+          "label": {
+            "fr": "Une section",
+            "en": "A section"
+          }
+        },
+        {
+          "type": "sketch_dof",
+          "value": 0,
+          "label": {
+            "fr": "Entièrement contrainte",
+            "en": "Fully constrained"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le balayage",
+        "en": "The sweep"
+      },
+      "goal": {
+        "fr": "Balaie la section annulaire le long de l'arc (Maj+W).",
+        "en": "Sweep the ring section along the arc (Shift+W)."
+      },
+      "hint": {
+        "tool": "Sweep",
+        "text": {
+          "fr": "Maj+W : profil = l'anneau, trajectoire = l'arc.",
+          "en": "Shift+W: profile = the ring, path = the arc."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sweep",
+          "label": {
+            "fr": "Un balayage",
+            "en": "A sweep"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Les brides",
+        "en": "The flanges"
+      },
+      "goal": {
+        "fr": "Ajoute une bride Ø70 × 8 à chaque extrémité (Join), alésée au diamètre intérieur.",
+        "en": "Add a Ø70 × 8 flange at each end (Join), bored to the inner diameter."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y sur XY puis sur YZ décalé de 45, Join ; puis Ø24 en Cut.",
+          "en": "Shift+Y on XY then on YZ offset by 45, Join; then Ø24 in Cut."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Join",
+              "min": 2
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Join",
+              "min": 2
+            }
+          ],
+          "label": {
+            "fr": "Deux brides",
+            "en": "Two flanges"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Les trous de bride",
+        "en": "The flange holes"
+      },
+      "goal": {
+        "fr": "4 trous M5 (Ø5,5) sur un cercle Ø50 : un trou puis une répétition circulaire, sur chaque bride.",
+        "en": "4 M5 holes (Ø5.5) on a Ø50 circle: one hole then a circular pattern, on each flange."
+      },
+      "hint": {
+        "tool": "Circular Pattern",
+        "text": {
+          "fr": "Maj+C, 4 occurrences, axe = l'axe de la bride.",
+          "en": "Shift+C, 4 occurrences, axis = the flange axis."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "CircularPattern",
+          "min": 2,
+          "label": {
+            "fr": "Deux répétitions circulaires",
+            "en": "Two circular patterns"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Exporter",
+        "en": "Export"
+      },
+      "goal": {
+        "fr": "Exporte la pièce en 3MF (Ctrl+3) et la mise en plan en PDF (Ctrl+D).",
+        "en": "Export the part to 3MF (Ctrl+3) and the drawing to PDF (Ctrl+D)."
+      },
+      "hint": {
+        "tool": "Drawing",
+        "text": {
+          "fr": "Ctrl+3 puis Ctrl+D > Export PDF.",
+          "en": "Ctrl+3 then Ctrl+D > Export PDF."
+        }
+      },
+      "criteria": [
+        {
+          "type": "event",
+          "name": "3mf_exported",
+          "label": {
+            "fr": "3MF exporté",
+            "en": "3MF exported"
+          }
+        },
+        {
+          "type": "event",
+          "name": "drawing_exported",
+          "label": {
+            "fr": "Plan exporté",
+            "en": "Drawing exported"
+          }
+        }
+      ]
+    }
+  ]
+}

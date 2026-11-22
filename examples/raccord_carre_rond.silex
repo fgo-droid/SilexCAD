@@ -1,0 +1,418 @@
+{
+  "features": [
+    {
+      "id": "cbd72fa9-32ab-4686-b0ab-f33d4e889ca9",
+      "name": "Plan_sortie",
+      "params": {
+        "base": {
+          "kind": "XY",
+          "offset": 60.0
+        },
+        "mode": "offset"
+      },
+      "type": "ConstructionPlane",
+      "annotation": "Un plan de construction décalé de 60 mm : c'est là que sera la sortie ronde.",
+      "annotation_en": "A construction plane offset by 60 mm: the round outlet goes there."
+    },
+    {
+      "id": "0bbbb093-e694-4181-80ce-accc83ec4e48",
+      "name": "Entree_carree",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "b330c977-39d7-4e2d-a1e6-abd70903bc7e",
+                2
+              ],
+              "b": [
+                "70a5e9bb-5182-4069-b9af-0654021c7524",
+                1
+              ],
+              "id": "ecf724b1-7228-4d70-afb6-7251eb82c0ab",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "70a5e9bb-5182-4069-b9af-0654021c7524",
+                2
+              ],
+              "b": [
+                "e89f75df-6e4d-4c19-ae2a-a936d5aca62f",
+                1
+              ],
+              "id": "4e5ef589-a619-4863-b846-3fa5b10814ca",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "e89f75df-6e4d-4c19-ae2a-a936d5aca62f",
+                2
+              ],
+              "b": [
+                "33b27d62-b663-4b54-a97c-71f1af33ece1",
+                1
+              ],
+              "id": "22fec41e-b1a8-41d6-af46-8d8c6a632d5f",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "33b27d62-b663-4b54-a97c-71f1af33ece1",
+                2
+              ],
+              "b": [
+                "b330c977-39d7-4e2d-a1e6-abd70903bc7e",
+                1
+              ],
+              "id": "bc377041-221f-485b-a933-ac062c88af0d",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "b330c977-39d7-4e2d-a1e6-abd70903bc7e",
+                0
+              ],
+              "id": "8e67df98-e927-4af6-988f-b2dd2a5b0bdb",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "e89f75df-6e4d-4c19-ae2a-a936d5aca62f",
+                0
+              ],
+              "id": "cc8fe90e-4b3c-4c06-aa34-cf640b8a970f",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "70a5e9bb-5182-4069-b9af-0654021c7524",
+                0
+              ],
+              "id": "1b618ffa-1edf-4eea-b83b-940e3d04df9f",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "33b27d62-b663-4b54-a97c-71f1af33ece1",
+                0
+              ],
+              "id": "122ada58-62d3-46a1-a05a-78e9b3b047b5",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "385ef911-1779-4900-83a0-920731648762",
+                1
+              ],
+              "b": [
+                "b330c977-39d7-4e2d-a1e6-abd70903bc7e",
+                1
+              ],
+              "id": "c4489d74-f19a-4c9d-b0c9-7d38564d7ba1",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "385ef911-1779-4900-83a0-920731648762",
+                2
+              ],
+              "b": [
+                "e89f75df-6e4d-4c19-ae2a-a936d5aca62f",
+                1
+              ],
+              "id": "1a8a44c7-0c8f-4896-bcbf-cbf139b4ffd3",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "400d1bd6-8d9f-4ce3-9409-04f4bc92a7e7",
+                1
+              ],
+              "b": [
+                "70a5e9bb-5182-4069-b9af-0654021c7524",
+                1
+              ],
+              "id": "8db29216-99b1-425b-ae17-98c1bd2e5614",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "400d1bd6-8d9f-4ce3-9409-04f4bc92a7e7",
+                2
+              ],
+              "b": [
+                "33b27d62-b663-4b54-a97c-71f1af33ece1",
+                1
+              ],
+              "id": "469e20f2-5805-4a36-ae7f-1525e47292ef",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "25ce6c04-2c52-46d1-8e33-387ff42181b3",
+                1
+              ],
+              "b": [
+                "385ef911-1779-4900-83a0-920731648762",
+                0
+              ],
+              "id": "b4e91217-c268-44e6-b62b-6eec52e6b61c",
+              "kind": "Midpoint"
+            },
+            {
+              "a": [
+                "25ce6c04-2c52-46d1-8e33-387ff42181b3",
+                1
+              ],
+              "b": [
+                "@O",
+                1
+              ],
+              "id": "2e518409-2e63-4e16-bbd0-584a3bfc2e0e",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "b330c977-39d7-4e2d-a1e6-abd70903bc7e",
+                0
+              ],
+              "id": "eef96095-0c75-47c2-873b-4e170e96d378",
+              "kind": "Distance",
+              "value": 60.0
+            },
+            {
+              "a": [
+                "33b27d62-b663-4b54-a97c-71f1af33ece1",
+                0
+              ],
+              "id": "7e8d5b32-4af6-4395-8f2b-6b251cba3101",
+              "kind": "Distance",
+              "value": 60.0
+            }
+          ],
+          "geos": [
+            {
+              "id": "b330c977-39d7-4e2d-a1e6-abd70903bc7e",
+              "kind": "Line",
+              "p1": [
+                -30.0,
+                -30.0
+              ],
+              "p2": [
+                30.0,
+                -30.0
+              ]
+            },
+            {
+              "id": "70a5e9bb-5182-4069-b9af-0654021c7524",
+              "kind": "Line",
+              "p1": [
+                30.0,
+                -30.0
+              ],
+              "p2": [
+                30.0,
+                30.0
+              ]
+            },
+            {
+              "id": "e89f75df-6e4d-4c19-ae2a-a936d5aca62f",
+              "kind": "Line",
+              "p1": [
+                30.0,
+                30.0
+              ],
+              "p2": [
+                -30.0,
+                30.0
+              ]
+            },
+            {
+              "id": "33b27d62-b663-4b54-a97c-71f1af33ece1",
+              "kind": "Line",
+              "p1": [
+                -30.0,
+                30.0
+              ],
+              "p2": [
+                -30.0,
+                -30.0
+              ]
+            },
+            {
+              "construction": true,
+              "id": "385ef911-1779-4900-83a0-920731648762",
+              "kind": "Line",
+              "p1": [
+                -30.0,
+                -30.0
+              ],
+              "p2": [
+                30.0,
+                30.0
+              ]
+            },
+            {
+              "construction": true,
+              "id": "400d1bd6-8d9f-4ce3-9409-04f4bc92a7e7",
+              "kind": "Line",
+              "p1": [
+                30.0,
+                -30.0
+              ],
+              "p2": [
+                -30.0,
+                30.0
+              ]
+            },
+            {
+              "construction": true,
+              "id": "25ce6c04-2c52-46d1-8e33-387ff42181b3",
+              "kind": "Point",
+              "p": [
+                0.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Entrée carrée 60 × 60, rectangle par le centre (Maj+R) : symétrique par construction.",
+      "annotation_en": "Square 60 × 60 inlet, center rectangle (Shift+R): symmetric by construction."
+    },
+    {
+      "id": "626f2f20-c1be-41bb-b92e-64d4e9d86deb",
+      "name": "Sortie_ronde",
+      "params": {
+        "plane": {
+          "kind": "Plane",
+          "planeId": "cbd72fa9-32ab-4686-b0ab-f33d4e889ca9"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "d62bea58-1ee3-4219-a6ac-b5532d8417c9",
+                3
+              ],
+              "b": [
+                "@O",
+                1
+              ],
+              "id": "e4b36d0b-f8d0-4f37-89e4-88160ddc1562",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d62bea58-1ee3-4219-a6ac-b5532d8417c9",
+                0
+              ],
+              "id": "4417d456-7dfd-4d65-9ea4-d5f384a85803",
+              "kind": "Diameter",
+              "value": 40.0
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "d62bea58-1ee3-4219-a6ac-b5532d8417c9",
+              "kind": "Circle",
+              "r": 20.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Sortie Ø40, centrée : le lissage reliera le carré au cercle.",
+      "annotation_en": "Ø40 outlet, centered: the loft will connect the square to the circle."
+    },
+    {
+      "id": "a8d6744d-d59f-464c-8210-e5bf013a1e93",
+      "name": "Loft1",
+      "params": {
+        "op": "NewBody",
+        "ruled": false,
+        "sections": [
+          {
+            "regions": [
+              "33b27d62-b663-4b54-a97c-71f1af33ece1,70a5e9bb-5182-4069-b9af-0654021c7524,b330c977-39d7-4e2d-a1e6-abd70903bc7e,e89f75df-6e4d-4c19-ae2a-a936d5aca62f"
+            ],
+            "sketch": "0bbbb093-e694-4181-80ce-accc83ec4e48"
+          },
+          {
+            "regions": [
+              "d62bea58-1ee3-4219-a6ac-b5532d8417c9"
+            ],
+            "sketch": "626f2f20-c1be-41bb-b92e-64d4e9d86deb"
+          }
+        ],
+        "solid": true,
+        "targetBody": ""
+      },
+      "type": "Loft",
+      "annotation": "Le lissage (Maj+L) passe d'une section à l'autre sans arête brusque.",
+      "annotation_en": "The loft (Shift+L) blends one section into the other without a sharp break."
+    },
+    {
+      "id": "4db4eae1-dab0-4cd7-8122-9b1de1c4b873",
+      "name": "Shell1",
+      "params": {
+        "body": "a8d6744d-d59f-464c-8210-e5bf013a1e93",
+        "outward": false,
+        "removedFaces": [
+          {
+            "name": "a8d6744d-d59f-464c-8210-e5bf013a1e93:end",
+            "sig": {
+              "c": [
+                -8.881784197001252e-16,
+                -2.352196884424575e-15,
+                59.99999999999999
+              ],
+              "d": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "s": 1256.6370614359168,
+              "t": 0
+            }
+          },
+          {
+            "name": "a8d6744d-d59f-464c-8210-e5bf013a1e93:start",
+            "sig": {
+              "c": [
+                2.6645352591003757e-15,
+                -8.084397349092692e-15,
+                0.0
+              ],
+              "d": [
+                0.0,
+                0.0,
+                -1.0
+              ],
+              "s": 3600.0000000000014,
+              "t": 0
+            }
+          }
+        ],
+        "thickness": 2.0
+      },
+      "type": "Shell",
+      "annotation": "Coque de 2 mm en retirant les deux faces d'extrémité : le raccord est creux et ouvert des deux côtés.",
+      "annotation_en": "2 mm shell removing both end faces: the adapter is hollow and open at both ends."
+    }
+  ],
+  "format": "silex",
+  "marker": 5,
+  "parameters": [],
+  "schema_version": "0.4",
+  "version": 4
+}

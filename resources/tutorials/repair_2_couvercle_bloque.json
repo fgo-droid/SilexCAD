@@ -1,0 +1,72 @@
+{
+  "id": "repair_2",
+  "category": "repair",
+  "order": 2,
+  "level": {
+    "fr": "Défi de dépannage",
+    "en": "Repair challenge"
+  },
+  "level_rank": 3,
+  "minutes": 5,
+  "start": "repair_2_couvercle_bloque",
+  "title": {
+    "fr": "Défi 2 — Le couvercle bloqué",
+    "en": "Challenge 2 — The stuck lid"
+  },
+  "intro": {
+    "fr": "Le couvercle n'entre pas dans le bac : la vérification d'interférences (Maj+I) montre une collision rouge. La lèvre du couvercle est dimensionnée par le paramètre « jeu_montage ». Corrige-le dans les paramètres (Ctrl+P) pour un vrai jeu d'impression 3D.",
+    "en": "The lid does not fit into the tray: the interference check (Shift+I) shows a red collision. The lip of the lid is sized by the parameter 'jeu_montage'. Fix it in the parameters (Ctrl+P) for a real 3D printing play."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Donner du jeu au montage",
+        "en": "Give the assembly some play"
+      },
+      "goal": {
+        "fr": "Ouvre les paramètres (Ctrl+P) et donne à « jeu_montage » une valeur positive réaliste en FDM (0,1 à 0,5 mm). Vérifie avec Interférences (Maj+I).",
+        "en": "Open the parameters (Ctrl+P) and give 'jeu_montage' a realistic positive FDM value (0.1 to 0.5 mm). Check with Interference (Shift+I)."
+      },
+      "hint": {
+        "tool": "Parameters",
+        "text": {
+          "fr": "Un jeu négatif fait grossir la lèvre : elle devient plus large que le bac.",
+          "en": "A negative play makes the lip grow: it becomes wider than the tray."
+        }
+      },
+      "criteria": [
+        {
+          "type": "parameter",
+          "name": "jeu_montage",
+          "min": 0.1,
+          "max": 0.5,
+          "label": {
+            "fr": "jeu_montage entre 0,1 et 0,5 mm",
+            "en": "jeu_montage between 0.1 and 0.5 mm"
+          }
+        },
+        {
+          "type": "no_collision",
+          "label": {
+            "fr": "Aucune collision entre le bac et le couvercle",
+            "en": "No collision between tray and lid"
+          }
+        },
+        {
+          "type": "robust",
+          "parameter": "longueur",
+          "value": 80,
+          "check": [
+            {
+              "type": "no_collision"
+            }
+          ],
+          "label": {
+            "fr": "Test de robustesse : boîte rallongée à 80 mm, toujours sans collision",
+            "en": "Robustness test: box lengthened to 80 mm, still no collision"
+          }
+        }
+      ]
+    }
+  ]
+}

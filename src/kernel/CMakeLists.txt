@@ -2,6 +2,8 @@
 # which is OCCT-free: OCCT include directories are PRIVATE so that the UI physically
 # cannot include TopoDS_Shape & co (architecture rule "no OCCT logic in the UI").
 find_package(OpenCASCADE CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(Freetype REQUIRED)  # v0.7 lot A: glyph outlines (the OCCT build has no Font_BRepFont)
 
 add_library(silex_kernel STATIC
     KernelEngine.cpp
@@ -20,7 +22,21 @@ add_library(silex_kernel STATIC
     ops/OpCombine.cpp
     ops/OpMirror.cpp
     ops/OpPattern.cpp
+    ops/OpSweepLoft.cpp
+    ops/OpDirect.cpp
+    ops/OpBodies.cpp
+    ops/Mate.cpp
+    ops/OpMechanical.cpp
+    ops/OpThread.cpp
+    ops/OpFastenerHole.cpp
+    ops/TextOutline.h ops/TextOutline.cpp
+    ops/OpText.cpp
     GeomRefs.cpp
+    Analysis.cpp
+    Zip.cpp
+    ThreeMf.cpp
+    Hlr.cpp
+    LessonFacts.cpp
 )
 
 target_include_directories(silex_kernel
@@ -29,7 +45,10 @@ target_include_directories(silex_kernel
 
 target_link_libraries(silex_kernel
     PUBLIC  silex_model
-    PRIVATE ${OpenCASCADE_FoundationClasses_LIBRARIES}
+    PRIVATE silex_sketch
+            ZLIB::ZLIB
+            Freetype::Freetype
+            ${OpenCASCADE_FoundationClasses_LIBRARIES}
             ${OpenCASCADE_ModelingData_LIBRARIES}
             ${OpenCASCADE_ModelingAlgorithms_LIBRARIES}
             ${OpenCASCADE_DataExchange_LIBRARIES})
@@ -37,6 +56,7 @@ target_link_libraries(silex_kernel
 # Internal headers are reachable by the regression tests through this interface target.
 add_library(silex_kernel_internal INTERFACE)
 target_include_directories(silex_kernel_internal INTERFACE ${OpenCASCADE_INCLUDE_DIR})
+target_link_libraries(silex_kernel_internal INTERFACE Freetype::Freetype)
 target_link_libraries(silex_kernel_internal INTERFACE silex_kernel
     ${OpenCASCADE_FoundationClasses_LIBRARIES}
     ${OpenCASCADE_ModelingData_LIBRARIES}

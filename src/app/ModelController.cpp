@@ -5,6 +5,8 @@
 #include <QPointer>
 #include <QSaveFile>
 
+#include "sketch/Parametric.h"
+
 namespace silex::ui {
 
 ModelController::ModelController(QObject* parent) : QObject(parent)
@@ -45,6 +47,15 @@ void ModelController::onResult(std::shared_ptr<const ModelSnapshot> snap)
         return;  // stale
     m_received = snap->revision;
     m_snapshot = std::move(snap);
+    // v0.4 lot 3: failed steps of the committed document are remembered for the AI tutor
+    if (!m_previewState)
+        for (const auto& r : m_snapshot->results)
+            if (r.status == FeatureStatus::Error && !r.message.empty()) {
+                const FeaturePtr f = doc().find(r.id);
+                const std::string e = (f ? f->name + ": " : std::string()) + r.message;
+                if (m_userErrors.empty() || m_userErrors.back() != e)
+                    noteUserError(e);
+            }
     emit snapshotChanged();
     if (!busy())
         emit busyChanged(false);
@@ -54,7 +65,9 @@ void ModelController::execute(const Command& cmd)
 {
     m_previewState.reset();
     m_previewFeature.clear();
-    m_history.execute(cmd);
+    // v0.3: every change keeps the document parametrically consistent (global parameters ->
+    // bound fields -> sketch re-solve), the timeline then recomputes in cascade.
+    m_history.execute(ParametricCommand(cmd));
     emit documentChanged();
     submit();
 }
@@ -112,7 +125,8 @@ bool ModelController::load(const QString& path, QString* error)
     }
     try {
         const QByteArray data = f.readAll();
-        DocState s = docFromJson(Json::parse(data.constData(), data.constData() + data.size()));
+        // parameters edited by hand in the file are honoured (bound fields re-evaluated)
+        DocState s = applyParameters(docFromJson(Json::parse(data.constData(), data.constData() + data.size())));
         m_previewState.reset();
         m_history.reset(std::move(s));
         m_path = path;
@@ -125,6 +139,16 @@ bool ModelController::load(const QString& path, QString* error)
             *error = QString::fromUtf8(e.what());
         return false;
     }
+}
+
+void ModelController::restore(DocState state, const QString& sourcePath)
+{
+    m_previewState.reset();
+    m_history.reset(applyParameters(std::move(state)));
+    m_history.markDirty();
+    m_path = sourcePath;
+    emit documentChanged();
+    submit();
 }
 
 bool ModelController::save(const QString& path, QString* error)
@@ -146,6 +170,25 @@ bool ModelController::save(const QString& path, QString* error)
     m_history.markClean();
     emit documentChanged();
     return true;
+}
+
+}  // namespace silex::ui
+
+namespace silex::ui {
+
+void ModelController::noteEvent(const std::string& e)
+{
+    if (m_events.insert(e).second)
+        emit eventsChanged();
+}
+
+void ModelController::noteUserError(const std::string& e)
+{
+    if (e.empty())
+        return;
+    m_userErrors.push_back(e);
+    while (m_userErrors.size() > 20)
+        m_userErrors.pop_front();
 }
 
 }  // namespace silex::ui

@@ -12,6 +12,7 @@ layout(std140, binding = 0) uniform Buf {
     vec4 eye;
     vec4 params;
     vec4 viewDir;
+    vec4 clip;
 } ubuf;
 
 vec3 shade(vec3 base, vec3 n, vec3 v)
@@ -35,6 +36,8 @@ vec3 viewVector()
 
 void main()
 {
+    if (dot(ubuf.clip.xyz, ubuf.clip.xyz) > 0.0 && dot(ubuf.clip.xyz, vWorld) > ubuf.clip.w)
+        discard;  // section view
     vec3 c = shade(vColor.rgb, normalize(vNormal), viewVector());
     float a = clamp(vColor.a * ubuf.params.x, 0.0, 1.0);
     float z = gl_FragCoord.z;

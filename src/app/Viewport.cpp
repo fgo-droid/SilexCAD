@@ -1,4 +1,5 @@
 #include "Viewport.h"
+#include "ViewCube.h"
 
 #include <QFile>
 #include <QKeyEvent>
@@ -19,7 +20,7 @@ namespace silex::ui {
 
 namespace {
 
-constexpr quint32 kUboSize = 112;  // mat4 + 3 x vec4 (std140)
+constexpr quint32 kUboSize = 128;  // mat4 + 4 x vec4 (std140)
 
 class OverlayWidget final : public QWidget
 {
@@ -91,6 +92,8 @@ Viewport::Viewport(QWidget* parent) : QRhiWidget(parent)
     m_anim = new QVariantAnimation(this);
     m_anim->setDuration(320);
     m_anim->setEasingCurve(QEasingCurve::OutCubic);
+    m_viewCube = new ViewCube(this);  // above the overlay, receives its own clicks
+    m_viewCube->show();
 }
 
 Viewport::~Viewport() = default;
@@ -99,6 +102,8 @@ void Viewport::resizeEvent(QResizeEvent* e)
 {
     QRhiWidget::resizeEvent(e);
     m_overlay->setGeometry(rect());
+    if (m_viewCube)
+        m_viewCube->reposition();
 }
 
 void Viewport::setSnapshot(std::shared_ptr<const ModelSnapshot> snap)
@@ -112,9 +117,35 @@ void Viewport::setSnapshot(std::shared_ptr<const ModelSnapshot> snap)
     refreshOverlay();
 }
 
+void Viewport::setOverlayMeshes(std::vector<OverlayMesh> meshes)
+{
+    m_overlaySrc = std::move(meshes);
+    m_overlaysDirty = true;
+    update();
+}
+
+bool Viewport::bodyHidden(size_t i) const
+{
+    return m_client && m_snap && i < m_snap->bodies.size() && m_client->highlight().hiddenBodies.count(m_snap->bodies[i].id);
+}
+
+bool Viewport::bodyTranslucent(size_t i) const
+{
+    if (m_client && m_client->highlight().ghostBodies)
+        return true;
+    return m_snap && i < m_snap->bodies.size() && m_snap->bodies[i].material.a < 0.99f;
+}
+
 void Viewport::highlightChanged()
 {
-    if (m_client && m_client->highlight().profileVisible != m_pickerProfiles)
+    if (m_client) {
+        const HighlightState& hs = m_client->highlight();
+        m_picker.setClip(hs.clipOn,
+                         QVector3D(float(hs.clipNormal.x), float(hs.clipNormal.y), float(hs.clipNormal.z)),
+                         float(hs.clipD));
+    }
+    if (m_client && (m_client->highlight().profileVisible != m_pickerProfiles ||
+                     m_client->highlight().hiddenBodies != m_pickerHidden))
         rebuildPicker();
     update();
     refreshOverlay();
@@ -125,17 +156,22 @@ void Viewport::refreshOverlay() { m_overlay->update(); }
 void Viewport::rebuildPicker()
 {
     m_pickerProfiles.clear();
-    if (m_client)
+    m_pickerHidden.clear();
+    if (m_client) {
         m_pickerProfiles = m_client->highlight().profileVisible;
-    m_picker.build(m_snap, m_pickerProfiles);
+        m_pickerHidden = m_client->highlight().hiddenBodies;
+    }
+    m_picker.build(m_snap, m_pickerProfiles, m_pickerHidden);
 }
 
 // ------------------------------------------------------------------ camera helpers
 
-void Viewport::animateTo(const QQuaternion& rot, std::optional<QVector3D> target, std::optional<float> distance)
+void Viewport::animateTo(const QQuaternion& rot, std::optional<QVector3D> target, std::optional<float> distance,
+                         int durationMs)
 {
     m_anim->stop();
     m_anim->disconnect(this);
+    m_anim->setDuration(durationMs);
     const QQuaternion r0 = m_camera.rotation;
     const QVector3D t0 = m_camera.target, t1 = target.value_or(t0);
     const float d0 = m_camera.distance, d1 = distance.value_or(d0);
@@ -171,6 +207,18 @@ void Viewport::fitAll(bool animated)
 }
 
 void Viewport::setStandardView(int which) { animateTo(Camera::standardView(which)); }
+
+void Viewport::homeView()
+{
+    BBox box;
+    if (m_snap)
+        box = m_snap->bbox;
+    Camera c = m_camera;
+    c.rotation = Camera::isometric();
+    c.fit(box);
+    m_camera.sceneRadius = c.sceneRadius;
+    animateTo(c.rotation, c.target, c.distance, 240);
+}
 
 SelItem Viewport::pickAt(QPointF px, uint32_t filter) const { return m_picker.pick(m_camera, size(), px, filter); }
 
@@ -392,6 +440,10 @@ void Viewport::releaseAll()
     for (auto& g : m_profiles)
         g.release();
     m_profiles.clear();
+    for (auto& g : m_overlays)
+        g.release();
+    m_overlays.clear();
+    m_overlaysDirty = true;
     m_preview.release();
     m_planes.release();
     m_grid.release();
@@ -455,6 +507,22 @@ void Viewport::uploadMesh(GpuMesh& g, const RenderMesh& m, QRhiResourceUpdateBat
 
 void Viewport::syncGeometry(QRhiResourceUpdateBatch* u)
 {
+    if (m_overlaysDirty) {
+        m_overlaysDirty = false;
+        for (auto& g : m_overlays)
+            g.release();
+        m_overlays.clear();
+        m_overlays.resize(m_overlaySrc.size());
+        std::vector<float> cols;
+        for (size_t i = 0; i < m_overlaySrc.size(); ++i) {
+            uploadMesh(m_overlays[i], m_overlaySrc[i].mesh, u, false);
+            cols.clear();
+            for (size_t v = 0; v < m_overlays[i].vertexFace.size(); ++v)
+                pushColor(cols, m_overlaySrc[i].color, m_overlaySrc[i].alpha);
+            if (!cols.empty())
+                u->uploadStaticBuffer(m_overlays[i].col, 0, quint32(cols.size() * sizeof(float)), cols.data());
+        }
+    }
     if (!m_geometryDirty)
         return;
     m_geometryDirty = false;
@@ -483,12 +551,22 @@ void Viewport::syncGeometry(QRhiResourceUpdateBatch* u)
         uploadMesh(m_preview, *m_snap->preview, u, false);
 }
 
+void Viewport::setBed(const BedSpec& bed)
+{
+    if (bed == m_bed)
+        return;
+    m_bed = bed;
+    m_bedDirty = true;
+    update();
+}
+
 void Viewport::rebuildGrid(QRhiResourceUpdateBatch* u)
 {
     const float step = std::pow(10.f, std::floor(std::log10(std::max(m_camera.distance * 0.12f, 0.01f))));
-    if (step == m_gridStep && m_grid.epos)
+    if (step == m_gridStep && m_grid.epos && !m_bedDirty)
         return;
     m_gridStep = step;
+    m_bedDirty = false;
     m_grid.release();
     std::vector<float> pts, cols;
     const int n = 50;
@@ -511,6 +589,22 @@ void Viewport::rebuildGrid(QRhiResourceUpdateBatch* u)
     line({-ext, 0, 0}, {ext, 0, 0}, QColor(0xe0, 0x50, 0x50), 0.75f);
     line({0, -ext, 0}, {0, ext, 0}, QColor(0x60, 0xc0, 0x60), 0.75f);
     line({0, 0, 0}, {0, 0, ext * 0.25f}, QColor(0x50, 0x8c, 0xf0), 0.75f);
+    if (m_bed.on) {
+        // build plate: outline, 10 mm grid, build volume (vertical edges + top), red when exceeded
+        const float hx = m_bed.size.x() / 2, hy = m_bed.size.y() / 2, hz = m_bed.size.z();
+        const QColor bc = m_bed.exceeded ? QColor(0xff, 0x5a, 0x50) : QColor(0x4a, 0xa3, 0xff);
+        for (float x = -hx + std::fmod(hx, 10.f); x < hx; x += 10.f)
+            line({x, -hy, 0.01f}, {x, hy, 0.01f}, QColor(0x4a, 0xa3, 0xff), 0.16f);
+        for (float y = -hy + std::fmod(hy, 10.f); y < hy; y += 10.f)
+            line({-hx, y, 0.01f}, {hx, y, 0.01f}, QColor(0x4a, 0xa3, 0xff), 0.16f);
+        const QVector3D c[4] = {{-hx, -hy, 0}, {hx, -hy, 0}, {hx, hy, 0}, {-hx, hy, 0}};
+        for (int k = 0; k < 4; ++k) {
+            const QVector3D a = c[k], b = c[(k + 1) % 4];
+            line(a, b, bc, 0.9f);
+            line(a + QVector3D(0, 0, hz), b + QVector3D(0, 0, hz), bc, m_bed.exceeded ? 0.8f : 0.35f);
+            line(a, a + QVector3D(0, 0, hz), bc, m_bed.exceeded ? 0.8f : 0.35f);
+        }
+    }
     m_grid.epos = makeBuffer(QRhiBuffer::VertexBuffer, pts.data(), quint32(pts.size() * sizeof(float)), u);
     m_grid.ecol = makeBuffer(QRhiBuffer::VertexBuffer, cols.data(), quint32(cols.size() * sizeof(float)), u);
     m_grid.edgeVertexCount = quint32(pts.size() / 3);
@@ -572,10 +666,13 @@ void Viewport::updateColors(QRhiResourceUpdateBatch* u)
         cols.clear();
         cols.reserve(g.vertexFace.size() * 4);
         const bool wholeBody = selBodies.count(int(b)) > 0;
-        const QColor bodyColor = !wholeBody ? Colors::Body
+        const BodyMaterial& mat = m_snap->bodies[b].material;
+        const QColor matColor = QColor::fromRgbF(mat.r, mat.g, mat.b);
+        const QColor bodyColor = !wholeBody ? matColor
                                  : (int(b) == targetBody && selBodies.size() > 1)
                                      ? Colors::TargetBody
                                      : Colors::Selected;
+        const float alpha = hs.ghostBodies ? std::min(0.22f, mat.a) : mat.a;
         for (int f : g.vertexFace) {
             QColor c = bodyColor;
             if (selFaces.count({int(b), f}))
@@ -584,7 +681,7 @@ void Viewport::updateColors(QRhiResourceUpdateBatch* u)
                 c = Colors::Hover;
             if (dim < 1.f)
                 c = c.darker(125);
-            pushColor(cols, c);
+            pushColor(cols, c, alpha);
         }
         if (!cols.empty())
             u->uploadStaticBuffer(g.col, 0, quint32(cols.size() * sizeof(float)), cols.data());
@@ -651,9 +748,10 @@ void Viewport::updateColors(QRhiResourceUpdateBatch* u)
 
 // ------------------------------------------------------------------ frame
 
-void Viewport::writeUbo(QRhiResourceUpdateBatch* u, QRhiBuffer* ubo, const QMatrix4x4& mvp, float alpha, float bias)
+void Viewport::writeUbo(QRhiResourceUpdateBatch* u, QRhiBuffer* ubo, const QMatrix4x4& mvp, float alpha, float bias,
+                        bool clip)
 {
-    float d[28];
+    float d[32];
     std::memcpy(d, mvp.constData(), 16 * sizeof(float));
     const QVector3D e = m_camera.eye(), f = m_camera.forward();
     d[16] = e.x();
@@ -668,6 +766,15 @@ void Viewport::writeUbo(QRhiResourceUpdateBatch* u, QRhiBuffer* ubo, const QMatr
     d[25] = f.y();
     d[26] = f.z();
     d[27] = 0;
+    d[28] = d[29] = d[30] = 0;
+    d[31] = 1;
+    if (clip && m_client && m_client->highlight().clipOn) {
+        const HighlightState& hs = m_client->highlight();
+        d[28] = float(hs.clipNormal.x);
+        d[29] = float(hs.clipNormal.y);
+        d[30] = float(hs.clipNormal.z);
+        d[31] = float(hs.clipD);
+    }
     u->updateDynamicBuffer(ubo, 0, kUboSize, d);
 }
 
@@ -693,6 +800,8 @@ void Viewport::render(QRhiCommandBuffer* cb)
 {
     QRhiResourceUpdateBatch* u = m_rhi->nextResourceUpdateBatch();
     const QSize px = renderTarget()->pixelSize();
+    if (m_viewCube)
+        m_viewCube->syncCamera(m_camera.rotation);
     const QRhiViewport vp(0, 0, float(px.width()), float(px.height()));
 
     syncGeometry(u);
@@ -706,7 +815,7 @@ void Viewport::render(QRhiCommandBuffer* cb)
     const QMatrix4x4 mvp = m_rhi->clipSpaceCorrMatrix() * m_camera.viewProjection(size());
     writeUbo(u, m_uboBody, mvp, 1.f, 0.f);
     writeUbo(u, m_uboEdge, mvp, 1.f, 2e-5f);
-    writeUbo(u, m_uboGrid, mvp, 1.f, 0.f);
+    writeUbo(u, m_uboGrid, mvp, 1.f, 0.f, false);
     writeUbo(u, m_uboOit, mvp, 1.f, 1e-5f);
 
     // 1) opaque
@@ -718,13 +827,15 @@ void Viewport::render(QRhiCommandBuffer* cb)
     cb->setGraphicsPipeline(m_psMesh);
     cb->setViewport(vp);
     cb->setShaderResources(m_srbBody);
-    for (const auto& g : m_bodies)
-        drawMesh(cb, g);
+    for (size_t i = 0; i < m_bodies.size(); ++i)
+        if (!bodyTranslucent(i) && !bodyHidden(i))
+            drawMesh(cb, m_bodies[i]);
     cb->setGraphicsPipeline(m_psEdges);
     cb->setViewport(vp);
     cb->setShaderResources(m_srbEdge);
-    for (const auto& g : m_bodies)
-        drawEdges(cb, g);
+    for (size_t i = 0; i < m_bodies.size(); ++i)
+        if (!bodyHidden(i))
+            drawEdges(cb, m_bodies[i]);
     cb->endPass();
 
     // 2) order-independent transparency
@@ -735,6 +846,11 @@ void Viewport::render(QRhiCommandBuffer* cb)
     for (size_t i = 0; i < m_profiles.size(); ++i)
         if (i < hs.profileVisible.size() && hs.profileVisible[i])
             drawMesh(cb, m_profiles[i]);
+    for (size_t i = 0; i < m_bodies.size(); ++i)
+        if (bodyTranslucent(i) && !bodyHidden(i))
+            drawMesh(cb, m_bodies[i]);  // translucent material (resin...) or X-ray view
+    for (const auto& g : m_overlays)
+        drawMesh(cb, g);
     if (hs.showPreview)
         drawMesh(cb, m_preview);
     if (hs.showOriginPlanes)

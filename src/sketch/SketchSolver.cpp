@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <deque>
 #include <map>
+#include <set>
+#include <tuple>
 #include <unordered_map>
 
 namespace silex {
@@ -43,6 +45,31 @@ public:
 
         for (const SketchGeo& g : sk.geos)
             addGeo(g);
+        for (const SketchConstraint& c : sk.constraints)
+            if (c.kind == ConstraintKind::Coincident && c.a.pos != PointPos::None && c.b.pos != PointPos::None) {
+                m_coincident.emplace(c.a, c.b);
+                m_coincident.emplace(c.b, c.a);
+            }
+    }
+
+    /// End points of a and b joined by a Coincident constraint (tangency at a joint).
+    std::optional<std::pair<GeoRef, GeoRef>> sharedEnd(const Uuid& a, const Uuid& b) const
+    {
+        for (PointPos pa : {PointPos::Start, PointPos::End})
+            for (PointPos pb : {PointPos::Start, PointPos::End})
+                if (m_coincident.count({GeoRef{a, pa}, GeoRef{b, pb}}))
+                    return std::pair{GeoRef{a, pa}, GeoRef{b, pb}};
+        return std::nullopt;
+    }
+
+    static GCS::Curve* curveOf(Slot* s)
+    {
+        switch (s->kind) {
+            case GeoKind::Line: return &s->line;
+            case GeoKind::Circle: return &s->circle;
+            case GeoKind::Arc: return &s->arc;
+            default: return nullptr;
+        }
     }
 
     double* constant(double v)
@@ -53,6 +80,8 @@ public:
     double* unknown(double v, const Uuid& owner)
     {
         double* p = constant(v);
+        if (m_fixed)
+            return p;
         m_unknowns.push_back(p);
         m_owner[p] = owner;
         return p;
@@ -60,6 +89,10 @@ public:
 
     void addGeo(const SketchGeo& g)
     {
+        // projected model edges are fixed: their parameters are constants, not unknowns
+        m_fixed = g.external();
+        if (m_fixed)
+            m_external.insert(g.id);
         Slot s;
         s.kind = g.kind;
         switch (g.kind) {
@@ -113,7 +146,7 @@ public:
     void addArcRules(GCS::System& sys)
     {
         for (auto& [id, s] : m_slots)
-            if (s.kind == GeoKind::Arc)
+            if (s.kind == GeoKind::Arc && !m_external.count(id))
                 sys.addConstraintArcRules(s.arc, 0);  // tag 0: internal, high priority
     }
 
@@ -160,6 +193,18 @@ public:
             case ConstraintKind::Tangent: {
                 if (!b)
                     return false;
+                // Tangency at a joint (end points made coincident): "angle via point" as in FreeCAD.
+                // The distance-based tangency is singular there (redundant with the coincidence).
+                if (auto sh = sharedEnd(c.a.geo, c.b.geo)) {
+                    GCS::Curve *ca = curveOf(a), *cb = curveOf(b);
+                    GCS::Point *p1 = point(sh->first), *p2 = point(sh->second);
+                    if (ca && cb && p1 && p2) {
+                        const double ang = sys.calculateAngleViaPoint(*ca, *cb, *p1, *p2);
+                        const double want = std::cos(ang) >= 0 ? 0.0 : (ang > 0 ? kPi : -kPi);
+                        sys.addConstraintAngleViaPoint(*ca, *cb, *p1, constant(want), tag);
+                        return true;
+                    }
+                }
                 Slot *x = a, *y = b;
                 if (y->kind == GeoKind::Line)
                     std::swap(x, y);
@@ -284,6 +329,94 @@ public:
                 sys.addConstraintL2LAngle(a->line, b->line, v, tag);
                 return true;
             }
+            // ---------------------------------------------------------- Sketcher Pro
+            case ConstraintKind::Midpoint: {
+                if (!b)
+                    return false;
+                GeoRef pr = c.a, cr = c.b;  // point, curve (accepted in any order)
+                Slot* curve = b;
+                if (!aPoint && bPoint) {
+                    std::swap(pr, cr);
+                    curve = a;
+                }
+                else if (!aPoint || bPoint)
+                    return false;
+                GCS::Point* p = point(pr);
+                if (!p)
+                    return false;
+                if (curve->kind == GeoKind::Line) {
+                    sys.addConstraintP2PSymmetric(curve->line.p1, curve->line.p2, *p, tag);
+                    return true;
+                }
+                if (curve->kind == GeoKind::Arc) {  // curvilinear middle: on the arc and on the chord bisector
+                    sys.addConstraintPointOnArc(*p, curve->arc, tag);
+                    sys.addConstraintPointOnPerpBisector(*p, curve->arc.start, curve->arc.end, tag);
+                    return true;
+                }
+                return false;
+            }
+            case ConstraintKind::Symmetric: {
+                Slot* ax = c.c.valid() ? slot(c.c.geo) : nullptr;
+                if (!b || !ax)
+                    return false;
+                const bool axPoint = c.c.pos != PointPos::None || ax->kind == GeoKind::Point;
+                if (!axPoint && ax->kind != GeoKind::Line)
+                    return false;
+                auto sym = [&](GCS::Point& p1, GCS::Point& p2) {
+                    if (axPoint)
+                        sys.addConstraintP2PSymmetric(p1, p2, *point(c.c), tag);
+                    else
+                        sys.addConstraintP2PSymmetric(p1, p2, ax->line, tag);
+                };
+                if (aPoint && bPoint) {
+                    sym(*point(c.a), *point(c.b));
+                    return true;
+                }
+                if (aPoint || bPoint || a->kind != b->kind)
+                    return false;
+                switch (a->kind) {
+                    case GeoKind::Line:
+                        if (c.value != 0) {
+                            sym(a->line.p1, b->line.p2);
+                            sym(a->line.p2, b->line.p1);
+                        }
+                        else {
+                            sym(a->line.p1, b->line.p1);
+                            sym(a->line.p2, b->line.p2);
+                        }
+                        return true;
+                    case GeoKind::Circle:
+                        sym(a->circle.center, b->circle.center);
+                        sys.addConstraintEqualRadius(a->circle, b->circle, tag);
+                        return true;
+                    case GeoKind::Arc:  // a mirrored arc runs the other way round
+                        sym(a->arc.start, b->arc.end);
+                        sym(a->arc.end, b->arc.start);
+                        sys.addConstraintEqualRadius(a->arc, b->arc, tag);
+                        return true;
+                    default: return false;
+                }
+            }
+            case ConstraintKind::Concentric: {
+                if (!b)
+                    return false;
+                auto center = [](Slot* s) -> GCS::Point* {
+                    if (s->kind == GeoKind::Circle) return &s->circle.center;
+                    if (s->kind == GeoKind::Arc) return &s->arc.center;
+                    return nullptr;
+                };
+                GCS::Point *ca = center(a), *cb = center(b);
+                if (!ca || !cb)
+                    return false;
+                sys.addConstraintP2PCoincident(*ca, *cb, tag);
+                return true;
+            }
+            case ConstraintKind::Collinear:
+                if (!b || a->kind != GeoKind::Line || b->kind != GeoKind::Line)
+                    return false;
+                sys.addConstraintPointOnLine(b->line.p1, a->line, tag);
+                sys.addConstraintPointOnLine(b->line.p2, a->line, tag);
+                return true;
         }
         return false;
     }
@@ -291,6 +424,8 @@ public:
     void addDrag(GCS::System& sys, const DragTarget& d)
     {
         const int tag = GCS::DefaultTemporaryConstraint;
+        if (isExternal(d.point.geo))
+            return;  // projected edges cannot be dragged
         Slot* s = slot(d.point.geo);
         if (!s)
             return;
@@ -377,6 +512,22 @@ private:
     std::unordered_map<double*, Uuid> m_owner;
     std::map<Uuid, Slot> m_slots;
     std::vector<Uuid> m_order;
+    bool m_fixed = false;
+    std::set<Uuid> m_external;
+    struct RefLess
+    {
+        bool operator()(const std::pair<GeoRef, GeoRef>& x, const std::pair<GeoRef, GeoRef>& y) const
+        {
+            auto key = [](const std::pair<GeoRef, GeoRef>& p) {
+                return std::tie(p.first.geo, p.first.pos, p.second.geo, p.second.pos);
+            };
+            return key(x) < key(y);
+        }
+    };
+    std::set<std::pair<GeoRef, GeoRef>, RefLess> m_coincident;
+
+public:
+    bool isExternal(const Uuid& id) const { return m_external.count(id) > 0; }
 };
 
 }  // namespace
@@ -439,10 +590,14 @@ SolveResult SketchSolver::solve(Sketch& sketch, const std::optional<DragTarget>&
                 for (const Uuid& id : b.order())
                     if (!free.count(id))
                         res.fullyConstrainedGeos.insert(id);
+            for (const Uuid& id : b.order())
+                if (b.isExternal(id))
+                    res.fullyConstrainedGeos.insert(id);
             if (sys.isEmptyDiagnoseMatrix())
                 res.dof = static_cast<int>(b.unknowns().size()) -
-                          4 * static_cast<int>(std::count_if(sketch.geos.begin(), sketch.geos.end(),
-                                                             [](const SketchGeo& g) { return g.kind == GeoKind::Arc; }));
+                          4 * static_cast<int>(std::count_if(sketch.geos.begin(), sketch.geos.end(), [](const SketchGeo& g) {
+                              return g.kind == GeoKind::Arc && !g.external();
+                          }));
         }
 
         if (!res.converged)

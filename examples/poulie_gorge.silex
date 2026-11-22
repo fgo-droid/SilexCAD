@@ -1,0 +1,1192 @@
+{
+  "features": [
+    {
+      "id": "ca388ae7-0acf-4e3b-a6ab-92227e181960",
+      "name": "Demi_profil",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "d1a2ac99-47a7-4554-a9e7-698e310ebca3",
+                1
+              ],
+              "b": [
+                "44adbdac-f2ae-47aa-b61b-f65c1403ad8f",
+                2
+              ],
+              "id": "e4562f87-81a9-4406-a389-fd97132f40f5",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d1a2ac99-47a7-4554-a9e7-698e310ebca3",
+                2
+              ],
+              "b": [
+                "a71136fb-c09b-4b95-8ec6-b0b67954e365",
+                1
+              ],
+              "id": "6c04536c-dc34-404f-8d24-49ff7f791091",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "a71136fb-c09b-4b95-8ec6-b0b67954e365",
+                2
+              ],
+              "b": [
+                "5e4882b5-781d-46aa-9fe4-a58f7b12152b",
+                1
+              ],
+              "id": "378e3bd2-1d3f-4d44-9e53-04093c920ef3",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "5e4882b5-781d-46aa-9fe4-a58f7b12152b",
+                2
+              ],
+              "b": [
+                "98ed7508-f429-42c9-99ef-41f41ca41119",
+                1
+              ],
+              "id": "db36a5ba-e321-4586-a1ae-b2c7cadc40aa",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "98ed7508-f429-42c9-99ef-41f41ca41119",
+                2
+              ],
+              "b": [
+                "fd10f4a3-ee09-4392-b8b3-fb8b49d2a538",
+                1
+              ],
+              "id": "c0055e9a-8873-4e47-9264-2e67125c7a98",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "fd10f4a3-ee09-4392-b8b3-fb8b49d2a538",
+                2
+              ],
+              "b": [
+                "ed7e9407-4222-427e-8978-c9eb6dad9978",
+                1
+              ],
+              "id": "7c7c68ff-0f21-4d7b-a390-7c4558f64b57",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "ed7e9407-4222-427e-8978-c9eb6dad9978",
+                2
+              ],
+              "b": [
+                "2a4123cd-99bd-4838-8b71-d65a6a5e16a1",
+                1
+              ],
+              "id": "e8b9960b-7d73-4d1f-b472-22673a30e76b",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "2a4123cd-99bd-4838-8b71-d65a6a5e16a1",
+                2
+              ],
+              "b": [
+                "0c085f0d-cf7c-4064-84cf-605ce08403d6",
+                1
+              ],
+              "id": "f7d674fd-688a-4e2c-93da-90bf35a7e917",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "0c085f0d-cf7c-4064-84cf-605ce08403d6",
+                2
+              ],
+              "b": [
+                "bafdf9d4-1270-4f04-b0fc-9d424b9a2310",
+                1
+              ],
+              "id": "1cdd8a40-de97-4529-99aa-eb7518be11a3",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "bafdf9d4-1270-4f04-b0fc-9d424b9a2310",
+                2
+              ],
+              "b": [
+                "8a677a42-d6dc-47eb-9cac-cb7b470e2905",
+                1
+              ],
+              "id": "1330d95e-a7cb-492c-8fec-077ba81ae9d8",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "8a677a42-d6dc-47eb-9cac-cb7b470e2905",
+                2
+              ],
+              "b": [
+                "b973d7c0-7dfe-480b-a4dd-d152a0285081",
+                1
+              ],
+              "id": "f5cb3d4f-e4f2-4b62-ac75-680462e06b25",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "b973d7c0-7dfe-480b-a4dd-d152a0285081",
+                2
+              ],
+              "b": [
+                "054a8993-dd15-412f-b88c-782920cdf2e5",
+                1
+              ],
+              "id": "aed84879-b68d-42ca-bf9b-d1c1b633a126",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "054a8993-dd15-412f-b88c-782920cdf2e5",
+                2
+              ],
+              "b": [
+                "ee51ae82-6066-4673-b7b6-5da9dfa98232",
+                1
+              ],
+              "id": "5bf08765-0014-499f-a280-b9c60b6f78e1",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "ee51ae82-6066-4673-b7b6-5da9dfa98232",
+                2
+              ],
+              "b": [
+                "ae14a2bc-e529-42e4-a1c0-47f4c204ec02",
+                1
+              ],
+              "id": "bf99ae84-f5fb-4097-82e7-1c8ce36041d2",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "ae14a2bc-e529-42e4-a1c0-47f4c204ec02",
+                2
+              ],
+              "b": [
+                "1f3050d9-9ada-4feb-9afb-06101d24e90d",
+                1
+              ],
+              "id": "811de91d-1b3b-4b8f-8837-c25d4f77acc3",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "1f3050d9-9ada-4feb-9afb-06101d24e90d",
+                2
+              ],
+              "b": [
+                "44adbdac-f2ae-47aa-b61b-f65c1403ad8f",
+                1
+              ],
+              "id": "bdfa2453-7bb2-4084-800c-6f71f766a955",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d1a2ac99-47a7-4554-a9e7-698e310ebca3",
+                0
+              ],
+              "id": "00bf438a-902b-4197-b3c7-1ee8461b30c2",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "a71136fb-c09b-4b95-8ec6-b0b67954e365",
+                0
+              ],
+              "id": "2c107045-45c5-4636-bf02-c778a108ed2a",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "5e4882b5-781d-46aa-9fe4-a58f7b12152b",
+                0
+              ],
+              "id": "7e7fd52f-c23f-4000-99cc-120afa740da7",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "98ed7508-f429-42c9-99ef-41f41ca41119",
+                0
+              ],
+              "id": "2c4ce275-dd7a-4f0b-a0ef-3c7dda8e64e6",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "fd10f4a3-ee09-4392-b8b3-fb8b49d2a538",
+                0
+              ],
+              "id": "87f3629a-59e0-49d5-8301-2620451b875d",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "ed7e9407-4222-427e-8978-c9eb6dad9978",
+                0
+              ],
+              "id": "26516bc5-5718-44f0-8002-d18ed6beb733",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "2a4123cd-99bd-4838-8b71-d65a6a5e16a1",
+                0
+              ],
+              "id": "8ac88102-0c22-4d25-a419-c03a9049967c",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "bafdf9d4-1270-4f04-b0fc-9d424b9a2310",
+                0
+              ],
+              "id": "81f5a6ec-c5cd-4aa0-be54-855f2d10746e",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "b973d7c0-7dfe-480b-a4dd-d152a0285081",
+                0
+              ],
+              "id": "e2b94967-7b51-4b6b-a7ac-b7b67d008f11",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "054a8993-dd15-412f-b88c-782920cdf2e5",
+                0
+              ],
+              "id": "1876e1ed-237f-4206-8cf2-3caa99ed2f9b",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "ee51ae82-6066-4673-b7b6-5da9dfa98232",
+                0
+              ],
+              "id": "318ba3bb-8aef-4e05-8d46-0fdc113249bd",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "ae14a2bc-e529-42e4-a1c0-47f4c204ec02",
+                0
+              ],
+              "id": "123dad86-00cc-4a6c-90ea-bcc456f52026",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "1f3050d9-9ada-4feb-9afb-06101d24e90d",
+                0
+              ],
+              "id": "7cee9382-9be0-47b9-91f9-5299531e94bf",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "44adbdac-f2ae-47aa-b61b-f65c1403ad8f",
+                0
+              ],
+              "id": "0d35fb9e-9cd6-461d-b465-492514917baa",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "d1a2ac99-47a7-4554-a9e7-698e310ebca3",
+                1
+              ],
+              "id": "76ccb238-9508-445e-b27b-42ccc51e9883",
+              "kind": "DistanceY",
+              "value": 0.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "a71136fb-c09b-4b95-8ec6-b0b67954e365",
+                1
+              ],
+              "id": "480ec215-1451-4e97-9d73-064d4beb0ee6",
+              "kind": "DistanceX",
+              "value": 25.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "5e4882b5-781d-46aa-9fe4-a58f7b12152b",
+                1
+              ],
+              "id": "c3919093-5235-414c-a4c3-9223965985dc",
+              "kind": "DistanceY",
+              "value": 15.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "98ed7508-f429-42c9-99ef-41f41ca41119",
+                1
+              ],
+              "id": "99a2c61e-cf8d-44af-a7b8-188ac679fc3f",
+              "kind": "DistanceX",
+              "value": 14.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "fd10f4a3-ee09-4392-b8b3-fb8b49d2a538",
+                1
+              ],
+              "id": "20c005d2-8546-4a32-b82d-5eb4c1a4f2f0",
+              "kind": "DistanceY",
+              "value": 30.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "ed7e9407-4222-427e-8978-c9eb6dad9978",
+                1
+              ],
+              "id": "f757509d-5934-432b-9464-f2f92fcb16e5",
+              "kind": "DistanceX",
+              "value": 20.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "2a4123cd-99bd-4838-8b71-d65a6a5e16a1",
+                1
+              ],
+              "id": "548cf911-7b45-4a63-94c1-bc1417279967",
+              "kind": "DistanceY",
+              "value": 40.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "bafdf9d4-1270-4f04-b0fc-9d424b9a2310",
+                1
+              ],
+              "id": "3e569ac3-7851-4aa1-a506-cb2fe3e09095",
+              "kind": "DistanceY",
+              "value": 32.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "b973d7c0-7dfe-480b-a4dd-d152a0285081",
+                1
+              ],
+              "id": "9f3e967a-3b33-41c0-89e1-6e282f319cab",
+              "kind": "DistanceY",
+              "value": 40.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "054a8993-dd15-412f-b88c-782920cdf2e5",
+                1
+              ],
+              "id": "fbcd5f3d-c9af-4497-86eb-c22108bd904a",
+              "kind": "DistanceX",
+              "value": 0.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "ee51ae82-6066-4673-b7b6-5da9dfa98232",
+                1
+              ],
+              "id": "e849de1a-ac18-4ace-85c7-c918bc996cac",
+              "kind": "DistanceY",
+              "value": 30.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "ae14a2bc-e529-42e4-a1c0-47f4c204ec02",
+                1
+              ],
+              "id": "393e2811-7058-4734-bb70-3397f8a1280b",
+              "kind": "DistanceX",
+              "value": 6.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "1f3050d9-9ada-4feb-9afb-06101d24e90d",
+                1
+              ],
+              "id": "66ab76e8-ed2d-4515-8eab-f6adc6fd8e49",
+              "kind": "DistanceY",
+              "value": 15.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "44adbdac-f2ae-47aa-b61b-f65c1403ad8f",
+                1
+              ],
+              "id": "e08a517f-0842-48b8-8d99-911518940c2b",
+              "kind": "DistanceX",
+              "value": -5.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "2a4123cd-99bd-4838-8b71-d65a6a5e16a1",
+                2
+              ],
+              "id": "92494bb2-d37e-40f9-ae74-00275ebfa3e1",
+              "kind": "DistanceX",
+              "value": 15.5
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "0c085f0d-cf7c-4064-84cf-605ce08403d6",
+                2
+              ],
+              "id": "f2f2abea-394c-4b0c-be4d-2d18c8aa9ddd",
+              "kind": "DistanceX",
+              "value": 12.5
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "bafdf9d4-1270-4f04-b0fc-9d424b9a2310",
+                2
+              ],
+              "id": "33027f02-dbab-4e9e-b7e6-5899436742d7",
+              "kind": "DistanceX",
+              "value": 7.5
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "8a677a42-d6dc-47eb-9cac-cb7b470e2905",
+                2
+              ],
+              "id": "56ba8b27-28b8-4bc1-ad6b-bcd286fd97e9",
+              "kind": "DistanceX",
+              "value": 4.5
+            }
+          ],
+          "geos": [
+            {
+              "id": "d1a2ac99-47a7-4554-a9e7-698e310ebca3",
+              "kind": "Line",
+              "p1": [
+                -5.0,
+                0.0
+              ],
+              "p2": [
+                25.0,
+                0.0
+              ]
+            },
+            {
+              "id": "a71136fb-c09b-4b95-8ec6-b0b67954e365",
+              "kind": "Line",
+              "p1": [
+                25.0,
+                0.0
+              ],
+              "p2": [
+                25.0,
+                15.0
+              ]
+            },
+            {
+              "id": "5e4882b5-781d-46aa-9fe4-a58f7b12152b",
+              "kind": "Line",
+              "p1": [
+                25.0,
+                15.0
+              ],
+              "p2": [
+                14.0,
+                15.0
+              ]
+            },
+            {
+              "id": "98ed7508-f429-42c9-99ef-41f41ca41119",
+              "kind": "Line",
+              "p1": [
+                14.0,
+                15.0
+              ],
+              "p2": [
+                14.0,
+                30.0
+              ]
+            },
+            {
+              "id": "fd10f4a3-ee09-4392-b8b3-fb8b49d2a538",
+              "kind": "Line",
+              "p1": [
+                14.0,
+                30.0
+              ],
+              "p2": [
+                20.0,
+                30.0
+              ]
+            },
+            {
+              "id": "ed7e9407-4222-427e-8978-c9eb6dad9978",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                30.0
+              ],
+              "p2": [
+                20.0,
+                40.0
+              ]
+            },
+            {
+              "id": "2a4123cd-99bd-4838-8b71-d65a6a5e16a1",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                40.0
+              ],
+              "p2": [
+                15.5,
+                40.0
+              ]
+            },
+            {
+              "id": "0c085f0d-cf7c-4064-84cf-605ce08403d6",
+              "kind": "Line",
+              "p1": [
+                15.5,
+                40.0
+              ],
+              "p2": [
+                12.5,
+                32.0
+              ]
+            },
+            {
+              "id": "bafdf9d4-1270-4f04-b0fc-9d424b9a2310",
+              "kind": "Line",
+              "p1": [
+                12.5,
+                32.0
+              ],
+              "p2": [
+                7.5,
+                32.0
+              ]
+            },
+            {
+              "id": "8a677a42-d6dc-47eb-9cac-cb7b470e2905",
+              "kind": "Line",
+              "p1": [
+                7.5,
+                32.0
+              ],
+              "p2": [
+                4.5,
+                40.0
+              ]
+            },
+            {
+              "id": "b973d7c0-7dfe-480b-a4dd-d152a0285081",
+              "kind": "Line",
+              "p1": [
+                4.5,
+                40.0
+              ],
+              "p2": [
+                0.0,
+                40.0
+              ]
+            },
+            {
+              "id": "054a8993-dd15-412f-b88c-782920cdf2e5",
+              "kind": "Line",
+              "p1": [
+                0.0,
+                40.0
+              ],
+              "p2": [
+                0.0,
+                30.0
+              ]
+            },
+            {
+              "id": "ee51ae82-6066-4673-b7b6-5da9dfa98232",
+              "kind": "Line",
+              "p1": [
+                0.0,
+                30.0
+              ],
+              "p2": [
+                6.0,
+                30.0
+              ]
+            },
+            {
+              "id": "ae14a2bc-e529-42e4-a1c0-47f4c204ec02",
+              "kind": "Line",
+              "p1": [
+                6.0,
+                30.0
+              ],
+              "p2": [
+                6.0,
+                15.0
+              ]
+            },
+            {
+              "id": "1f3050d9-9ada-4feb-9afb-06101d24e90d",
+              "kind": "Line",
+              "p1": [
+                6.0,
+                15.0
+              ],
+              "p2": [
+                -5.0,
+                15.0
+              ]
+            },
+            {
+              "id": "44adbdac-f2ae-47aa-b61b-f65c1403ad8f",
+              "kind": "Line",
+              "p1": [
+                -5.0,
+                15.0
+              ],
+              "p2": [
+                -5.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Seule la moitié du profil est dessinée, au-dessus de l'axe X : la révolution fera le reste. La gorge en V fait 40°.",
+      "annotation_en": "Only half of the profile is drawn, above the X axis: the revolve does the rest. The V groove is 40°."
+    },
+    {
+      "id": "503f9cf8-76a0-446f-b2a6-961c8e4fcd66",
+      "name": "Revolve1",
+      "params": {
+        "angle": 360.0,
+        "axis": "X",
+        "op": "NewBody",
+        "profile": {
+          "regions": [],
+          "sketch": "ca388ae7-0acf-4e3b-a6ab-92227e181960"
+        },
+        "targetBody": ""
+      },
+      "type": "Revolve",
+      "annotation": "Révolution 360° autour de X : moyeu, voile et jante en une seule fonction.",
+      "annotation_en": "360° revolve around X: hub, web and rim in a single feature."
+    },
+    {
+      "id": "64ee4c4c-6ae8-4870-ab1a-6c1421d1b233",
+      "name": "Cylinder1",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 12.0,
+        "height": 40.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "YZ",
+          "offset": -10.0
+        },
+        "targetBody": "503f9cf8-76a0-446f-b2a6-961c8e4fcd66",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "L'alésage Ø12 pour l'arbre.",
+      "annotation_en": "The Ø12 bore for the shaft."
+    },
+    {
+      "id": "705e4345-8a2a-4bd8-9ac7-fed9ef1018cd",
+      "name": "Clavette",
+      "params": {
+        "plane": {
+          "kind": "YZ",
+          "offset": -10.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                3
+              ],
+              "b": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                1
+              ],
+              "id": "e8b18b2e-a683-4e07-b9f4-c5b7170499f4",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "6188a4e7-ae0a-4954-ad8f-36445304530e",
+                3
+              ],
+              "b": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                2
+              ],
+              "id": "9713ccc8-cc1e-4678-b6a9-b4fe67a82704",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                2
+              ],
+              "b": [
+                "cb06627e-36c7-444d-9065-50105fe55855",
+                1
+              ],
+              "id": "05451df9-16b5-4bc6-afe1-fc2dab1f323c",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "cb06627e-36c7-444d-9065-50105fe55855",
+                2
+              ],
+              "b": [
+                "6188a4e7-ae0a-4954-ad8f-36445304530e",
+                1
+              ],
+              "id": "23ca4cb8-8ef6-42eb-b27e-ff59c0c4782c",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "6188a4e7-ae0a-4954-ad8f-36445304530e",
+                2
+              ],
+              "b": [
+                "d443979c-66ee-42dd-ad76-0436429a0aa6",
+                1
+              ],
+              "id": "b3bed9c3-4913-4d75-9395-f70cdab86c13",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d443979c-66ee-42dd-ad76-0436429a0aa6",
+                2
+              ],
+              "b": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                1
+              ],
+              "id": "3fba16e3-9ae7-4ad2-86a2-73d7189d6b6f",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "cb06627e-36c7-444d-9065-50105fe55855",
+                0
+              ],
+              "b": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                0
+              ],
+              "id": "8590f0a0-1eb2-46c7-9dab-e863393e8ed7",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "cb06627e-36c7-444d-9065-50105fe55855",
+                0
+              ],
+              "b": [
+                "6188a4e7-ae0a-4954-ad8f-36445304530e",
+                0
+              ],
+              "id": "9378592a-b9c4-40af-a019-6430cba70653",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "d443979c-66ee-42dd-ad76-0436429a0aa6",
+                0
+              ],
+              "b": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                0
+              ],
+              "id": "4907ad09-a5f9-4888-8733-aaf3a27a8e8d",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "d443979c-66ee-42dd-ad76-0436429a0aa6",
+                0
+              ],
+              "b": [
+                "6188a4e7-ae0a-4954-ad8f-36445304530e",
+                0
+              ],
+              "id": "0eada743-25b1-4504-bc7d-d9a7d16fdf10",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                0
+              ],
+              "b": [
+                "6188a4e7-ae0a-4954-ad8f-36445304530e",
+                0
+              ],
+              "id": "ed3219e1-087a-45d3-b4b3-bc6503032c33",
+              "kind": "Equal"
+            },
+            {
+              "a": [
+                "6b1684bb-f965-4415-b1fe-05721f7486c9",
+                1
+              ],
+              "b": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                0
+              ],
+              "id": "ab222f6a-c07d-4cd9-a55d-8cfed1b14050",
+              "kind": "Midpoint"
+            },
+            {
+              "a": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                0
+              ],
+              "id": "2dddf08c-6cff-4300-ba00-d023052037f5",
+              "kind": "Distance",
+              "value": 2.0
+            },
+            {
+              "a": [
+                "f717bb35-1281-405f-8d05-df991fd21c9e",
+                0
+              ],
+              "id": "417e1833-3a76-48ba-b594-90b092169241",
+              "kind": "Radius",
+              "value": 2.0
+            },
+            {
+              "a": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                0
+              ],
+              "id": "fdc9d05a-04e8-4f64-a731-b3bc7a26a486",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                1
+              ],
+              "id": "0937196f-8da0-4be0-a64b-65de6add3bb7",
+              "kind": "DistanceX",
+              "value": -6.123233995736766e-17
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+                1
+              ],
+              "id": "5e487ec2-3b1d-4403-aa04-7a8eaba3ba46",
+              "kind": "DistanceY",
+              "value": 5.0
+            }
+          ],
+          "geos": [
+            {
+              "construction": true,
+              "id": "038e34c0-aadc-4b7c-a034-f5367c5b94e7",
+              "kind": "Line",
+              "p1": [
+                -6.123233995736766e-17,
+                5.0
+              ],
+              "p2": [
+                -6.123233995736766e-17,
+                7.0
+              ]
+            },
+            {
+              "a0": 3.141592653589793,
+              "a1": 6.283185307179586,
+              "c": [
+                -6.123233995736766e-17,
+                5.0
+              ],
+              "id": "f717bb35-1281-405f-8d05-df991fd21c9e",
+              "kind": "Arc",
+              "r": 2.0
+            },
+            {
+              "a0": 0.0,
+              "a1": 3.141592653589793,
+              "c": [
+                -6.123233995736766e-17,
+                7.0
+              ],
+              "id": "6188a4e7-ae0a-4954-ad8f-36445304530e",
+              "kind": "Arc",
+              "r": 2.0
+            },
+            {
+              "id": "cb06627e-36c7-444d-9065-50105fe55855",
+              "kind": "Line",
+              "p1": [
+                2.0,
+                5.0
+              ],
+              "p2": [
+                2.0,
+                7.0
+              ]
+            },
+            {
+              "id": "d443979c-66ee-42dd-ad76-0436429a0aa6",
+              "kind": "Line",
+              "p1": [
+                -2.0,
+                7.0
+              ],
+              "p2": [
+                -2.0,
+                5.0
+              ]
+            },
+            {
+              "construction": true,
+              "id": "6b1684bb-f965-4415-b1fe-05721f7486c9",
+              "kind": "Point",
+              "p": [
+                0.0,
+                6.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "La rainure de clavette : une oblongue (U) de 4 mm de large qui mord dans l'alésage.",
+      "annotation_en": "The keyway: a 4 mm wide slot (U) cutting into the bore."
+    },
+    {
+      "id": "8fbe2072-24b1-4e11-89db-31970016b372",
+      "name": "Extrude1",
+      "params": {
+        "distance": 40.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "705e4345-8a2a-4bd8-9ac7-fed9ef1018cd"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "32202b94-7bb0-4c15-bc0f-54e71b2bc0b2",
+      "name": "Trou_allegement",
+      "params": {
+        "plane": {
+          "kind": "YZ"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "0acba3cb-2181-42bf-a3ce-100919c6f518",
+                0
+              ],
+              "id": "9caee1af-aae8-4f64-a482-488347eb56e0",
+              "kind": "Diameter",
+              "value": 10.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "0acba3cb-2181-42bf-a3ce-100919c6f518",
+                3
+              ],
+              "id": "0ae0738b-db87-4dde-bda0-71e82b30a09e",
+              "kind": "DistanceX",
+              "value": 0.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "0acba3cb-2181-42bf-a3ce-100919c6f518",
+                3
+              ],
+              "id": "f889110d-cb6a-46a9-911c-2265fc2e6dc2",
+              "kind": "DistanceY",
+              "value": 22.5
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                22.5
+              ],
+              "id": "0acba3cb-2181-42bf-a3ce-100919c6f518",
+              "kind": "Circle",
+              "r": 5.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "cee6edf4-e590-41b7-b8ee-f49c0968efd3",
+      "name": "Extrude2",
+      "params": {
+        "distance": 25.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "32202b94-7bb0-4c15-bc0f-54e71b2bc0b2"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "c59803fd-b1e0-4e5f-8229-d442da56062d",
+      "name": "CircularPattern1",
+      "params": {
+        "axis": {
+          "kind": "X"
+        },
+        "count": 6,
+        "equalSpacing": true,
+        "reverse": false,
+        "targets": {
+          "ids": [
+            "cee6edf4-e590-41b7-b8ee-f49c0968efd3"
+          ],
+          "type": "feature"
+        },
+        "totalAngle": 360.0
+      },
+      "type": "CircularPattern",
+      "annotation": "Un seul trou d'allègement, répété 6 fois autour de X : change le nombre et tout se recalcule.",
+      "annotation_en": "One lightening hole, repeated 6 times around X: change the count and everything updates."
+    }
+  ],
+  "format": "silex",
+  "marker": 8,
+  "parameters": [],
+  "schema_version": "0.4",
+  "version": 4
+}

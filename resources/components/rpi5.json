@@ -1,0 +1,182 @@
+{
+  "id": "rpi5",
+  "category": "board",
+  "name": {
+    "fr": "Raspberry Pi 5",
+    "en": "Raspberry Pi 5"
+  },
+  "description": {
+    "fr": "Même empreinte que le Pi 4 : 85 × 56 mm, trous M2,5 (58 × 49). Ethernet et USB inversés.",
+    "en": "Same footprint as the Pi 4: 85 × 56 mm, M2.5 holes (58 × 49). Ethernet and USB swapped."
+  },
+  "pcb": {
+    "size": [
+      85,
+      56
+    ],
+    "thickness": 1.4,
+    "corner_radius": 3
+  },
+  "mounting_holes": [
+    {
+      "x": 3.5,
+      "y": 3.5,
+      "d": 2.7
+    },
+    {
+      "x": 61.5,
+      "y": 3.5,
+      "d": 2.7
+    },
+    {
+      "x": 3.5,
+      "y": 52.5,
+      "d": 2.7
+    },
+    {
+      "x": 61.5,
+      "y": 52.5,
+      "d": 2.7
+    }
+  ],
+  "screw": "M2.5",
+  "standoff_mm": 3,
+  "material": "PCB Vert",
+  "parts": [
+    {
+      "part": "GPIO",
+      "box": [
+        32.5,
+        52.5,
+        0,
+        51,
+        5,
+        8.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "SoC",
+      "box": [
+        29,
+        31,
+        0,
+        17,
+        17,
+        2.6
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Ethernet",
+      "box": [
+        76.2,
+        10.2,
+        0,
+        21.8,
+        15.9,
+        13.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "USB 2.0",
+      "box": [
+        78.6,
+        29.1,
+        0,
+        17.4,
+        13.1,
+        16
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "USB 3.0",
+      "box": [
+        78.6,
+        47,
+        0,
+        17.4,
+        13.1,
+        16
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "USB-C",
+      "box": [
+        11.2,
+        2.7,
+        0,
+        8.9,
+        7.4,
+        3.2
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "micro HDMI 0",
+      "box": [
+        27.8,
+        2.6,
+        0,
+        7.5,
+        6.5,
+        3.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "micro HDMI 1",
+      "box": [
+        41.2,
+        2.6,
+        0,
+        7.5,
+        6.5,
+        3.5
+      ],
+      "mode": "join"
+    }
+  ],
+  "openings": [
+    {
+      "name": "USB-C",
+      "side": "-y",
+      "center": [
+        11.2,
+        1.6
+      ],
+      "size": [
+        8.9,
+        3.2
+      ]
+    },
+    {
+      "name": "micro HDMI",
+      "side": "-y",
+      "center": [
+        34.5,
+        1.75
+      ],
+      "size": [
+        21,
+        3.5
+      ]
+    },
+    {
+      "name": "Ethernet + USB",
+      "side": "+x",
+      "center": [
+        28.5,
+        8
+      ],
+      "size": [
+        52,
+        16
+      ]
+    }
+  ],
+  "step": "rpi5.step"
+}

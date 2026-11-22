@@ -1,0 +1,306 @@
+{
+ "features": [
+  {
+   "id": "a1a146a7-aac6-46fe-8526-1f77d2dfa83b",
+   "name": "Profil_L",
+   "params": {
+    "plane": {
+     "kind": "XY"
+    },
+    "sketch": {
+     "constraints": [
+      {
+       "a": [
+        "cf1a9f81-d8b2-4552-8c9c-4f8c776f300e",
+        1
+       ],
+       "b": [
+        "fb318df7-b863-424b-8d4f-e1fe32d0fb1e",
+        2
+       ],
+       "id": "67d2b45e-abf1-463c-82ec-3e2e7ed1465d",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "cf1a9f81-d8b2-4552-8c9c-4f8c776f300e",
+        2
+       ],
+       "b": [
+        "3bf8943a-34dd-4667-9ac4-e356147033d7",
+        1
+       ],
+       "id": "a40aa164-7ca3-4096-96d1-859d6ea1e83c",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "3bf8943a-34dd-4667-9ac4-e356147033d7",
+        2
+       ],
+       "b": [
+        "c7498b8c-c36f-4681-82a6-6dd94892b977",
+        1
+       ],
+       "id": "d4a72b91-be39-4559-838d-6566b7fa3fbf",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "c7498b8c-c36f-4681-82a6-6dd94892b977",
+        2
+       ],
+       "b": [
+        "344d956a-d28b-4309-b9b2-99add3c73c07",
+        1
+       ],
+       "id": "35816e0e-e023-4e11-bae6-03254342d6e0",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "344d956a-d28b-4309-b9b2-99add3c73c07",
+        2
+       ],
+       "b": [
+        "426c094e-9e3f-4de3-93a0-af636d191910",
+        1
+       ],
+       "id": "0d4cb71b-10cf-4536-804e-8621e46094bb",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "426c094e-9e3f-4de3-93a0-af636d191910",
+        2
+       ],
+       "b": [
+        "fb318df7-b863-424b-8d4f-e1fe32d0fb1e",
+        1
+       ],
+       "id": "e5ec78ba-3a91-4d74-ad25-68aa4e07dc05",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "cf1a9f81-d8b2-4552-8c9c-4f8c776f300e",
+        1
+       ],
+       "b": [
+        "@O",
+        1
+       ],
+       "id": "01cfe396-b8ba-4bbd-9d34-a0d5901d98c6",
+       "kind": "Coincident"
+      },
+      {
+       "a": [
+        "cf1a9f81-d8b2-4552-8c9c-4f8c776f300e",
+        0
+       ],
+       "id": "8fe38913-b66b-4495-baa1-d133569af08f",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "3bf8943a-34dd-4667-9ac4-e356147033d7",
+        0
+       ],
+       "id": "a4a06512-107f-4171-959a-2039abda3dfa",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "c7498b8c-c36f-4681-82a6-6dd94892b977",
+        0
+       ],
+       "id": "cd3f6001-bb3f-405d-8c9f-779151a4daa2",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "344d956a-d28b-4309-b9b2-99add3c73c07",
+        0
+       ],
+       "id": "669c5aae-efaa-4ff9-90e8-d7912e457971",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "426c094e-9e3f-4de3-93a0-af636d191910",
+        0
+       ],
+       "id": "1d74e756-81cb-4f18-b0d7-82446b3776b9",
+       "kind": "Horizontal"
+      },
+      {
+       "a": [
+        "fb318df7-b863-424b-8d4f-e1fe32d0fb1e",
+        0
+       ],
+       "id": "d5cbb49f-6ac1-4f10-be6f-54b5fdc269ff",
+       "kind": "Vertical"
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "3bf8943a-34dd-4667-9ac4-e356147033d7",
+        1
+       ],
+       "id": "7da9cebd-3051-4b59-92eb-d1b17fa42efd",
+       "kind": "DistanceX",
+       "value": 50.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "c7498b8c-c36f-4681-82a6-6dd94892b977",
+        1
+       ],
+       "id": "9204e518-f73f-4002-8f89-f29714e01e30",
+       "kind": "DistanceY",
+       "value": 10.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "344d956a-d28b-4309-b9b2-99add3c73c07",
+        1
+       ],
+       "id": "e6f39458-b1f2-4f93-9225-f6c76bad46c1",
+       "kind": "DistanceX",
+       "value": 10.0
+      },
+      {
+       "a": [
+        "@O",
+        1
+       ],
+       "b": [
+        "426c094e-9e3f-4de3-93a0-af636d191910",
+        1
+       ],
+       "expr": "hauteur",
+       "id": "2b4d3731-df6b-425c-ab77-4adec2b257f8",
+       "kind": "DistanceY",
+       "value": 40.0
+      }
+     ],
+     "geos": [
+      {
+       "id": "cf1a9f81-d8b2-4552-8c9c-4f8c776f300e",
+       "kind": "Line",
+       "p1": [
+        0.0,
+        0.0
+       ],
+       "p2": [
+        50.0,
+        0.0
+       ]
+      },
+      {
+       "id": "3bf8943a-34dd-4667-9ac4-e356147033d7",
+       "kind": "Line",
+       "p1": [
+        50.0,
+        0.0
+       ],
+       "p2": [
+        50.0,
+        10.0
+       ]
+      },
+      {
+       "id": "c7498b8c-c36f-4681-82a6-6dd94892b977",
+       "kind": "Line",
+       "p1": [
+        50.0,
+        10.0
+       ],
+       "p2": [
+        10.0,
+        10.0
+       ]
+      },
+      {
+       "id": "344d956a-d28b-4309-b9b2-99add3c73c07",
+       "kind": "Line",
+       "p1": [
+        10.0,
+        10.0
+       ],
+       "p2": [
+        10.0,
+        40.0
+       ]
+      },
+      {
+       "id": "426c094e-9e3f-4de3-93a0-af636d191910",
+       "kind": "Line",
+       "p1": [
+        10.0,
+        40.0
+       ],
+       "p2": [
+        0.0,
+        40.0
+       ]
+      },
+      {
+       "id": "fb318df7-b863-424b-8d4f-e1fe32d0fb1e",
+       "kind": "Line",
+       "p1": [
+        0.0,
+        40.0
+       ],
+       "p2": [
+        0.0,
+        0.0
+       ]
+      }
+     ]
+    }
+   },
+   "type": "Sketch"
+  },
+  {
+   "id": "628fc83c-b060-4027-838b-a290a4a3f13e",
+   "name": "Extrude1",
+   "params": {
+    "distance": 20.0,
+    "op": "NewBody",
+    "profile": {
+     "regions": [],
+     "sketch": "a1a146a7-aac6-46fe-8526-1f77d2dfa83b"
+    },
+    "reversed": false,
+    "symmetric": false,
+    "targetBody": ""
+   },
+   "type": "Extrude"
+  }
+ ],
+ "format": "silex",
+ "marker": 2,
+ "parameters": [
+  {
+   "comment": "Hauteur du profil en L",
+   "expression": "40",
+   "name": "hauteur",
+   "unit": "mm",
+   "value": 40.0
+  }
+ ],
+ "schema_version": "0.4",
+ "version": 4
+}

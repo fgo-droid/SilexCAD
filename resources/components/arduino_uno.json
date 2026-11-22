@@ -1,0 +1,134 @@
+{
+  "id": "arduino_uno",
+  "category": "board",
+  "name": {
+    "fr": "Arduino Uno R3",
+    "en": "Arduino Uno R3"
+  },
+  "description": {
+    "fr": "Carte 68,6 × 53,3 mm, 4 trous Ø3,2 (M3), USB-B et jack d'alimentation qui dépassent.",
+    "en": "68.6 × 53.3 mm board, 4 Ø3.2 holes (M3), USB-B and power jack overhanging."
+  },
+  "pcb": {
+    "size": [
+      68.6,
+      53.3
+    ],
+    "thickness": 1.6,
+    "corner_radius": 0.5
+  },
+  "mounting_holes": [
+    {
+      "x": 14.0,
+      "y": 2.5,
+      "d": 3.2
+    },
+    {
+      "x": 15.3,
+      "y": 50.7,
+      "d": 3.2
+    },
+    {
+      "x": 66.1,
+      "y": 7.6,
+      "d": 3.2
+    },
+    {
+      "x": 66.1,
+      "y": 35.5,
+      "d": 3.2
+    }
+  ],
+  "screw": "M3",
+  "standoff_mm": 4,
+  "material": "PCB Vert",
+  "parts": [
+    {
+      "part": "USB-B",
+      "box": [
+        1.7,
+        38.1,
+        0,
+        16,
+        12,
+        11
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "DC jack",
+      "box": [
+        5.45,
+        7.6,
+        0,
+        14.5,
+        9,
+        11
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Headers digital",
+      "box": [
+        45.7,
+        50.8,
+        0,
+        35.6,
+        2.54,
+        8.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Headers power",
+      "box": [
+        45.7,
+        2.54,
+        0,
+        35.6,
+        2.54,
+        8.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "ATmega328P",
+      "box": [
+        45,
+        22,
+        0,
+        35,
+        7.5,
+        4
+      ],
+      "mode": "join"
+    }
+  ],
+  "openings": [
+    {
+      "name": "USB-B",
+      "side": "-x",
+      "center": [
+        38.1,
+        5.5
+      ],
+      "size": [
+        12,
+        11
+      ]
+    },
+    {
+      "name": "DC jack",
+      "side": "-x",
+      "center": [
+        7.6,
+        5.5
+      ],
+      "size": [
+        9,
+        11
+      ]
+    }
+  ],
+  "step": "arduino_uno.step"
+}

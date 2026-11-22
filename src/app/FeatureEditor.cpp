@@ -3,14 +3,19 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
+
+#include "ExprSpinBox.h"
+#include "model/Bindings.h"
 #include <QFormLayout>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QListView>
 #include <QLocale>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPushButton>
+#include <QTimer>
 #include <QVBoxLayout>
 #include <QtMath>
 
@@ -35,6 +40,7 @@ FeatureEditor::FeatureEditor(Workspace& ws, std::string type, FeaturePtr existin
     if (m_existing) {
         m_id = m_existing->id;
         m_name = m_existing->name;
+        m_valueExpr = fieldExpression(m_existing->params, valuePointer());
         if (m_type == FeatureType::Extrude) {
             const auto p = m_existing->as<ExtrudeParams>();
             for (const auto& k : p.profile.regions)
@@ -65,6 +71,20 @@ FeatureEditor::FeatureEditor(Workspace& ws, std::string type, FeaturePtr existin
             m_value = p.thickness;
             m_outward = p.outward;
         }
+        else if (m_type == FeatureType::OffsetFace) {
+            const auto p = m_existing->as<OffsetFaceParams>();
+            m_face = p.face;
+            m_faceBody = p.body;
+            m_value = p.distance;
+        }
+        else if (m_type == FeatureType::Box || m_type == FeatureType::Cylinder) {
+            m_prim = m_existing->as<PrimitiveParams>();
+            m_value = m_prim.height;
+            m_op = m_prim.op;
+            for (const char* ptr : {"/centerX", "/centerY", "/length", "/width", "/diameter"})
+                if (auto e = fieldExpression(m_existing->params, ptr); !e.empty())
+                    m_exprs[ptr] = e;
+        }
         else if (m_type == FeatureType::Combine) {
             const auto p = m_existing->as<CombineParams>();
             m_target = p.target;
@@ -80,7 +100,7 @@ FeatureEditor::FeatureEditor(Workspace& ws, std::string type, FeaturePtr existin
     }
     else {
         m_id = newUuid();
-        m_name = ws.model()->doc().nextName(m_type);
+        m_name = ws.model()->doc().nextName(m_type == FeatureType::OffsetFace ? std::string("PressPull") : m_type);
         const bool hasBodies = snap && !snap->bodies.empty();
         if (m_type == FeatureType::Extrude) {
             m_value = 10.0;
@@ -96,9 +116,26 @@ FeatureEditor::FeatureEditor(Workspace& ws, std::string type, FeaturePtr existin
             m_op = BooleanOp::Join;
         else if (m_type == FeatureType::Shell)
             m_value = 2.0;
+        else if (m_type == FeatureType::OffsetFace)
+            m_value = 5.0;
+        else if (isPrimitive()) {
+            m_value = 10.0;
+            m_op = BooleanOp::NewBody;
+            if (m_type == FeatureType::Cylinder)
+                m_prim.diameter = 20;
+        }
         else
             m_value = 1.0;
         for (const SelItem& s : ws.selection()) {
+            if (isOffsetFace() && s.kind == SelKind::Face && s.planar && m_face.name.empty()) {
+                m_face = s.ref();
+                m_faceBody = s.owner;
+            }
+            if (isPrimitive() && s.kind == SelKind::Face && s.planar && m_prim.plane.kind != "Face") {
+                m_prim.plane.kind = "Face";  // a primitive on the selected face (boss, pocket)
+                m_prim.plane.face = s.ref();
+                m_op = BooleanOp::Join;
+            }
             if (isShell() && s.kind == SelKind::Face)
                 m_shellFaces.push_back(s.ref());
             if (isProfileBased() && s.kind == SelKind::Profile)
@@ -139,6 +176,42 @@ bool FeatureEditor::isCombine() const { return m_type == FeatureType::Combine; }
 
 bool FeatureEditor::isShell() const { return m_type == FeatureType::Shell; }
 
+bool FeatureEditor::isOffsetFace() const { return m_type == FeatureType::OffsetFace; }
+
+bool FeatureEditor::isPrimitive() const { return m_type == FeatureType::Box || m_type == FeatureType::Cylinder; }
+
+Placement FeatureEditor::primitivePlane() const
+{
+    if (m_prim.plane.kind != "Face")
+        return offsetPlacement(originPlacement(m_prim.plane.kind), m_prim.plane.offset);
+    if (auto snap = m_ws.model()->snapshot())
+        for (const auto& b : snap->bodies)
+            for (const auto& f : b.mesh.faces)
+                if (f.name == m_prim.plane.face.name && f.planar) {
+                    // same frame as the kernel: face centroid, X = world X projected on the face
+                    Placement pl = f.plane;
+                    pl.origin = f.sig.center;
+                    const Vec3 n = pl.normal.normalized();
+                    Vec3 x = Vec3{1, 0, 0} - n * n.x;
+                    if (x.length() < 1e-6)
+                        x = Vec3{0, 1, 0} - n * n.y;
+                    pl.xDir = x.normalized();
+                    return offsetPlacement(pl, m_prim.plane.offset);
+                }
+    return originPlacement("XY");
+}
+
+std::vector<TopoRef> FeatureEditor::highlightedFaces() const
+{
+    if (isShell())
+        return m_shellFaces;
+    if (isOffsetFace() && !m_face.name.empty())
+        return {m_face};
+    if (isPrimitive() && m_prim.plane.kind == "Face")
+        return {m_prim.plane.face};
+    return {};
+}
+
 QString FeatureEditor::bodyName(const Uuid& id) const
 {
     if (auto snap = m_ws.model()->snapshot())
@@ -152,6 +225,10 @@ uint32_t FeatureEditor::pickFilter() const
 {
     if (isProfileBased())
         return SelFilter::Profiles;
+    if (isOffsetFace())
+        return SelFilter::Faces | SelFilter::PlanarOnly | (m_pressPull && m_face.name.empty() ? SelFilter::Profiles : 0u);
+    if (isPrimitive())
+        return SelFilter::Faces | SelFilter::PlanarOnly;
     return (isCombine() || isShell()) ? SelFilter::Faces : SelFilter::Edges;
 }
 
@@ -166,6 +243,17 @@ std::set<Uuid> FeatureEditor::sketchesInUse() const
 }
 
 // ------------------------------------------------------------------ document
+
+std::string FeatureEditor::valuePointer() const
+{
+    if (m_type == FeatureType::Extrude) return "/distance";
+    if (m_type == FeatureType::Revolve) return "/angle";
+    if (isShell()) return "/thickness";
+    if (isOffsetFace()) return "/distance";
+    if (isPrimitive()) return "/height";
+    if (isCombine()) return {};
+    return "/value";
+}
 
 FeaturePtr FeatureEditor::buildNode() const
 {
@@ -203,6 +291,21 @@ FeaturePtr FeatureEditor::buildNode() const
         p.outward = m_outward;
         n->params = Json(p);
     }
+    else if (isOffsetFace()) {
+        OffsetFaceParams p;
+        p.face = m_face;
+        p.body = m_faceBody;
+        p.distance = m_value;
+        n->params = Json(p);
+    }
+    else if (isPrimitive()) {
+        PrimitiveParams p = m_prim;
+        p.height = m_value;
+        p.op = m_op;
+        n->params = Json(p);
+        for (const auto& [ptr, e] : m_exprs)
+            setFieldExpression(n->params, ptr, e);
+    }
     else if (isCombine()) {
         CombineParams p;
         p.target = m_target;
@@ -217,6 +320,8 @@ FeaturePtr FeatureEditor::buildNode() const
         p.value = m_value;
         n->params = Json(p);
     }
+    if (!isCombine())
+        setFieldExpression(n->params, valuePointer(), m_valueExpr);
     return n;
 }
 
@@ -239,6 +344,8 @@ void FeatureEditor::pushPreview()
     const bool ready = isProfileBased() ? !m_profiles.empty()
                        : isCombine()    ? (!m_target.empty() && !m_tools.empty())
                        : isShell()      ? !m_shellFaces.empty()
+                       : isOffsetFace() ? !m_face.name.empty()
+                       : isPrimitive()  ? true
                                         : !m_edges.empty();
     if (!ready) {
         DocState d = m_ws.model()->doc();
@@ -259,9 +366,9 @@ void FeatureEditor::syncSelection()
     for (const auto& e : m_edges)
         if (SelItem s = m_ws.findEdge(e); s.valid())
             sel.push_back(s);
-    if (isShell())
+    if (const auto faces = highlightedFaces(); !faces.empty())
         if (auto snap = m_ws.model()->snapshot())
-            for (const TopoRef& r : m_shellFaces)
+            for (const TopoRef& r : faces)
                 for (size_t b = 0; b < snap->bodies.size(); ++b) {
                     const auto& faces = snap->bodies[b].mesh.faces;
                     for (size_t f = 0; f < faces.size(); ++f)
@@ -346,6 +453,38 @@ void FeatureEditor::onPicked(const SelItem& item, bool)
         else
             m_edges.push_back(item.ref());
     }
+    else if (item.kind == SelKind::Profile && isOffsetFace() && m_pressPull) {
+        // Press / Pull on a closed sketch profile = a regular extrusion
+        QTimer::singleShot(0, m_ws.viewport(), [ws = &m_ws, item] {
+            ws->cancelSession();
+            ws->setSelection({item});
+            ws->startFeature(FeatureType::Extrude);
+        });
+        return;
+    }
+    else if (item.kind == SelKind::Face && isOffsetFace()) {
+        if (!item.planar) {
+            m_ws.status(QObject::tr("Press / Pull works on planar faces"));
+            return;
+        }
+        m_face = item.ref();
+        m_faceBody = item.owner;
+    }
+    else if (item.kind == SelKind::Face && isPrimitive()) {
+        if (!item.planar)
+            return;
+        m_prim.plane.kind = "Face";
+        m_prim.plane.face = item.ref();
+        m_prim.plane.offset = 0;
+        if (m_op == BooleanOp::NewBody)
+            m_op = BooleanOp::Join;
+        if (m_planeBox) {
+            m_updatingPanel = true;
+            m_planeBox->setItemText(3, QObject::tr("Selected face"));
+            m_planeBox->setCurrentIndex(3);
+            m_updatingPanel = false;
+        }
+    }
     else if (item.kind == SelKind::Face && isShell()) {
         auto it = std::find_if(m_shellFaces.begin(), m_shellFaces.end(),
                                [&](const TopoRef& r) { return r.name == item.name; });
@@ -387,6 +526,11 @@ bool FeatureEditor::commit()
         m_ws.status(QObject::tr("Select at least one face to remove (the opening)"));
         return false;
     }
+    if (isOffsetFace() && m_face.name.empty()) {
+        m_ws.status(m_pressPull ? QObject::tr("Click a planar face to push / pull, or a closed profile to extrude")
+                                : QObject::tr("Click a planar face to push / pull"));
+        return false;
+    }
     if (isCombine() && (m_target.empty() || m_tools.empty())) {
         m_ws.status(QObject::tr("Click a target body, then one or more tool bodies"));
         return false;
@@ -419,7 +563,14 @@ std::vector<MenuAction> FeatureEditor::menuActions()
                          pushPreview();
                      }});
     }
-    if (isProfileBased()) {
+    if (isOffsetFace() || isPrimitive()) {
+        a.push_back({QObject::tr("Flip"), icon(IconId::PressPull), [this] {
+                         m_value = -m_value;
+                         updatePanel();
+                         pushPreview();
+                     }});
+    }
+    if (isProfileBased() || isPrimitive()) {
         a.push_back({QObject::tr("New body"), icon(IconId::Body), [this] {
                          m_op = BooleanOp::NewBody;
                          updatePanel();
@@ -443,10 +594,38 @@ std::vector<MenuAction> FeatureEditor::menuActions()
 
 bool FeatureEditor::gizmo(QPointF* base, QPointF* tip, Vec3* origin, Vec3* dir) const
 {
-    if (m_type != FeatureType::Extrude || m_profiles.empty())
-        return false;
     auto snap = m_ws.model()->snapshot();
     if (!snap)
+        return false;
+    // direct modelling: arrow on the face (Press / Pull) or on the base of the primitive
+    if (isOffsetFace() || isPrimitive()) {
+        Vec3 c, d;
+        bool found = false;
+        if (isOffsetFace()) {
+            for (const auto& b : snap->bodies)
+                for (const auto& f : b.mesh.faces)
+                    if (!found && f.name == m_face.name && f.planar) {
+                        c = f.sig.center;
+                        d = f.plane.normal.normalized();
+                        found = true;
+                    }
+        }
+        else {
+            const Placement pl = primitivePlane();
+            c = pl.toWorld({m_prim.centerX, m_prim.centerY});
+            d = pl.normal.normalized();
+            found = true;
+        }
+        if (!found)
+            return false;
+        if (origin)
+            *origin = c;
+        if (dir)
+            *dir = d;
+        Viewport* vp = m_ws.viewport();
+        return vp->toScreen(c, base) && vp->toScreen(c + d * m_value, tip);
+    }
+    if (m_type != FeatureType::Extrude || m_profiles.empty())
         return false;
     const SketchView* sv = snap->sketch(m_profiles.front().first);
     if (!sv)
@@ -574,6 +753,14 @@ void FeatureEditor::paintOverlay(QPainter& p)
     if (isProfileBased())
         hint = m_profiles.empty() ? QObject::tr("Select one or more profiles")
                                   : QObject::tr("%n profile(s) — drag the arrow or type a value", nullptr, int(m_profiles.size()));
+    else if (isOffsetFace())
+        hint = m_face.name.empty()
+                   ? (m_pressPull ? QObject::tr("Click a planar face (push / pull) or a closed profile (extrude)")
+                                  : QObject::tr("Click the planar face to push / pull"))
+                   : (m_value >= 0 ? QObject::tr("Pull: adds material — drag the arrow or type a distance")
+                                   : QObject::tr("Push: removes material — drag the arrow or type a distance"));
+    else if (isPrimitive())
+        hint = QObject::tr("Drag the arrow for the height · click a planar face to build on it");
     else if (isShell())
         hint = m_shellFaces.empty() ? QObject::tr("Click the face(s) to open")
                                     : QObject::tr("%n face(s) removed — set the wall thickness", nullptr,
@@ -623,20 +810,32 @@ QWidget* FeatureEditor::createPanel(QWidget* parent)
         m_target.clear();
         m_tools.clear();
         m_shellFaces.clear();
+        m_face = {};
+        m_faceBody.clear();
         syncSelection();
         pushPreview();
         updatePanel();
     });
     selRow->addWidget(m_selLabel, 1);
     selRow->addWidget(clear);
-    form->addRow(isProfileBased() ? QObject::tr("Profiles")
-                 : isCombine()    ? QObject::tr("Bodies")
-                 : isShell()      ? QObject::tr("Removed Faces")
-                                  : QObject::tr("Edges"),
-                 selRow);
+    if (isPrimitive()) {
+        m_selLabel->hide();
+        clear->hide();
+    }
+    else
+        form->addRow(isProfileBased() ? QObject::tr("Profiles")
+                     : isCombine()    ? QObject::tr("Bodies")
+                     : isShell()      ? QObject::tr("Removed Faces")
+                     : isOffsetFace() ? QObject::tr("Face")
+                                      : QObject::tr("Edges"),
+                     selRow);
 
-    m_valueBox = new QDoubleSpinBox(w);
+    m_valueBox = new ExprSpinBox(w);
     m_valueBox->setDecimals(3);
+    QObject::connect(m_valueBox, &ExprSpinBox::exprChanged, m_valueBox, [this](const QString& e) {
+        if (!m_updatingPanel)
+            m_valueExpr = e.toStdString();
+    });
     m_valueBox->setKeyboardTracking(true);
     if (isShell()) {
         m_valueBox->setRange(0.05, 1000);
@@ -657,6 +856,9 @@ QWidget* FeatureEditor::createPanel(QWidget* parent)
         m_valueBox->hide();
         m_opBox = new QComboBox(w);
         m_opBox->addItems({QObject::tr("Join (union)"), QObject::tr("Cut (subtract)"), QObject::tr("Intersect")});
+        if (essentialUi())  // v0.5: advanced option hidden in the Essential profile
+            if (auto* v = qobject_cast<QListView*>(m_opBox->view()))
+                v->setRowHidden(2, true);
         form->addRow(QObject::tr("Operation"), m_opBox);
         QObject::connect(m_opBox, &QComboBox::currentIndexChanged, m_opBox, [this](int i) {
             if (m_updatingPanel)
@@ -695,10 +897,89 @@ QWidget* FeatureEditor::createPanel(QWidget* parent)
         auto* flip = new QPushButton(QObject::tr("Flip direction"), w);
         QObject::connect(flip, &QPushButton::clicked, flip, [this] {
             m_value = -m_value;
+            if (!m_valueExpr.empty())
+                m_valueExpr = "-(" + m_valueExpr + ")";
             updatePanel();
             pushPreview();
         });
         form->addRow("", flip);
+    }
+    else if (isOffsetFace()) {
+        m_valueBox->setRange(-1e5, 1e5);
+        m_valueBox->setSuffix(" mm");
+        form->addRow(QObject::tr("Distance"), m_valueBox);
+        m_opInfo = new QLabel(w);
+        form->addRow(QObject::tr("Operation"), m_opInfo);
+        auto* flip = new QPushButton(QObject::tr("Push / Pull (flip)"), w);
+        QObject::connect(flip, &QPushButton::clicked, flip, [this] {
+            m_value = -m_value;
+            if (!m_valueExpr.empty())
+                m_valueExpr = "-(" + m_valueExpr + ")";
+            updatePanel();
+            pushPreview();
+        });
+        form->addRow("", flip);
+    }
+    else if (isPrimitive()) {
+        m_planeBox = new QComboBox(w);
+        m_planeBox->addItems({QObject::tr("XY (top)"), QObject::tr("XZ (front)"), QObject::tr("YZ (right)"),
+                              m_prim.plane.kind == "Face" ? QObject::tr("Selected face") : QObject::tr("Click a face...")});
+        m_planeBox->setCurrentIndex(m_prim.plane.kind == "XZ" ? 1 : m_prim.plane.kind == "YZ" ? 2 : m_prim.plane.kind == "Face" ? 3 : 0);
+        form->addRow(QObject::tr("Base plane"), m_planeBox);
+        QObject::connect(m_planeBox, &QComboBox::currentIndexChanged, m_planeBox, [this](int i) {
+            if (m_updatingPanel)
+                return;
+            if (i == 3) {
+                if (m_prim.plane.kind != "Face")
+                    m_ws.status(QObject::tr("Click a planar face in the view"));
+                return;
+            }
+            m_prim.plane.kind = i == 1 ? "XZ" : i == 2 ? "YZ" : "XY";
+            m_prim.plane.face = {};
+            pushPreview();
+            m_ws.viewport()->refreshOverlay();
+        });
+        // secondary fields: expressions of global parameters accepted (bound per JSON pointer)
+        auto field = [&](const QString& label, double* v, const char* ptr, double lo) {
+            auto* box = new ExprSpinBox(w);
+            box->setRange(lo, 1e5);
+            box->setDecimals(3);
+            box->setSuffix(" mm");
+            box->setKeyboardTracking(true);
+            box->setValueAndExpression(*v, m_exprs.count(ptr) ? m_exprs[ptr] : std::string{});
+            QObject::connect(box, &QDoubleSpinBox::valueChanged, box, [this, v](double x) {
+                if (m_updatingPanel)
+                    return;
+                *v = x;
+                pushPreview();
+                m_ws.viewport()->refreshOverlay();
+            });
+            QObject::connect(box, &ExprSpinBox::exprChanged, box, [this, ptr = std::string(ptr)](const QString& e) {
+                if (!m_updatingPanel)
+                    m_exprs[ptr] = e.toStdString();
+            });
+            form->addRow(label, box);
+        };
+        field(QObject::tr("Center X"), &m_prim.centerX, "/centerX", -1e5);
+        field(QObject::tr("Center Y"), &m_prim.centerY, "/centerY", -1e5);
+        if (m_type == FeatureType::Box) {
+            field(QObject::tr("Length (X)"), &m_prim.length, "/length", 0.001);
+            field(QObject::tr("Width (Y)"), &m_prim.width, "/width", 0.001);
+        }
+        else
+            field(QObject::tr("Diameter (%1)").arg(QChar(0x2300)), &m_prim.diameter, "/diameter", 0.001);
+        m_valueBox->setRange(-1e5, 1e5);
+        m_valueBox->setSuffix(" mm");
+        form->addRow(QObject::tr("Height (Z)"), m_valueBox);
+        m_opBox = new QComboBox(w);
+        m_opBox->addItems({QObject::tr("New body"), QObject::tr("Join"), QObject::tr("Cut")});
+        form->addRow(QObject::tr("Operation"), m_opBox);
+        QObject::connect(m_opBox, &QComboBox::currentIndexChanged, m_opBox, [this](int i) {
+            if (m_updatingPanel)
+                return;
+            m_op = opFromIndex(i);
+            pushPreview();
+        });
     }
     else if (m_type == FeatureType::Revolve) {
         m_axisBox = new QComboBox(w);
@@ -721,7 +1002,7 @@ QWidget* FeatureEditor::createPanel(QWidget* parent)
     QObject::connect(m_valueBox, &QDoubleSpinBox::valueChanged, m_valueBox, [this](double v) {
         if (m_updatingPanel)
             return;
-        if (m_type == FeatureType::Extrude && std::abs(v) < 1e-6)
+        if ((m_type == FeatureType::Extrude || isOffsetFace() || isPrimitive()) && std::abs(v) < 1e-6)
             return;
         m_value = v;
         pushPreview();
@@ -731,6 +1012,9 @@ QWidget* FeatureEditor::createPanel(QWidget* parent)
     if (isProfileBased()) {
         m_opBox = new QComboBox(w);
         m_opBox->addItems({QObject::tr("New body"), QObject::tr("Join"), QObject::tr("Cut"), QObject::tr("Intersect")});
+        if (essentialUi())  // v0.5: advanced option hidden in the Essential profile
+            if (auto* v = qobject_cast<QListView*>(m_opBox->view()))
+                v->setRowHidden(3, true);
         form->addRow(QObject::tr("Operation"), m_opBox);
         QObject::connect(m_opBox, &QComboBox::currentIndexChanged, m_opBox, [this](int i) {
             if (m_updatingPanel)
@@ -799,14 +1083,20 @@ void FeatureEditor::updatePanel()
         else
             m_selLabel->setText(isProfileBased() ? QObject::tr("%n selected", nullptr, int(m_profiles.size()))
                                 : isShell()      ? QObject::tr("%n selected", nullptr, int(m_shellFaces.size()))
+                                : isOffsetFace() ? QObject::tr("%n selected", nullptr, m_face.name.empty() ? 0 : 1)
                                                  : QObject::tr("%n selected", nullptr, int(m_edges.size())));
     }
-    if (m_valueBox && std::abs(m_valueBox->value() - m_value) > 1e-9)
-        m_valueBox->setValue(m_value);
+    if (m_valueBox && (std::abs(m_valueBox->value() - m_value) > 1e-9 || m_valueBox->expression() != m_valueExpr))
+        m_valueBox->setValueAndExpression(m_value, m_valueExpr);
     if (m_dirBox)
         m_dirBox->setCurrentIndex(isShell() ? (m_outward ? 1 : 0) : (m_symmetric ? 1 : 0));
     if (m_opBox)
         m_opBox->setCurrentIndex(isCombine() ? std::max(0, opIndex(m_op) - 1) : opIndex(m_op));
+    if (m_opInfo)
+        m_opInfo->setText(m_value >= 0 ? QString("<span style='color:%1'>%2</span>")
+                                             .arg(QColor(0x4a, 0xa3, 0xff).name(), QObject::tr("Pull: join (adds material)"))
+                                       : QString("<span style='color:%1'>%2</span>")
+                                             .arg(Colors::Error.name(), QObject::tr("Push: cut (removes material)")));
     if (m_message) {
         QString msg;
         QColor c = Colors::Warning;
@@ -819,7 +1109,10 @@ void FeatureEditor::updatePanel()
                 else if (r->status == FeatureStatus::Warning)
                     msg = QString::fromStdString(r->message);
             }
-        m_message->setText(msg.isEmpty() ? QString() : QString("<span style='color:%1'>%2</span>").arg(c.name(), msg.toHtmlEscaped()));
+        QString html = msg.isEmpty() ? QString() : QString("<span style='color:%1'>%2</span>").arg(c.name(), msg.toHtmlEscaped());
+        if (const QString why = m_ws.explainStep(m_id); !why.isEmpty())
+            html += QString("<br><span style='color:#cfe8d2'>&#128161; %1</span>").arg(why.toHtmlEscaped());
+        m_message->setText(html);
     }
     m_updatingPanel = false;
 }

@@ -1,0 +1,516 @@
+{
+  "features": [
+    {
+      "id": "c9872f94-2ab2-4086-986b-a56c1f437172",
+      "name": "Box1",
+      "params": {
+        "centerX": 22.5,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 10.0,
+        "length": 45.0,
+        "op": "NewBody",
+        "plane": {
+          "kind": "XY"
+        },
+        "width": 30.0
+      },
+      "type": "Box",
+      "annotation": "On ne modélise que la moitié droite : la semelle.",
+      "annotation_en": "Only the right half is modelled: the base."
+    },
+    {
+      "id": "2d8c7c86-1bc8-411a-992d-8e78fef221e4",
+      "name": "Box2",
+      "params": {
+        "centerX": 10.0,
+        "centerY": 0.0,
+        "diameter": 20.0,
+        "height": 30.0,
+        "length": 20.0,
+        "op": "Join",
+        "plane": {
+          "kind": "XY"
+        },
+        "targetBody": "c9872f94-2ab2-4086-986b-a56c1f437172",
+        "width": 30.0
+      },
+      "type": "Box"
+    },
+    {
+      "id": "4ed1c662-b8f8-4c17-b7c8-8c7926391a26",
+      "name": "Cylinder1",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 30.0,
+        "diameter": 44.0,
+        "height": 30.0,
+        "length": 20.0,
+        "op": "Join",
+        "plane": {
+          "kind": "XZ",
+          "offset": -15.0
+        },
+        "targetBody": "c9872f94-2ab2-4086-986b-a56c1f437172",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "Le corps du palier, centré sur l'axe Z : le plan de symétrie YZ le coupe en deux.",
+      "annotation_en": "The bearing housing, centered on the Z axis: the YZ symmetry plane cuts it in half."
+    },
+    {
+      "id": "d054bf98-0c86-4f4c-adfb-028919370b45",
+      "name": "Oblong",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 10.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                3
+              ],
+              "b": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                1
+              ],
+              "id": "12cd53e9-2cd8-4990-ad4a-0604c1eac703",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "fefe6afc-9316-4735-b688-c884b03842e1",
+                3
+              ],
+              "b": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                2
+              ],
+              "id": "11efc531-3470-4696-891f-1cf78bd41e73",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                2
+              ],
+              "b": [
+                "705b876f-198b-4cc0-8e9e-1a1988a1cb66",
+                1
+              ],
+              "id": "6a7223de-d6ed-42c9-a9e4-0eb2ff116c12",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "705b876f-198b-4cc0-8e9e-1a1988a1cb66",
+                2
+              ],
+              "b": [
+                "fefe6afc-9316-4735-b688-c884b03842e1",
+                1
+              ],
+              "id": "981e5ecd-f3e3-42b7-a608-d45b5df29861",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "fefe6afc-9316-4735-b688-c884b03842e1",
+                2
+              ],
+              "b": [
+                "33ab12e9-e63f-4dd2-850d-01d7be43bff7",
+                1
+              ],
+              "id": "16034a43-c70c-48e9-b2fd-d530f5de3499",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "33ab12e9-e63f-4dd2-850d-01d7be43bff7",
+                2
+              ],
+              "b": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                1
+              ],
+              "id": "8846b0c5-211a-4e27-9de5-fc5d6782aea4",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "705b876f-198b-4cc0-8e9e-1a1988a1cb66",
+                0
+              ],
+              "b": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                0
+              ],
+              "id": "e321dd8d-d484-417f-9cb5-d20de2528277",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "705b876f-198b-4cc0-8e9e-1a1988a1cb66",
+                0
+              ],
+              "b": [
+                "fefe6afc-9316-4735-b688-c884b03842e1",
+                0
+              ],
+              "id": "f5651d97-58f9-417d-ba95-3042f80fa770",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "33ab12e9-e63f-4dd2-850d-01d7be43bff7",
+                0
+              ],
+              "b": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                0
+              ],
+              "id": "e5e4b53f-c10e-4050-8a40-7c1bd7c42906",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "33ab12e9-e63f-4dd2-850d-01d7be43bff7",
+                0
+              ],
+              "b": [
+                "fefe6afc-9316-4735-b688-c884b03842e1",
+                0
+              ],
+              "id": "0abcd3d0-1521-4526-a7b0-a4c0f50a9152",
+              "kind": "Tangent"
+            },
+            {
+              "a": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                0
+              ],
+              "b": [
+                "fefe6afc-9316-4735-b688-c884b03842e1",
+                0
+              ],
+              "id": "de8a5662-9588-4c0d-b72b-86b01e07329a",
+              "kind": "Equal"
+            },
+            {
+              "a": [
+                "8a70601c-e487-434f-a712-a9d20e59cdfd",
+                1
+              ],
+              "b": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                0
+              ],
+              "id": "6bf6737e-5ea3-4f50-bf26-a3e4f168e14f",
+              "kind": "Midpoint"
+            },
+            {
+              "a": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                0
+              ],
+              "id": "a4e6d2f8-943f-437f-9ab7-e3ab796e4693",
+              "kind": "Distance",
+              "value": 8.0
+            },
+            {
+              "a": [
+                "c44194a2-a67b-4b61-b892-e7b50225a24e",
+                0
+              ],
+              "id": "e08b2370-80af-4365-bfd7-c29bb73905ec",
+              "kind": "Radius",
+              "value": 4.5
+            },
+            {
+              "a": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                0
+              ],
+              "id": "f8beb7f3-4798-4c0e-968f-3408d9ce6522",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                1
+              ],
+              "id": "d2fdb439-98a0-46a4-9417-3a01e2b83bb2",
+              "kind": "DistanceY",
+              "value": 0.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+                1
+              ],
+              "id": "f13134ba-4b6f-4755-8ccb-b2d9796a40d1",
+              "kind": "DistanceX",
+              "value": 31.0
+            }
+          ],
+          "geos": [
+            {
+              "construction": true,
+              "id": "cb7ccbe7-c96f-40c6-a395-601fc39c002b",
+              "kind": "Line",
+              "p1": [
+                31.0,
+                0.0
+              ],
+              "p2": [
+                39.0,
+                0.0
+              ]
+            },
+            {
+              "a0": 1.5707963267948966,
+              "a1": 4.71238898038469,
+              "c": [
+                31.0,
+                0.0
+              ],
+              "id": "c44194a2-a67b-4b61-b892-e7b50225a24e",
+              "kind": "Arc",
+              "r": 4.5
+            },
+            {
+              "a0": 4.71238898038469,
+              "a1": 7.853981633974483,
+              "c": [
+                39.0,
+                0.0
+              ],
+              "id": "fefe6afc-9316-4735-b688-c884b03842e1",
+              "kind": "Arc",
+              "r": 4.5
+            },
+            {
+              "id": "705b876f-198b-4cc0-8e9e-1a1988a1cb66",
+              "kind": "Line",
+              "p1": [
+                31.0,
+                -4.5
+              ],
+              "p2": [
+                39.0,
+                -4.5
+              ]
+            },
+            {
+              "id": "33ab12e9-e63f-4dd2-850d-01d7be43bff7",
+              "kind": "Line",
+              "p1": [
+                39.0,
+                4.5
+              ],
+              "p2": [
+                31.0,
+                4.5
+              ]
+            },
+            {
+              "construction": true,
+              "id": "8a70601c-e487-434f-a712-a9d20e59cdfd",
+              "kind": "Point",
+              "p": [
+                35.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Un trou oblong (U) : il laisse ± 4 mm de réglage pour aligner l'arbre au montage.",
+      "annotation_en": "A slot (U): it leaves ± 4 mm of adjustment to align the shaft at assembly."
+    },
+    {
+      "id": "7a6e35a9-956b-4077-959e-7e4fdfb3651e",
+      "name": "Extrude1",
+      "params": {
+        "distance": 10.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "d054bf98-0c86-4f4c-adfb-028919370b45"
+        },
+        "reversed": true,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "ce759f8a-dd68-42df-b56a-71c71194de28",
+      "name": "Mirror1",
+      "params": {
+        "merge": true,
+        "plane": {
+          "kind": "YZ"
+        },
+        "targets": {
+          "ids": [
+            "c9872f94-2ab2-4086-986b-a56c1f437172"
+          ],
+          "type": "body"
+        }
+      },
+      "type": "Mirror",
+      "annotation": "La symétrie (Mirror) crée l'autre moitié, oblong compris : une seule cote à changer.",
+      "annotation_en": "The Mirror creates the other half, slot included: a single dimension to change."
+    },
+    {
+      "id": "e86cb719-c62a-4601-8dc3-253e6eaa6824",
+      "name": "Logement",
+      "params": {
+        "plane": {
+          "kind": "XZ",
+          "offset": -15.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "87baba68-8e49-4260-9368-848cc5b992c6",
+                0
+              ],
+              "b": [
+                "1ce2e991-6cba-4fd6-a247-207843dc8d09",
+                0
+              ],
+              "id": "263bf16e-131d-4641-9aa7-a3813c27b6c5",
+              "kind": "Concentric"
+            },
+            {
+              "a": [
+                "1ce2e991-6cba-4fd6-a247-207843dc8d09",
+                0
+              ],
+              "id": "34f153e0-a552-4af1-8a72-f75f429e3d10",
+              "kind": "Diameter",
+              "value": 26.0
+            },
+            {
+              "a": [
+                "87baba68-8e49-4260-9368-848cc5b992c6",
+                0
+              ],
+              "id": "71521912-fdd0-4509-b3da-31efe3288307",
+              "kind": "Diameter",
+              "value": 44.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "87baba68-8e49-4260-9368-848cc5b992c6",
+                3
+              ],
+              "id": "38367cca-9468-49d7-b50a-e52d69ea7464",
+              "kind": "DistanceX",
+              "value": 0.0
+            },
+            {
+              "a": [
+                "@O",
+                1
+              ],
+              "b": [
+                "87baba68-8e49-4260-9368-848cc5b992c6",
+                3
+              ],
+              "id": "651803b3-de2d-4bd8-9fbe-83acb7a951b2",
+              "kind": "DistanceY",
+              "value": 30.0
+            }
+          ],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                30.0
+              ],
+              "construction": true,
+              "id": "87baba68-8e49-4260-9368-848cc5b992c6",
+              "kind": "Circle",
+              "r": 22.0
+            },
+            {
+              "c": [
+                0.0,
+                30.0
+              ],
+              "id": "1ce2e991-6cba-4fd6-a247-207843dc8d09",
+              "kind": "Circle",
+              "r": 13.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch",
+      "annotation": "Logement du roulement Ø26, rendu concentrique (O) au corps Ø44 : l'épaisseur reste uniforme.",
+      "annotation_en": "Ø26 bearing seat, made concentric (O) with the Ø44 housing: the wall stays uniform."
+    },
+    {
+      "id": "808ea1f2-4d04-40f3-8d26-761705841674",
+      "name": "Extrude2",
+      "params": {
+        "distance": 30.0,
+        "op": "Cut",
+        "profile": {
+          "regions": [],
+          "sketch": "e86cb719-c62a-4601-8dc3-253e6eaa6824"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "01c712b9-d111-44a7-bfb4-0e8a44e7cddf",
+      "name": "Cylinder2",
+      "params": {
+        "centerX": 0.0,
+        "centerY": 0.0,
+        "diameter": 4.0,
+        "height": -12.0,
+        "length": 20.0,
+        "op": "Cut",
+        "plane": {
+          "kind": "XY",
+          "offset": 52.0
+        },
+        "targetBody": "c9872f94-2ab2-4086-986b-a56c1f437172",
+        "width": 20.0
+      },
+      "type": "Cylinder",
+      "annotation": "Le trou de graissage, sur le dessus, débouche dans le logement.",
+      "annotation_en": "The grease hole, on top, opens into the bearing seat."
+    }
+  ],
+  "format": "silex",
+  "marker": 9,
+  "parameters": [],
+  "schema_version": "0.4",
+  "version": 4
+}

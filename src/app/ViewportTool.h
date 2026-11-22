@@ -3,9 +3,11 @@
 // interaction (the Workspace and its active editing session).
 
 #include <cstdint>
+#include <set>
 #include <vector>
 
 #include "Selection.h"
+#include "model/Math.h"
 
 class QMouseEvent;
 class QKeyEvent;
@@ -21,6 +23,11 @@ struct HighlightState
     bool showOriginPlanes = false;
     bool showPreview = true;
     bool dimBodies = false;            ///< sketch editing: bodies drawn slightly transparent-looking
+    bool ghostBodies = false;          ///< v0.3: every body translucent (interference X-ray view)
+    std::set<Uuid> hiddenBodies;       ///< v0.4: bodies hidden with V / Isolate (display only)
+    bool clipOn = false;               ///< v0.3: section view
+    Vec3 clipNormal{0, 0, 1};          ///< material where dot(n, p) > clipD is hidden
+    double clipD = 0;
     uint64_t version = 0;              ///< bump on any change
 };
 

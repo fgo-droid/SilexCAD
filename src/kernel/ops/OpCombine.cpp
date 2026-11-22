@@ -26,6 +26,9 @@ public:
         auto& bodies = ctx.state.bodies;
         if (p.target.empty() || !bodies.count(p.target))
             throw FeatureError("The target body no longer exists");
+        requireEditable(ctx.state, p.target);
+        for (const Uuid& id : p.tools)
+            requireEditable(ctx.state, id);
         std::vector<NamedShape> tools;
         for (const Uuid& id : p.tools) {
             if (id == p.target)

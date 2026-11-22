@@ -1,0 +1,199 @@
+{
+  "id": "boitier",
+  "order": 2,
+  "title": {
+    "fr": "Parcours 2 — Boîtier imprimable à couvercle",
+    "en": "Path 2 — Printable box with a lid"
+  },
+  "level": {
+    "fr": "Intermédiaire",
+    "en": "Intermediate"
+  },
+  "level_rank": 1,
+  "minutes": 20,
+  "intro": {
+    "fr": "Un boîtier fermé d'un seul tenant, creusé, scindé en fond + couvercle, avec un jeu de montage piloté par un paramètre et vérifié avant impression.",
+    "en": "A closed box in one piece, hollowed, split into a bottom + a lid, with an assembly clearance driven by a parameter and checked before printing."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Le jeu de montage",
+        "en": "The assembly clearance"
+      },
+      "goal": {
+        "fr": "Crée le paramètre global jeu_montage = 0.25 (Ctrl+P).",
+        "en": "Create the global parameter jeu_montage = 0.25 (Ctrl+P)."
+      },
+      "hint": {
+        "tool": "Parameters",
+        "text": {
+          "fr": "Ctrl+P, Ajouter, nom jeu_montage, expression 0.25.",
+          "en": "Ctrl+P, Add, name jeu_montage, expression 0.25."
+        }
+      },
+      "criteria": [
+        {
+          "type": "parameter",
+          "name": "jeu_montage",
+          "label": {
+            "fr": "Paramètre jeu_montage",
+            "en": "Parameter jeu_montage"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le bloc",
+        "en": "The block"
+      },
+      "goal": {
+        "fr": "Crée une boîte de 80 × 50 × 30 mm (Maj+B).",
+        "en": "Create an 80 × 50 × 30 mm box (Shift+B)."
+      },
+      "hint": {
+        "tool": "Box",
+        "text": {
+          "fr": "Maj+B, longueur 80, largeur 50, hauteur 30.",
+          "en": "Shift+B, length 80, width 50, height 30."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "label": {
+            "fr": "Un bloc (Box ou extrusion)",
+            "en": "A block (Box or extrusion)"
+          },
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Box"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La coque",
+        "en": "The shell"
+      },
+      "goal": {
+        "fr": "Creuse le bloc avec une coque de 2 mm (H) — garde-le fermé (aucune face ouverte) ou ouvre le dessous.",
+        "en": "Hollow the block with a 2 mm shell (H) — keep it closed (no open face) or open the bottom."
+      },
+      "hint": {
+        "tool": "Shell",
+        "text": {
+          "fr": "H, épaisseur 2 mm.",
+          "en": "H, thickness 2 mm."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Shell",
+          "label": {
+            "fr": "Une coque",
+            "en": "A shell"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Fond + couvercle",
+        "en": "Bottom + lid"
+      },
+      "goal": {
+        "fr": "Scinde le boîtier par un plan horizontal à 22 mm (Split Body).",
+        "en": "Split the box with a horizontal plane at 22 mm (Split Body)."
+      },
+      "hint": {
+        "tool": "Split Body",
+        "text": {
+          "fr": "Split Body, plan XY, décalage 22.",
+          "en": "Split Body, XY plane, offset 22."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "SplitBody",
+          "label": {
+            "fr": "Un Split Body",
+            "en": "A Split Body"
+          }
+        },
+        {
+          "type": "body_count",
+          "min": 2,
+          "label": {
+            "fr": "Deux pièces",
+            "en": "Two bodies"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le jeu",
+        "en": "The clearance"
+      },
+      "goal": {
+        "fr": "Aligne le couvercle sur le fond avec un jeu = jeu_montage (Align, face à face).",
+        "en": "Align the lid on the bottom with a gap = jeu_montage (Align, face to face)."
+      },
+      "hint": {
+        "tool": "Align",
+        "text": {
+          "fr": "Align : face du couvercle, puis face du fond, jeu = jeu_montage.",
+          "en": "Align: face of the lid, then face of the bottom, gap = jeu_montage."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "TransformBody",
+          "label": {
+            "fr": "Un positionnement (Move / Align)",
+            "en": "A positioning (Move / Align)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Vérifier l'emboîtement",
+        "en": "Check the fit"
+      },
+      "goal": {
+        "fr": "Lance la vérification d'interférences (Maj+I) : elle doit être verte.",
+        "en": "Run the interference check (Shift+I): it must be green."
+      },
+      "hint": {
+        "tool": "Interference",
+        "text": {
+          "fr": "Maj+I, sélectionne les deux pièces.",
+          "en": "Shift+I, select both bodies."
+        }
+      },
+      "criteria": [
+        {
+          "type": "event",
+          "name": "interference_ok",
+          "label": {
+            "fr": "Interférences : vert",
+            "en": "Interference: green"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@
 #include <cmath>
 #include <set>
 
+#include <BRepAdaptor_Curve.hxx>
 #include <BRepAlgoAPI_Splitter.hxx>
 #include <BRepBuilderAPI_MakeEdge.hxx>
 #include <BRepBuilderAPI_MakeFace.hxx>
@@ -25,6 +26,7 @@
 
 #include "kernel/TopoNaming.h"
 #include "kernel/ops/Ops.h"
+#include "sketch/SketchSolver.h"
 
 namespace silex::kernel {
 namespace {
@@ -44,6 +46,17 @@ public:
         out.sketch = p.sketch;
         out.plane = resolvePlane(ctx, p.plane);
 
+        // v0.3: projected model edges follow the model; the sketch is re-solved around them.
+        bool projected = false;
+        for (SketchGeo& g : out.sketch.geos)
+            if (g.external())
+                projected = projectEdge(ctx, out.plane, g) || projected;
+        if (projected) {
+            const SolveResult res = SketchSolver::solve(out.sketch, std::nullopt, false);
+            if (!res.converged)
+                ctx.warnings.push_back("The sketch could not be re-solved around its projected edges");
+        }
+
         const gp_Ax3 ax(P(out.plane.origin), D(out.plane.normal), D(out.plane.xDir));
         const gp_Pln pln(ax);
 
@@ -56,7 +69,7 @@ public:
             vmin = std::min(vmin, q.y - r);
             vmax = std::max(vmax, q.y + r);
         };
-        for (const SketchGeo& g : p.sketch.geos) {
+        for (const SketchGeo& g : out.sketch.geos) {
             if (g.construction || g.kind == GeoKind::Point)
                 continue;
             try {
@@ -101,10 +114,73 @@ public:
     }
 
 private:
+    /// Updates an external geometry from its model edge (projected on the sketch plane).
+    /// Returns true when the coordinates changed.
+    static bool projectEdge(ExecContext& ctx, const Placement& pl, SketchGeo& g)
+    {
+        auto r = resolveRef(ctx.state.bodies, g.ext, TopAbs_EDGE, ctx.state.modelSize());
+        if (!r) {
+            ctx.warnings.push_back("A projected edge no longer exists: its last position is kept");
+            return false;
+        }
+        if (!r->byName)
+            ctx.warnings.push_back("A projected edge was re-attached by geometry");
+        const SketchGeo before = g;
+        BRepAdaptor_Curve c(TopoDS::Edge(r->shape));
+        auto local = [&](const gp_Pnt& q) { return pl.toLocal(Vec3{q.X(), q.Y(), q.Z()}); };
+        const gp_Pnt ps = c.Value(c.FirstParameter()), pe = c.Value(c.LastParameter());
+        if (c.GetType() == GeomAbs_Circle) {
+            const gp_Circ ci = c.Circle();
+            const gp_Dir ax = ci.Axis().Direction();
+            const double dot = ax.X() * pl.normal.x + ax.Y() * pl.normal.y + ax.Z() * pl.normal.z;
+            if (std::abs(std::abs(dot) - 1.0) > 1e-6) {
+                ctx.warnings.push_back("A projected circle is not parallel to the sketch plane (projected as a chord)");
+                g.kind = GeoKind::Line;
+                g.p1 = local(ps);
+                g.p2 = local(pe);
+            }
+            else {
+                g.c = local(ci.Location());
+                g.r = ci.Radius();
+                if (std::abs(c.LastParameter() - c.FirstParameter()) > 2 * kPi - 1e-9) {
+                    g.kind = GeoKind::Circle;
+                }
+                else {
+                    // sketch arcs run counter-clockwise around the sketch normal
+                    Vec2 s0 = local(ps) - g.c, s1 = local(pe) - g.c;
+                    if (dot < 0)
+                        std::swap(s0, s1);
+                    g.kind = GeoKind::Arc;
+                    g.a0 = std::atan2(s0.y, s0.x);
+                    g.a1 = std::atan2(s1.y, s1.x);
+                    while (g.a1 <= g.a0)
+                        g.a1 += 2 * kPi;
+                }
+            }
+        }
+        else {
+            if (c.GetType() != GeomAbs_Line)
+                ctx.warnings.push_back("A projected curve was approximated by its chord");
+            g.kind = GeoKind::Line;
+            g.p1 = local(ps);
+            g.p2 = local(pe);
+            if ((g.p2 - g.p1).length() < 1e-9)
+                ctx.warnings.push_back("A projected edge is perpendicular to the sketch plane (projects to a point)");
+        }
+        return !(g.p1 == before.p1 && g.p2 == before.p2 && g.c == before.c && g.r == before.r && g.a0 == before.a0 &&
+                 g.a1 == before.a1 && g.kind == before.kind);
+    }
+
     Placement resolvePlane(ExecContext& ctx, const SketchPlaneRef& ref) const
     {
+        if (ref.kind == "Plane") {  // v0.4: construction plane
+            auto it = ctx.state.planes.find(ref.planeId);
+            if (it == ctx.state.planes.end())
+                throw FeatureError("The construction plane of the sketch no longer exists");
+            return offsetPlacement(it->second, ref.offset);
+        }
         if (ref.kind != "Face")
-            return originPlacement(ref.kind);
+            return offsetPlacement(originPlacement(ref.kind), ref.offset);
         auto r = resolveRef(ctx.state.bodies, ref.face, TopAbs_FACE, ctx.state.modelSize());
         if (!r)
             throw FeatureError("The sketch plane (face) no longer exists");
@@ -113,7 +189,7 @@ private:
         auto pl = facePlacement(TopoDS::Face(r->shape));
         if (!pl)
             throw FeatureError("The sketch face is not planar anymore");
-        return *pl;
+        return offsetPlacement(*pl, ref.offset);
     }
 
     std::vector<SketchRegion> buildRegions(ExecContext& ctx, const gp_Pln& pln,

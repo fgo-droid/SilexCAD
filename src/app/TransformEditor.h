@@ -4,6 +4,7 @@
 // origin planes, or an edge / face picked in the viewport) and live semi-transparent preview.
 
 #include <QPointer>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -70,6 +71,7 @@ private:
     double m_angle = 360.0;
     bool m_equal = true;
     bool m_reverse = false;
+    std::map<std::string, std::string> m_exprs;  ///< v0.3: JSON pointer -> expression
     Slot m_slot = Slot::Targets;
     bool m_updating = false;
 

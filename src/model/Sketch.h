@@ -8,6 +8,7 @@
 
 #include "model/Json.h"
 #include "model/Math.h"
+#include "model/TopoRef.h"
 #include "model/Uuid.h"
 
 namespace silex {
@@ -30,6 +31,11 @@ struct SketchGeo
     Vec2 c;               ///< Circle/Arc: center.
     double r = 0;         ///< Circle/Arc: radius.
     double a0 = 0, a1 = 0;///< Arc: start/end angles (radians, CCW from a0 to a1).
+    /// v0.3: projected model edge ("external" geometry). Always construction, fixed for the solver,
+    /// re-projected by the kernel at every recompute so that it follows the model.
+    TopoRef ext;
+
+    bool external() const { return !ext.name.empty(); }
 
     Vec2 point(PointPos pos) const;
     bool hasPoint(PointPos pos) const;
@@ -52,6 +58,11 @@ enum class ConstraintKind {
     Radius,
     Diameter,
     Angle,
+    // Sketcher Pro
+    Midpoint,    ///< a = point, b = line (middle) or arc (curvilinear middle)
+    Symmetric,   ///< a, b symmetric about c (line / axis, or a point); value = 1: line ends paired crosswise
+    Concentric,  ///< a, b circles / arcs sharing their center
+    Collinear,   ///< a, b lines on the same infinite line
 };
 
 const char* toString(ConstraintKind k);
@@ -71,9 +82,15 @@ struct SketchConstraint
     Uuid id;
     ConstraintKind kind = ConstraintKind::Coincident;
     GeoRef a, b;
+    GeoRef c;           ///< Sketcher Pro: third reference (symmetry axis)
     double value = 0;   ///< dimension value (mm / radians); Fixed: x
     double value2 = 0;  ///< Fixed: y
     Vec2 labelOffset{0, 0};
+    std::string expr;   ///< v0.3: expression driving `value` (global parameters), empty = literal
+    std::string group;  ///< v0.7: internal constraint of a rigid block ("block:<anchor id>"), not drawn
+
+    bool references(const Uuid& geo) const { return a.geo == geo || b.geo == geo || c.geo == geo; }
+    bool referencesPoint(const GeoRef& p) const { return a == p || b == p || c == p; }
 };
 
 struct Sketch
@@ -93,6 +110,38 @@ struct Sketch
     /// Current measured value of a dimensional constraint (used when creating it).
     double measure(const SketchConstraint& c) const;
 };
+
+// ------------------------------------------------------------------ v0.7 lot C: calibrated image
+
+/// Reference photo / drawing shown under a sketch (reverse engineering, repairs). Pixel coordinates
+/// have their origin at the top-left corner of the image, Y down; sketch coordinates are mm, Y up.
+struct SketchCanvas
+{
+    std::string imagePath;   ///< original file (informative, may be relative)
+    std::string imageData;   ///< base64 of the image file (embedded: the .silex stays portable)
+    std::string mime = "image/png";
+    int pxWidth = 0, pxHeight = 0;  ///< image size in pixels
+    double opacity = 0.5;
+    double widthMm = 100, heightMm = 100;
+    Vec2 center{0, 0};       ///< image center in sketch coordinates
+    double angleDeg = 0;     ///< counter-clockwise
+    bool flipH = false, flipV = false;
+    bool visible = true;
+};
+
+/// A new canvas `widthMm` wide (height from the pixel aspect ratio), centered on `center`.
+SketchCanvas makeCanvas(int pxWidth, int pxHeight, double widthMm, Vec2 center = {0, 0});
+/// Pixel (x right, y down) -> sketch point (mm). Throws std::invalid_argument without pixel size.
+Vec2 canvasPixelToSketch(const SketchCanvas& c, Vec2 px);
+/// Sketch point -> pixel.
+Vec2 canvasSketchToPixel(const SketchCanvas& c, Vec2 p);
+/// Two-click calibration: the pixels px1 / px2 are `distanceMm` apart in reality. Scales the image
+/// uniformly (square pixels) to 1:1; the point px1 keeps its place in the sketch. Returns false
+/// (with `error`) when the points coincide or the distance is not positive.
+bool calibrateCanvas(SketchCanvas& c, Vec2 px1, Vec2 px2, double distanceMm, std::string* error = nullptr);
+
+void to_json(Json& j, const SketchCanvas& c);
+void from_json(const Json& j, SketchCanvas& c);
 
 void to_json(Json& j, const SketchGeo& g);
 void from_json(const Json& j, SketchGeo& g);

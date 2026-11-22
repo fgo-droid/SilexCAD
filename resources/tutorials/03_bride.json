@@ -1,0 +1,208 @@
+{
+  "id": "bride",
+  "order": 3,
+  "title": {
+    "fr": "Parcours 3 — Bride mécanique et mise en plan",
+    "en": "Path 3 — Mechanical flange and drawing"
+  },
+  "level": {
+    "fr": "Avancé",
+    "en": "Advanced"
+  },
+  "level_rank": 2,
+  "minutes": 20,
+  "intro": {
+    "fr": "Une bride tournée (révolution), percée de trous répétés, un taraudage réel, puis la mise en plan exportée en PDF.",
+    "en": "A turned flange (revolve), drilled with patterned holes, a real thread, then the drawing exported to PDF."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Le profil",
+        "en": "The profile"
+      },
+      "goal": {
+        "fr": "Esquisse le demi-profil de la bride sur le plan XZ, entièrement contraint.",
+        "en": "Sketch the half profile of the flange on the XZ plane, fully constrained."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S → plan XZ, lignes (L) d'un seul côté de l'axe, cotes D.",
+          "en": "S → XZ plane, lines (L) on one side of the axis, dimensions D."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse",
+            "en": "A sketch"
+          }
+        },
+        {
+          "type": "sketch_dof",
+          "value": 0,
+          "label": {
+            "fr": "Entièrement contrainte",
+            "en": "Fully constrained"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La révolution",
+        "en": "The revolve"
+      },
+      "goal": {
+        "fr": "Fais tourner le profil de 360° autour de l'axe (R).",
+        "en": "Revolve the profile by 360° around the axis (R)."
+      },
+      "hint": {
+        "tool": "Revolve",
+        "text": {
+          "fr": "R, axe = l'axe de l'esquisse, 360°.",
+          "en": "R, axis = the sketch axis, 360°."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Revolve",
+          "label": {
+            "fr": "Une révolution",
+            "en": "A revolve"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Un trou de fixation",
+        "en": "A mounting hole"
+      },
+      "goal": {
+        "fr": "Perce un trou dans la collerette (Cut).",
+        "en": "Drill a hole in the collar (Cut)."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y sur la face de la collerette, opération Cut.",
+          "en": "Shift+Y on the collar face, Cut operation."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "label": {
+            "fr": "Un perçage",
+            "en": "A hole"
+          },
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Cut"
+            },
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Cut"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La répétition",
+        "en": "The pattern"
+      },
+      "goal": {
+        "fr": "Répète le trou 6 fois autour de l'axe (Maj+C).",
+        "en": "Repeat the hole 6 times around the axis (Shift+C)."
+      },
+      "hint": {
+        "tool": "Circular Pattern",
+        "text": {
+          "fr": "Maj+C, cible = la fonction de perçage, axe Z, 6 occurrences.",
+          "en": "Shift+C, target = the hole feature, Z axis, 6 occurrences."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "CircularPattern",
+          "label": {
+            "fr": "Une répétition circulaire",
+            "en": "A circular pattern"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le taraudage",
+        "en": "The thread"
+      },
+      "goal": {
+        "fr": "Taraude l'alésage central (Thread, M10 ou M12, jeu FDM 0,15 mm).",
+        "en": "Tap the central bore (Thread, M10 or M12, FDM clearance 0.15 mm)."
+      },
+      "hint": {
+        "tool": "Thread",
+        "text": {
+          "fr": "Thread, clique la face cylindrique du trou.",
+          "en": "Thread, click the cylindrical face of the hole."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Thread",
+          "label": {
+            "fr": "Un filetage",
+            "en": "A thread"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La mise en plan",
+        "en": "The drawing"
+      },
+      "goal": {
+        "fr": "Ouvre la mise en plan (Ctrl+D) et exporte-la en PDF.",
+        "en": "Open the drawing (Ctrl+D) and export it to PDF."
+      },
+      "hint": {
+        "tool": "Drawing",
+        "text": {
+          "fr": "Ctrl+D, puis Export PDF.",
+          "en": "Ctrl+D, then Export PDF."
+        }
+      },
+      "criteria": [
+        {
+          "type": "event",
+          "name": "drawing_exported",
+          "label": {
+            "fr": "Plan exporté",
+            "en": "Drawing exported"
+          }
+        }
+      ]
+    }
+  ]
+}

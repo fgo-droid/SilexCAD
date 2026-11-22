@@ -1,0 +1,75 @@
+{
+  "id": "repair_1",
+  "category": "repair",
+  "order": 1,
+  "level": {
+    "fr": "Défi de dépannage",
+    "en": "Repair challenge"
+  },
+  "level_rank": 3,
+  "minutes": 5,
+  "start": "repair_1_esquisse_elastique",
+  "title": {
+    "fr": "Défi 1 — L'esquisse élastique",
+    "en": "Challenge 1 — The elastic sketch"
+  },
+  "intro": {
+    "fr": "Cette plaque est paramétrée : sa largeur vient du paramètre « largeur » (Ctrl+P). Passe-la de 60 à 80 mm : les deux trous se décentrent ! Les trous sont cotés depuis le bord gauche seulement. Répare l'esquisse pour qu'ils restent symétriques, quelle que soit la largeur. Silex vérifiera lui-même avec une largeur de 80 mm.",
+    "en": "This plate is parametric: its width comes from the parameter 'largeur' (Ctrl+P). Change it from 60 to 80 mm: the two holes go off-center! They are dimensioned from the left edge only. Repair the sketch so that they stay symmetric whatever the width. Silex will check it itself with an 80 mm width."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Rendre les perçages symétriques",
+        "en": "Make the holes symmetric"
+      },
+      "goal": {
+        "fr": "Double-clique l'esquisse « Plaque », remplace la cote du 2e trou par une cote depuis le bord droit, ou une contrainte Symétrie (S) / Milieu (M). L'esquisse doit rester entièrement contrainte (blanche).",
+        "en": "Double-click the sketch 'Plaque', replace the dimension of the 2nd hole by a dimension from the right edge, or a Symmetry (S) / Midpoint (M) constraint. The sketch must stay fully constrained (white)."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "Une cote mesurée depuis le bord droit suit ce bord quand la plaque s'élargit.",
+          "en": "A dimension measured from the right edge follows that edge when the plate grows."
+        }
+      },
+      "criteria": [
+        {
+          "type": "all_sketches_dof",
+          "value": 0,
+          "label": {
+            "fr": "Esquisse entièrement contrainte (0 DOF)",
+            "en": "Sketch fully constrained (0 DOF)"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en erreur",
+            "en": "No failed step"
+          }
+        },
+        {
+          "type": "robust",
+          "parameter": "largeur",
+          "value": 80,
+          "check": [
+            {
+              "type": "holes_symmetric",
+              "axis": "x"
+            },
+            {
+              "type": "all_sketches_dof",
+              "value": 0
+            }
+          ],
+          "label": {
+            "fr": "Test de robustesse : à 80 mm, les trous restent centrés",
+            "en": "Robustness test: at 80 mm the holes stay centered"
+          }
+        }
+      ]
+    }
+  ]
+}

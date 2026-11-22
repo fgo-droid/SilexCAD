@@ -1,0 +1,212 @@
+{
+  "id": "poulie",
+  "order": 6,
+  "title": {
+    "fr": "Parcours 6 — La poulie à gorge trapézoïdale",
+    "en": "Path 6 — The V-belt pulley"
+  },
+  "level": {
+    "fr": "Intermédiaire",
+    "en": "Intermediate"
+  },
+  "level_rank": 1,
+  "minutes": 20,
+  "intro": {
+    "fr": "Le cas d'école de la révolution : un demi-profil coté autour de l'axe X, un alésage avec rainure de clavette, des trous d'allègement répétés, puis la mise en plan.",
+    "en": "The textbook revolve: a dimensioned half profile around the X axis, a bore with a keyway, patterned lightening holes, then the drawing."
+  },
+  "example": "poulie_gorge",
+  "steps": [
+    {
+      "title": {
+        "fr": "Le demi-profil",
+        "en": "The half profile"
+      },
+      "goal": {
+        "fr": "Esquisse sur XY la moitié du profil, au-dessus de l'axe X : moyeu, voile et jante avec une gorge en V de 40°.",
+        "en": "Sketch on XY half of the profile, above the X axis: hub, web and rim with a 40° V groove."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "L pour le contour, D pour les rayons depuis l'axe X.",
+          "en": "L for the contour, D for the radii from the X axis."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse",
+            "en": "A sketch"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La révolution",
+        "en": "The revolve"
+      },
+      "goal": {
+        "fr": "Fais tourner le profil de 360° autour de l'axe X (R).",
+        "en": "Revolve the profile by 360° around the X axis (R)."
+      },
+      "hint": {
+        "tool": "Revolve",
+        "text": {
+          "fr": "R, axe X, 360°.",
+          "en": "R, X axis, 360°."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Revolve",
+          "label": {
+            "fr": "Une révolution",
+            "en": "A revolve"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "L'alésage",
+        "en": "The bore"
+      },
+      "goal": {
+        "fr": "Perce l'alésage central Ø12 tout au long de l'axe.",
+        "en": "Drill the Ø12 central bore all along the axis."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y sur le plan YZ, Ø12, Cut.",
+          "en": "Shift+Y on the YZ plane, Ø12, Cut."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Cut"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Cut"
+            }
+          ],
+          "label": {
+            "fr": "Un alésage (Cut)",
+            "en": "A bore (Cut)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La rainure de clavette",
+        "en": "The keyway"
+      },
+      "goal": {
+        "fr": "Dessine une oblongue (U) de 4 mm de large qui mord dans l'alésage et enlève-la sur toute la longueur.",
+        "en": "Draw a 4 mm wide slot (U) cutting into the bore and remove it over the whole length."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S sur YZ, U, largeur 4 ; E, Cut.",
+          "en": "S on YZ, U, width 4; E, Cut."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "op": "Cut",
+          "label": {
+            "fr": "Une rainure (Extrude Cut)",
+            "en": "A keyway (Extrude Cut)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Les trous d'allègement",
+        "en": "The lightening holes"
+      },
+      "goal": {
+        "fr": "Perce un trou Ø10 dans le voile puis répète-le 6 fois autour de l'axe X (Maj+C).",
+        "en": "Drill a Ø10 hole in the web then repeat it 6 times around the X axis (Shift+C)."
+      },
+      "hint": {
+        "tool": "Circular Pattern",
+        "text": {
+          "fr": "Maj+C, cible = la fonction du trou, axe X, 6.",
+          "en": "Shift+C, target = the hole feature, X axis, 6."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "CircularPattern",
+          "label": {
+            "fr": "Une répétition circulaire",
+            "en": "A circular pattern"
+          }
+        },
+        {
+          "type": "feature_param",
+          "feature": "CircularPattern",
+          "pointer": "/count",
+          "min": 6,
+          "label": {
+            "fr": "6 occurrences",
+            "en": "6 occurrences"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La mise en plan",
+        "en": "The drawing"
+      },
+      "goal": {
+        "fr": "Ouvre la mise en plan (Ctrl+D) et exporte-la en PDF.",
+        "en": "Open the drawing (Ctrl+D) and export it to PDF."
+      },
+      "hint": {
+        "tool": "Drawing",
+        "text": {
+          "fr": "Ctrl+D, puis Export PDF.",
+          "en": "Ctrl+D, then Export PDF."
+        }
+      },
+      "criteria": [
+        {
+          "type": "event",
+          "name": "drawing_exported",
+          "label": {
+            "fr": "Plan exporté",
+            "en": "Drawing exported"
+          }
+        }
+      ]
+    }
+  ]
+}

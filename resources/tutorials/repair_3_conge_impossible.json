@@ -1,0 +1,76 @@
+{
+  "id": "repair_3",
+  "category": "repair",
+  "order": 3,
+  "level": {
+    "fr": "Défi de dépannage",
+    "en": "Repair challenge"
+  },
+  "level_rank": 3,
+  "minutes": 5,
+  "start": "repair_3_conge_impossible",
+  "title": {
+    "fr": "Défi 3 — Le congé impossible",
+    "en": "Challenge 3 — The impossible fillet"
+  },
+  "intro": {
+    "fr": "L'étape « Fillet1 » est rouge dans la timeline. Clique-la : l'Inspecteur explique pourquoi. Corrige le rayon pour que le congé passe… et qu'il passe encore si la plaque devient plus fine (Silex testera une épaisseur de 6 mm).",
+    "en": "The step 'Fillet1' is red in the timeline. Click it: the Inspector explains why. Fix the radius so that the fillet works... and still works if the plate gets thinner (Silex will test a 6 mm thickness)."
+  },
+  "steps": [
+    {
+      "title": {
+        "fr": "Ajuster le rayon du congé",
+        "en": "Adjust the fillet radius"
+      },
+      "goal": {
+        "fr": "Double-clique « Fillet1 » et choisis un rayon plus petit que l'épaisseur de la plaque. Garde le congé (ne le supprime pas).",
+        "en": "Double-click 'Fillet1' and choose a radius smaller than the plate thickness. Keep the fillet (do not delete it)."
+      },
+      "hint": {
+        "tool": "Fillet",
+        "text": {
+          "fr": "Un congé ne peut pas être plus grand que les faces qu'il raccorde : ici, l'épaisseur.",
+          "en": "A fillet cannot be larger than the faces it blends: here, the thickness."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Fillet",
+          "min": 1,
+          "label": {
+            "fr": "Le congé existe et se calcule",
+            "en": "The fillet exists and computes"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Plus aucune étape rouge",
+            "en": "No red step anymore"
+          }
+        },
+        {
+          "type": "robust",
+          "parameter": "epaisseur",
+          "value": 6,
+          "check": [
+            {
+              "type": "no_errors"
+            },
+            {
+              "type": "feature",
+              "feature": "Fillet",
+              "min": 1
+            }
+          ],
+          "label": {
+            "fr": "Test de robustesse : plaque de 6 mm, le congé passe encore",
+            "en": "Robustness test: 6 mm plate, the fillet still works"
+          }
+        }
+      ]
+    }
+  ]
+}

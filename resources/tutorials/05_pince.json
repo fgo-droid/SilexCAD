@@ -1,0 +1,233 @@
+{
+  "id": "pince",
+  "order": 5,
+  "title": {
+    "fr": "Parcours 5 — Le cadre de pince de serrage",
+    "en": "Path 5 — The C-clamp frame"
+  },
+  "level": {
+    "fr": "Intermédiaire",
+    "en": "Intermediate"
+  },
+  "level_rank": 1,
+  "minutes": 20,
+  "intro": {
+    "fr": "Une pièce mécanique classique : un profil en C avec des congés 2D, des nervures de renfort, un bossage et un vrai taraudage M8 imprimable.",
+    "en": "A classic mechanical part: a C profile with 2D fillets, stiffening ribs, a boss and a real printable M8 thread."
+  },
+  "example": "pince_serrage",
+  "steps": [
+    {
+      "title": {
+        "fr": "Le profil en C",
+        "en": "The C profile"
+      },
+      "goal": {
+        "fr": "Esquisse sur XY un contour fermé en C (60 × 80 mm, mâchoires de 15 mm) avec des congés 2D (Maj+F) dans les angles intérieurs.",
+        "en": "Sketch on XY a closed C contour (60 × 80 mm, 15 mm jaws) with 2D fillets (Shift+F) in the inner corners."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "L pour la polyligne, puis Maj+F sur les coins intérieurs (R5).",
+          "en": "L for the polyline, then Shift+F on the inner corners (R5)."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse",
+            "en": "A sketch"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "L'épaisseur",
+        "en": "The thickness"
+      },
+      "goal": {
+        "fr": "Extrude le profil de 12 mm (E).",
+        "en": "Extrude the profile by 12 mm (E)."
+      },
+      "hint": {
+        "tool": "Extrude",
+        "text": {
+          "fr": "E, 12 mm.",
+          "en": "E, 12 mm."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "label": {
+            "fr": "Une extrusion",
+            "en": "An extrusion"
+          }
+        },
+        {
+          "type": "body_count",
+          "min": 1,
+          "label": {
+            "fr": "Une pièce",
+            "en": "A body"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "La nervure",
+        "en": "The rib"
+      },
+      "goal": {
+        "fr": "Sur un plan à mi-épaisseur (Z = 6), dessine une ligne de l'âme à la mâchoire dans un angle intérieur, puis Rib (4 mm).",
+        "en": "On a plane at mid-thickness (Z = 6), draw a line from the spine to the jaw in an inner corner, then Rib (4 mm)."
+      },
+      "hint": {
+        "tool": "Rib",
+        "text": {
+          "fr": "Create ▾ > Rib : clique l'esquisse de la ligne, épaisseur 4 mm.",
+          "en": "Create ▾ > Rib: click the line sketch, thickness 4 mm."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Rib",
+          "label": {
+            "fr": "Une nervure",
+            "en": "A rib"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le bossage",
+        "en": "The boss"
+      },
+      "goal": {
+        "fr": "Ajoute un bossage cylindrique Ø18 sur la mâchoire du haut, axe vertical (Join).",
+        "en": "Add a Ø18 cylindrical boss on the upper jaw, vertical axis (Join)."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y sur le plan XZ décalé, Ø18, opération Join.",
+          "en": "Shift+Y on the offset XZ plane, Ø18, Join operation."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Join"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Join"
+            }
+          ],
+          "label": {
+            "fr": "Un bossage (Join)",
+            "en": "A boss (Join)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le perçage",
+        "en": "The hole"
+      },
+      "goal": {
+        "fr": "Perce le bossage au diamètre de taraudage : 6,8 mm pour du M8.",
+        "en": "Drill the boss at the tap drill diameter: 6.8 mm for M8."
+      },
+      "hint": {
+        "tool": "Cylinder",
+        "text": {
+          "fr": "Maj+Y, Ø6,8, Cut — même axe que le bossage.",
+          "en": "Shift+Y, Ø6.8, Cut — same axis as the boss."
+        }
+      },
+      "criteria": [
+        {
+          "type": "any_of",
+          "of": [
+            {
+              "type": "feature",
+              "feature": "Cylinder",
+              "op": "Cut"
+            },
+            {
+              "type": "feature",
+              "feature": "Extrude",
+              "op": "Cut"
+            }
+          ],
+          "label": {
+            "fr": "Un perçage (Cut)",
+            "en": "A hole (Cut)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le taraudage",
+        "en": "The thread"
+      },
+      "goal": {
+        "fr": "Taraude le trou en M8 avec un jeu FDM de 0,15 mm (Thread).",
+        "en": "Tap the hole in M8 with an FDM clearance of 0.15 mm (Thread)."
+      },
+      "hint": {
+        "tool": "Thread",
+        "text": {
+          "fr": "Thread, clique la face cylindrique du trou, M8, jeu 0,15.",
+          "en": "Thread, click the cylindrical face of the hole, M8, clearance 0.15."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature_param",
+          "feature": "Thread",
+          "pointer": "/size",
+          "equals": "M8",
+          "label": {
+            "fr": "Filetage M8",
+            "en": "M8 thread"
+          }
+        },
+        {
+          "type": "feature_param",
+          "feature": "Thread",
+          "pointer": "/clearance",
+          "value": 0.15,
+          "tol": 0.001,
+          "label": {
+            "fr": "Jeu FDM 0,15 mm",
+            "en": "FDM clearance 0.15 mm"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    }
+  ]
+}

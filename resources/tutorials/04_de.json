@@ -1,0 +1,201 @@
+{
+  "id": "de",
+  "order": 4,
+  "title": {
+    "fr": "Parcours 4 — Le dé à jouer paramétrique",
+    "en": "Path 4 — The parametric dice"
+  },
+  "level": {
+    "fr": "Débutant",
+    "en": "Beginner"
+  },
+  "level_rank": 0,
+  "minutes": 15,
+  "intro": {
+    "fr": "Un cube de 20 mm piloté par un paramètre, des points creusés sur ses 6 faces (les faces opposées font 7) et des arêtes arrondies : esquisses sur faces, rectangle par le centre, répétition 2D et congés.",
+    "en": "A 20 mm cube driven by a parameter, pips carved on its 6 faces (opposite faces add up to 7) and rounded edges: sketches on faces, center rectangle, 2D pattern and fillets."
+  },
+  "example": "de_parametrique",
+  "steps": [
+    {
+      "title": {
+        "fr": "Le carré de base",
+        "en": "The base square"
+      },
+      "goal": {
+        "fr": "Crée le paramètre cote = 20 (Ctrl+P). Esquisse un rectangle par le centre (Maj+R) de 20 × 20 sur XY, centré sur l'origine, entièrement contraint.",
+        "en": "Create the parameter cote = 20 (Ctrl+P). Sketch a 20 × 20 center rectangle (Shift+R) on XY, centered on the origin, fully constrained."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "S → XY, Maj+R : clic sur l'origine puis un coin. D sur deux côtés.",
+          "en": "S → XY, Shift+R: click the origin then a corner. D on two sides."
+        }
+      },
+      "criteria": [
+        {
+          "type": "parameter",
+          "name": "cote",
+          "label": {
+            "fr": "Paramètre cote",
+            "en": "Parameter cote"
+          }
+        },
+        {
+          "type": "feature",
+          "feature": "Sketch",
+          "label": {
+            "fr": "Une esquisse",
+            "en": "A sketch"
+          }
+        },
+        {
+          "type": "sketch_dof",
+          "value": 0,
+          "label": {
+            "fr": "Entièrement contrainte (blanche)",
+            "en": "Fully constrained (white)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le cube",
+        "en": "The cube"
+      },
+      "goal": {
+        "fr": "Extrude le carré de 20 mm (E) — ou mieux : tape « cote » dans la distance.",
+        "en": "Extrude the square by 20 mm (E) — or better: type 'cote' as the distance."
+      },
+      "hint": {
+        "tool": "Extrude",
+        "text": {
+          "fr": "E, distance = cote.",
+          "en": "E, distance = cote."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "label": {
+            "fr": "Une extrusion",
+            "en": "An extrusion"
+          }
+        },
+        {
+          "type": "body_volume",
+          "value": 8000,
+          "tol": 0.01,
+          "label": {
+            "fr": "Un cube de 20 mm (8 000 mm³)",
+            "en": "A 20 mm cube (8,000 mm³)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le premier point",
+        "en": "The first pip"
+      },
+      "goal": {
+        "fr": "Esquisse sur la face du dessus (clic sur la face, S) un cercle Ø3 au centre, puis creuse-le de 1 mm (E, Cut).",
+        "en": "Sketch on the top face (click the face, S) a Ø3 circle in the middle, then carve it 1 mm deep (E, Cut)."
+      },
+      "hint": {
+        "tool": "Extrude",
+        "text": {
+          "fr": "Clic sur la face du dessus, S, C au centre, D = 3 ; E, Cut, 1 mm.",
+          "en": "Click the top face, S, C in the middle, D = 3; E, Cut, 1 mm."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "op": "Cut",
+          "label": {
+            "fr": "Un point creusé (Cut)",
+            "en": "A carved pip (Cut)"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Les six faces",
+        "en": "The six faces"
+      },
+      "goal": {
+        "fr": "Creuse les 5 autres faces. Les faces opposées font 7 : 6 sous le 1, 5 en face du 2, 4 en face du 3. Pour le 6 : deux cercles et une répétition linéaire 2D ×3.",
+        "en": "Carve the 5 other faces. Opposite faces add up to 7: 6 under the 1, 5 opposite the 2, 4 opposite the 3. For the 6: two circles and a 2D linear pattern ×3."
+      },
+      "hint": {
+        "tool": "Sketch",
+        "text": {
+          "fr": "Dans l'esquisse : sélectionne les cercles puis Pattern (répétition linéaire), 3 copies, pas 5 mm.",
+          "en": "In the sketch: select the circles then Pattern (linear), 3 copies, 5 mm spacing."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Extrude",
+          "op": "Cut",
+          "min": 6,
+          "label": {
+            "fr": "Six faces creusées",
+            "en": "Six faces carved"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Les arêtes arrondies",
+        "en": "Rounded edges"
+      },
+      "goal": {
+        "fr": "Arrondis les 12 arêtes du cube (F, rayon 2 mm) : le dé roulera mieux.",
+        "en": "Round the 12 edges of the cube (F, radius 2 mm): the dice will roll better."
+      },
+      "hint": {
+        "tool": "Fillet",
+        "text": {
+          "fr": "F, sélection par cadre ← (crossing) pour attraper les arêtes, rayon 2.",
+          "en": "F, crossing box ← to catch the edges, radius 2."
+        }
+      },
+      "criteria": [
+        {
+          "type": "feature",
+          "feature": "Fillet",
+          "label": {
+            "fr": "Un congé",
+            "en": "A fillet"
+          }
+        },
+        {
+          "type": "feature_param",
+          "feature": "Fillet",
+          "pointer": "/edges",
+          "min": 12,
+          "label": {
+            "fr": "Au moins 12 arêtes arrondies",
+            "en": "At least 12 edges rounded"
+          }
+        },
+        {
+          "type": "no_errors",
+          "label": {
+            "fr": "Aucune étape en rouge",
+            "en": "No red step"
+          }
+        }
+      ]
+    }
+  ]
+}

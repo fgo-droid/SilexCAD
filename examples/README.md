@@ -27,3 +27,20 @@ Les congés restent sur les bons angles. Les perçages restent sur la face supé
 cotées depuis l'origine.
 
 Le test `Examples.*` de la suite `silex_tests` recalcule ces trois fichiers et vérifie leurs volumes.
+
+## Cas d'école annotés (mode guidé)
+
+Chaque fichier est la solution de référence d'un parcours du panneau **Learn** (`F1` > *Ouvrir l'exemple annoté*)
+et porte une annotation FR / EN par étape pour la **visite guidée**. Ils sont régénérés par l'API MCP/IPC avec
+`python tools/examples/build_examples.py` ; le test `Finitions.EachAnnotatedExampleCompletesItsLesson` rejoue chaque
+timeline étape par étape et vérifie que toutes les étapes du parcours se valident.
+
+| Fichier | Parcours | Fonctions montrées |
+| --- | --- | --- |
+| `equerre_annotee.silex` | 1 — Équerre (débutant) | esquisse contrainte, extrusions, perçage, congés |
+| `de_parametrique.silex` | 4 — Dé à jouer (débutant) | rectangle par le centre, paramètre `cote`, esquisses sur 6 faces, répétition 2D, congés R2 sur 12 arêtes |
+| `pince_serrage.silex` | 5 — Pince de serrage (intermédiaire) | profil en C + congés 2D, 2 nervures, bossage Ø18, taraudage M8 réel (jeu 0,15) |
+| `poulie_gorge.silex` | 6 — Poulie (intermédiaire) | demi-profil + révolution autour de X, alésage Ø12, rainure de clavette (oblong), 6 trous d'allègement en répétition circulaire |
+| `palier_semelle.silex` | 7 — Support de roulement (intermédiaire) | demi-pièce + symétrie YZ, oblong de réglage, logement Ø26 concentrique, trou de graissage |
+| `raccord_carre_rond.silex` | 8 — Raccord carré-rond (avancé) | plan décalé +60, lissage 60 × 60 → Ø40, coque 2 mm ouverte aux deux bouts |
+| `coude_brides.silex` | 9 — Coude à brides (avancé) | balayage le long d'un arc R45, section pilotée par `diametre_tube` / `epaisseur_paroi`, 2 brides, 2 × 4 trous en répétition circulaire |

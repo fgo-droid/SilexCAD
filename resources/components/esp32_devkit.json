@@ -1,0 +1,113 @@
+{
+  "id": "esp32_devkit",
+  "category": "board",
+  "name": {
+    "fr": "ESP32 DevKit V1 (30 broches)",
+    "en": "ESP32 DevKit V1 (30 pins)"
+  },
+  "description": {
+    "fr": "Carte 51,5 × 28,4 mm sans trous de fixation : elle se tient par ses deux rangées de broches (entraxe 25,4).",
+    "en": "51.5 × 28.4 mm board without mounting holes: it is held by its two pin rows (25.4 apart)."
+  },
+  "pcb": {
+    "size": [
+      51.5,
+      28.4
+    ],
+    "thickness": 1.6,
+    "corner_radius": 0.5
+  },
+  "mounting_holes": [],
+  "screw": "",
+  "standoff_mm": 0,
+  "material": "PCB Vert",
+  "parts": [
+    {
+      "part": "ESP-WROOM-32",
+      "box": [
+        38.75,
+        14.2,
+        0,
+        25.5,
+        18,
+        3.1
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "micro USB",
+      "box": [
+        1.5,
+        14.2,
+        0,
+        5.6,
+        8,
+        2.8
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Pins A",
+      "box": [
+        25.75,
+        1.5,
+        -10.1,
+        38.1,
+        2.5,
+        8.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Pins B",
+      "box": [
+        25.75,
+        26.9,
+        -10.1,
+        38.1,
+        2.5,
+        8.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Pins A header",
+      "box": [
+        25.75,
+        1.5,
+        -4.1,
+        38.1,
+        2.5,
+        2.5
+      ],
+      "mode": "join"
+    },
+    {
+      "part": "Pins B header",
+      "box": [
+        25.75,
+        26.9,
+        -4.1,
+        38.1,
+        2.5,
+        2.5
+      ],
+      "mode": "join"
+    }
+  ],
+  "openings": [
+    {
+      "name": "micro USB",
+      "side": "-x",
+      "center": [
+        14.2,
+        1.4
+      ],
+      "size": [
+        8,
+        2.8
+      ]
+    }
+  ],
+  "step": "esp32_devkit.step"
+}

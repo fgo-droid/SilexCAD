@@ -1,0 +1,689 @@
+{
+  "bodies": [
+    {
+      "id": "a9cb7704-bd24-4933-a7cf-7af0e00e8a30",
+      "material": {
+        "color": "#2A2C30FF",
+        "density": 1.27,
+        "name": "PETG Noir"
+      }
+    },
+    {
+      "id": "d5fe2098-8b0c-4346-9443-070751dc0915",
+      "material": {
+        "color": "#CFE6F273",
+        "density": 1.1,
+        "name": "Résine Translucide"
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "ca9f64fe-21b8-46a2-a27e-7f26213deee7",
+      "name": "Sketch1",
+      "params": {
+        "plane": {
+          "kind": "XY"
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "56a57099-6fa9-4e4b-8f02-ead4826e3f7e",
+                2
+              ],
+              "b": [
+                "19ac79d8-287e-4953-9a04-95b834092fbf",
+                1
+              ],
+              "id": "6414fe4c-5691-4a4a-8816-3a9547344ef9",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "19ac79d8-287e-4953-9a04-95b834092fbf",
+                2
+              ],
+              "b": [
+                "602e514c-d876-4410-b19d-23aac787c987",
+                1
+              ],
+              "id": "c0936a0d-6a7f-4ecb-b231-7a0929ceda16",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "602e514c-d876-4410-b19d-23aac787c987",
+                2
+              ],
+              "b": [
+                "8e386546-ee32-4162-9538-32edee2e9fb1",
+                1
+              ],
+              "id": "5cc0e1fb-0fd6-4bbe-87da-7096b239dabc",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "8e386546-ee32-4162-9538-32edee2e9fb1",
+                2
+              ],
+              "b": [
+                "56a57099-6fa9-4e4b-8f02-ead4826e3f7e",
+                1
+              ],
+              "id": "011b5cce-5d61-419a-81a6-8d1adc719fbc",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "56a57099-6fa9-4e4b-8f02-ead4826e3f7e",
+                0
+              ],
+              "id": "3c2279d7-592a-48d8-b9f5-81bf09ea9b01",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "602e514c-d876-4410-b19d-23aac787c987",
+                0
+              ],
+              "id": "9138e946-5123-4682-8833-350d72372e66",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "19ac79d8-287e-4953-9a04-95b834092fbf",
+                0
+              ],
+              "id": "6feab6ca-dced-43fc-b2a7-e86e6a2ff7c4",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "8e386546-ee32-4162-9538-32edee2e9fb1",
+                0
+              ],
+              "id": "3bdaf034-f1f6-4d67-b8b6-0185c4c52770",
+              "kind": "Vertical"
+            }
+          ],
+          "geos": [
+            {
+              "id": "56a57099-6fa9-4e4b-8f02-ead4826e3f7e",
+              "kind": "Line",
+              "p1": [
+                0.0,
+                0.0
+              ],
+              "p2": [
+                60.0,
+                0.0
+              ]
+            },
+            {
+              "id": "19ac79d8-287e-4953-9a04-95b834092fbf",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                0.0
+              ],
+              "p2": [
+                60.0,
+                40.0
+              ]
+            },
+            {
+              "id": "602e514c-d876-4410-b19d-23aac787c987",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                40.0
+              ],
+              "p2": [
+                0.0,
+                40.0
+              ]
+            },
+            {
+              "id": "8e386546-ee32-4162-9538-32edee2e9fb1",
+              "kind": "Line",
+              "p1": [
+                0.0,
+                40.0
+              ],
+              "p2": [
+                0.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "a9cb7704-bd24-4933-a7cf-7af0e00e8a30",
+      "name": "Extrude1",
+      "params": {
+        "distance": 25.0,
+        "expr": {
+          "/distance": "hauteur"
+        },
+        "op": "NewBody",
+        "profile": {
+          "regions": [
+            "19ac79d8-287e-4953-9a04-95b834092fbf,56a57099-6fa9-4e4b-8f02-ead4826e3f7e,602e514c-d876-4410-b19d-23aac787c987,8e386546-ee32-4162-9538-32edee2e9fb1"
+          ],
+          "sketch": "ca9f64fe-21b8-46a2-a27e-7f26213deee7"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "3d0112ee-4f79-4405-9ff8-97679f2dfcc2",
+      "name": "Shell1",
+      "params": {
+        "body": "a9cb7704-bd24-4933-a7cf-7af0e00e8a30",
+        "outward": false,
+        "removedFaces": [
+          {
+            "name": "a9cb7704-bd24-4933-a7cf-7af0e00e8a30:end",
+            "sig": {
+              "c": [
+                30.0,
+                20.0,
+                25.0
+              ],
+              "d": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "s": 2400.0,
+              "t": 0
+            }
+          }
+        ],
+        "thickness": 2.0
+      },
+      "type": "Shell"
+    },
+    {
+      "id": "05cb3df0-13b7-4002-b4aa-2fe3c0ebef73",
+      "name": "Sketch2",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 25.25
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "d1e20e34-b0b5-44ab-9ad7-19a6cb68a6be",
+                2
+              ],
+              "b": [
+                "e4095040-8f64-42a8-b1d0-d649094d5db6",
+                1
+              ],
+              "id": "095636d0-26ab-4301-81b4-7849a8e6a8db",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "e4095040-8f64-42a8-b1d0-d649094d5db6",
+                2
+              ],
+              "b": [
+                "9eee5daa-d1cb-458d-80fa-fb1ea5603012",
+                1
+              ],
+              "id": "9f64017c-43cc-4ae3-b5e4-e0cf8791a719",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "9eee5daa-d1cb-458d-80fa-fb1ea5603012",
+                2
+              ],
+              "b": [
+                "a37cf04f-60e9-419c-b4c4-6493bb1a96b0",
+                1
+              ],
+              "id": "143d08ef-3f31-481e-8079-567aca528983",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "a37cf04f-60e9-419c-b4c4-6493bb1a96b0",
+                2
+              ],
+              "b": [
+                "d1e20e34-b0b5-44ab-9ad7-19a6cb68a6be",
+                1
+              ],
+              "id": "5374cf9a-cad9-4602-910a-1a0ce663e27a",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d1e20e34-b0b5-44ab-9ad7-19a6cb68a6be",
+                0
+              ],
+              "id": "c5a86d26-1887-4f3e-8260-9d8444917257",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "9eee5daa-d1cb-458d-80fa-fb1ea5603012",
+                0
+              ],
+              "id": "e2d9b288-2587-47e7-8bff-6e99d69975d8",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "e4095040-8f64-42a8-b1d0-d649094d5db6",
+                0
+              ],
+              "id": "cfd98e76-645b-45e8-a2e3-ccc64bc254b3",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "a37cf04f-60e9-419c-b4c4-6493bb1a96b0",
+                0
+              ],
+              "id": "63a34f30-06be-4d52-888b-53b014a50d73",
+              "kind": "Vertical"
+            }
+          ],
+          "geos": [
+            {
+              "id": "d1e20e34-b0b5-44ab-9ad7-19a6cb68a6be",
+              "kind": "Line",
+              "p1": [
+                0.0,
+                0.0
+              ],
+              "p2": [
+                60.0,
+                0.0
+              ]
+            },
+            {
+              "id": "e4095040-8f64-42a8-b1d0-d649094d5db6",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                0.0
+              ],
+              "p2": [
+                60.0,
+                40.0
+              ]
+            },
+            {
+              "id": "9eee5daa-d1cb-458d-80fa-fb1ea5603012",
+              "kind": "Line",
+              "p1": [
+                60.0,
+                40.0
+              ],
+              "p2": [
+                0.0,
+                40.0
+              ]
+            },
+            {
+              "id": "a37cf04f-60e9-419c-b4c4-6493bb1a96b0",
+              "kind": "Line",
+              "p1": [
+                0.0,
+                40.0
+              ],
+              "p2": [
+                0.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "d5fe2098-8b0c-4346-9443-070751dc0915",
+      "name": "Extrude2",
+      "params": {
+        "distance": 3.0,
+        "op": "NewBody",
+        "profile": {
+          "regions": [
+            "9eee5daa-d1cb-458d-80fa-fb1ea5603012,a37cf04f-60e9-419c-b4c4-6493bb1a96b0,d1e20e34-b0b5-44ab-9ad7-19a6cb68a6be,e4095040-8f64-42a8-b1d0-d649094d5db6"
+          ],
+          "sketch": "05cb3df0-13b7-4002-b4aa-2fe3c0ebef73"
+        },
+        "reversed": false,
+        "symmetric": false,
+        "targetBody": ""
+      },
+      "type": "Extrude"
+    },
+    {
+      "id": "a837b875-2f07-4277-974c-3f14decca5de",
+      "name": "Sketch3",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 60.0
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "id": "91a7f9f3-9708-4c7a-8297-8e48488c2265",
+              "kind": "Line",
+              "p1": [
+                100.0,
+                0.0
+              ],
+              "p2": [
+                150.0,
+                0.0
+              ]
+            },
+            {
+              "a0": 4.71238898038469,
+              "a1": 6.283185307179586,
+              "c": [
+                150.0,
+                30.0
+              ],
+              "id": "0e27ac36-3971-4655-8e71-2b550e62b16a",
+              "kind": "Arc",
+              "r": 30.0
+            },
+            {
+              "id": "e24a2b52-1257-4c76-b8e2-dc2a77627d0c",
+              "kind": "Line",
+              "p1": [
+                180.0,
+                30.0
+              ],
+              "p2": [
+                180.0,
+                80.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "f88faef3-3e32-48c7-a671-5330baf2d1a5",
+      "name": "Sketch4",
+      "params": {
+        "plane": {
+          "kind": "YZ",
+          "offset": 100.0
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                60.0
+              ],
+              "id": "e640b82f-a5be-4d8f-bf49-dd2ba1ce6dc7",
+              "kind": "Circle",
+              "r": 5.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "b6f4db38-da0a-4042-ad0b-c2d9b73b5f09",
+      "name": "Sweep1",
+      "params": {
+        "op": "NewBody",
+        "orientation": "CorrectedFrenet",
+        "path": {
+          "curves": [],
+          "sketch": "a837b875-2f07-4277-974c-3f14decca5de"
+        },
+        "profile": {
+          "regions": [
+            "e640b82f-a5be-4d8f-bf49-dd2ba1ce6dc7"
+          ],
+          "sketch": "f88faef3-3e32-48c7-a671-5330baf2d1a5"
+        },
+        "targetBody": ""
+      },
+      "type": "Sweep"
+    },
+    {
+      "id": "78639015-b2e0-43d5-b387-bfc7a858f6f5",
+      "name": "Sketch5",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 100.0
+        },
+        "sketch": {
+          "constraints": [
+            {
+              "a": [
+                "89445f20-e400-4199-b468-46c14c7db0e2",
+                2
+              ],
+              "b": [
+                "0f067c7d-5606-4add-a00f-e90242b7d0ea",
+                1
+              ],
+              "id": "889ac156-4675-409b-9c89-4c07b4d022fc",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "0f067c7d-5606-4add-a00f-e90242b7d0ea",
+                2
+              ],
+              "b": [
+                "78e4d6bb-bd9b-4f9e-981d-572df6a5ba29",
+                1
+              ],
+              "id": "5d462fe4-9067-49d1-98cb-02839a9b88fb",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "78e4d6bb-bd9b-4f9e-981d-572df6a5ba29",
+                2
+              ],
+              "b": [
+                "d416625a-2408-4720-8cff-138f7ca7323d",
+                1
+              ],
+              "id": "25200637-ff85-444b-abc5-0373c46e6c53",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "d416625a-2408-4720-8cff-138f7ca7323d",
+                2
+              ],
+              "b": [
+                "89445f20-e400-4199-b468-46c14c7db0e2",
+                1
+              ],
+              "id": "6a0aaff4-8c80-4439-b4dc-c3745e078e80",
+              "kind": "Coincident"
+            },
+            {
+              "a": [
+                "89445f20-e400-4199-b468-46c14c7db0e2",
+                0
+              ],
+              "id": "aa7e7e62-02fc-42fc-80f7-7224e6d795e2",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "78e4d6bb-bd9b-4f9e-981d-572df6a5ba29",
+                0
+              ],
+              "id": "8b945383-ca34-4aa2-8cb2-3d44db277833",
+              "kind": "Horizontal"
+            },
+            {
+              "a": [
+                "0f067c7d-5606-4add-a00f-e90242b7d0ea",
+                0
+              ],
+              "id": "e9292f33-6b20-46ec-9da7-23f9c136423b",
+              "kind": "Vertical"
+            },
+            {
+              "a": [
+                "d416625a-2408-4720-8cff-138f7ca7323d",
+                0
+              ],
+              "id": "dcdb5f0d-2f40-4088-80b4-32289af6b017",
+              "kind": "Vertical"
+            }
+          ],
+          "geos": [
+            {
+              "id": "89445f20-e400-4199-b468-46c14c7db0e2",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                -20.0
+              ],
+              "p2": [
+                20.0,
+                -20.0
+              ]
+            },
+            {
+              "id": "0f067c7d-5606-4add-a00f-e90242b7d0ea",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                -20.0
+              ],
+              "p2": [
+                20.0,
+                20.0
+              ]
+            },
+            {
+              "id": "78e4d6bb-bd9b-4f9e-981d-572df6a5ba29",
+              "kind": "Line",
+              "p1": [
+                20.0,
+                20.0
+              ],
+              "p2": [
+                -20.0,
+                20.0
+              ]
+            },
+            {
+              "id": "d416625a-2408-4720-8cff-138f7ca7323d",
+              "kind": "Line",
+              "p1": [
+                -20.0,
+                20.0
+              ],
+              "p2": [
+                -20.0,
+                -20.0
+              ]
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "fc272f78-f02c-4ffd-8df8-4f6e6b671fc4",
+      "name": "Sketch6",
+      "params": {
+        "plane": {
+          "kind": "XY",
+          "offset": 150.0
+        },
+        "sketch": {
+          "constraints": [],
+          "geos": [
+            {
+              "c": [
+                0.0,
+                0.0
+              ],
+              "id": "103c8744-8069-47b1-b855-7a9ce9904e6b",
+              "kind": "Circle",
+              "r": 12.0
+            }
+          ]
+        }
+      },
+      "type": "Sketch"
+    },
+    {
+      "id": "7b4eae67-a0b6-46af-b7c3-471820f5b912",
+      "name": "Loft1",
+      "params": {
+        "op": "NewBody",
+        "ruled": false,
+        "sections": [
+          {
+            "regions": [
+              "0f067c7d-5606-4add-a00f-e90242b7d0ea,78e4d6bb-bd9b-4f9e-981d-572df6a5ba29,89445f20-e400-4199-b468-46c14c7db0e2,d416625a-2408-4720-8cff-138f7ca7323d"
+            ],
+            "sketch": "78639015-b2e0-43d5-b387-bfc7a858f6f5"
+          },
+          {
+            "regions": [
+              "103c8744-8069-47b1-b855-7a9ce9904e6b"
+            ],
+            "sketch": "fc272f78-f02c-4ffd-8df8-4f6e6b671fc4"
+          }
+        ],
+        "solid": true,
+        "targetBody": ""
+      },
+      "type": "Loft"
+    }
+  ],
+  "format": "silex",
+  "marker": 11,
+  "parameters": [
+    {
+      "comment": "hauteur boitier",
+      "expression": "25",
+      "name": "hauteur",
+      "unit": "mm",
+      "value": 25.0
+    },
+    {
+      "expression": "0.25",
+      "name": "jeu_montage",
+      "unit": "mm",
+      "value": 0.25
+    }
+  ],
+  "schema_version": "0.3",
+  "version": 3
+}
