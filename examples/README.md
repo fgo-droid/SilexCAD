@@ -44,3 +44,11 @@ timeline étape par étape et vérifie que toutes les étapes du parcours se val
 | `palier_semelle.silex` | 7 — Support de roulement (intermédiaire) | demi-pièce + symétrie YZ, oblong de réglage, logement Ø26 concentrique, trou de graissage |
 | `raccord_carre_rond.silex` | 8 — Raccord carré-rond (avancé) | plan décalé +60, lissage 60 × 60 → Ø40, coque 2 mm ouverte aux deux bouts |
 | `coude_brides.silex` | 9 — Coude à brides (avancé) | balayage le long d'un arc R45, section pilotée par `diametre_tube` / `epaisseur_paroi`, 2 brides, 2 × 4 trous en répétition circulaire |
+
+## Boîtier Raspberry Pi 4
+
+`boitier_raspberry_pi4.silex` : boîtier 94 × 64 × 30 mm à couvercle emboîtable, créé par l'assistant boîtier.
+Il contient la carte de la bibliothèque (verrouillée) posée sur 4 entretoises, les ouvertures de tous les
+connecteurs (Ethernet, 2 × USB, USB-C, 2 × micro HDMI, audio, micro SD), des fentes d'aération et le logo
+gravé sur le couvercle. Les dimensions intérieures sont des paramètres (`Ctrl+P`). Régénérable par
+`python tools/examples/build_rpi_case.py`.
